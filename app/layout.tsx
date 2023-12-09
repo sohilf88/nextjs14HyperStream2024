@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import Providers from './../reduxtoolkit/store/ClientProvider';
-const inter = Inter({ subsets: ["latin"] });
+import Providers from "./../reduxtoolkit/store/ClientProvider";
+import Header from "./../components/Header";
 
 export const metadata: Metadata = {
   title: "HyperStream CCTV RTMP Service",
@@ -17,8 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <body>
+        <Providers>
+          <Header></Header>
+          {children}
+        </Providers>
       </body>
     </html>
   );

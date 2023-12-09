@@ -2,7 +2,7 @@ import { camera, cameraFeatureSlice } from "@/typescript.definations"
 import {createSlice,createAsyncThunk,PayloadAction} from "@reduxjs/toolkit"
 import axios from "axios"
 const initialState={
-    data:[]
+    data:[],
 } as cameraFeatureSlice
 
 
@@ -20,8 +20,8 @@ export const cameraSlice=createSlice({
     initialState,
     reducers:{},
     extraReducers:(builder)=>{
-        builder.addCase(getCameras.fulfilled,(state,action:PayloadAction<camera>)=>{
-             state.data.push(action.payload)
+        builder.addCase(getCameras.fulfilled,(state,action:PayloadAction<camera[] >)=>{
+             state.data.push(...action.payload)
         })
         builder.addCase(getCameras.rejected,(state)=>{
             state.data=state.data

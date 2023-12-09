@@ -13,7 +13,7 @@ export type camera={
 }
 
 export type cameraFeatureSlice={
-    data:camera[]
+    data:camera[] 
 }
 
 export type user={
