@@ -11,6 +11,17 @@ export type camera={
     url:string,
 
 }
+export type createCamera={
+   
+    name:string,
+    distrct:string,
+    taluka:string,
+    city:string,
+    area:string,
+    location:string,
+    url:string,
+
+}
 
 export type cameraFeatureSlice={
     data:camera[] 
