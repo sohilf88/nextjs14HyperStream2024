@@ -1,25 +1,65 @@
 "use client";
-import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
-import { getCameras } from "../reduxtoolkit/features/cameraSlice";
+import { AgGridReact } from "ag-grid-react"; // React Grid Logic
+import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { createCamera } from "@/typescript.definations";
 
-export default function Home() {
-  const dispatch = useAppDispatch();
-  const ref = useRef(false); //it is used to avoid useEffect running two times hence used
+const AdminDashboard = () => {
+  const [rowData, setRowData] = useState([]);
+
+  const dataFromApi = async () => {
+    const data = await axios.get("http://localhost:5000/api/v1/camera");
+    // console.log(data.data.result)
+    setRowData(data.data.result);
+  };
 
   useEffect(() => {
-    if (ref.current === false) {
-      dispatch(getCameras());
-    }
-    return () => {
-      ref.current = true;
-    };
+    dataFromApi();
   }, []);
-
+  // Column Definitions: Defines & controls grid columns.
+  const [colDefs, setColDefs] = useState([
+    {
+      field: "name",
+      headerName: "Name",
+      editable: true,
+      checkboxSelection: true,
+      headerCheckboxSelection: true,
+    },
+    { field: "district", headerName: "District" },
+    { field: "taluka", headerName: "Taluka" },
+    { field: "city", headerName: "City" },
+    { field: "area" },
+  ]);
+  const defaultColumns = {
+    filter: true,
+    floatingFilter: true,
+    flex: 1,
+    // rowMultiSelectWithClick:true
+  };
+  // const selectedROws=(getSelectedRows )=>{
+  //   console.log(getSelectedRows )
+  // }
   return (
-    <main>
-      <Link href="/user">user</Link>
-    </main>
+    <div className="mt-5">
+      <div
+        className="ag-theme-quartz text-center uppercase"
+        style={{ height: 550, marginLeft: "auto", marginRight: "auto" }}
+      >
+        {/* The AG Grid component */}
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={colDefs}
+          defaultColDef={defaultColumns}
+          enableAdvancedFilter={true}
+          rowSelection={"multiple"}
+          pagination={true}
+          // onRowSelected={selectedROws}
+        />
+      </div>
+    </div>
   );
-}
+};
+
+export default AdminDashboard;
