@@ -4,6 +4,7 @@ import {cameraSlice} from "../features/cameraSlice";
 export const store = configureStore({
   reducer: {
     cameras:cameraSlice.reducer,
+    
   },
 });
 
