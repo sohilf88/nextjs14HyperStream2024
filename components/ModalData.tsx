@@ -18,47 +18,47 @@ const style = {
 function ModalData() {
   const dispatch = useAppDispatch();
   return (
-    <Box sx={style} className="rounded shadow-md uppercase ">
-      <form className="md:space-y-3 space-y-1 " action="">
+    <Box sx={style} className="rounded shadow-md ">
+      <form className="md:space-y-3 space-y-1" action="">
         <TextField
-          color="secondary"
+          color="primary"
           id="outlined-basic"
           label="Camera Name"
           variant="outlined"
           fullWidth
         />
         <TextField
-          color="secondary"
+          color="primary"
           id="filled-basic"
-          label="Distric"
+          label="District"
           variant="outlined"
           fullWidth
         />
         <TextField
-          color="secondary"
+          color="primary"
           id="outlined-basic"
           label="Taluka"
           variant="outlined"
           fullWidth
         />
         <TextField
-          color="secondary"
+          color="primary"
           id="outlined-basic"
           label="City"
           variant="outlined"
           fullWidth
         />
         <TextField
-          color="secondary"
+          color="primary"
           id="outlined-basic"
           label="Area"
           variant="outlined"
           fullWidth
         />
         <TextField
-          color="secondary"
+          color="primary"
           id="outlined-basic"
-          label="CCTV RTMP/HLS link (optional)"
+          label="CCTV Link (ex- rtmp://server.com/STREAM_KEY)"
           variant="outlined"
           fullWidth
         />
