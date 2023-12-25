@@ -1,11 +1,9 @@
 "use client";
-import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { createCamera } from "@/typescript.definations";
-import SimpleTable from "./../components/Table/simpleTable";
+import SimpleTable from "@/components/Table/simpleTable";
 import useColumn from "@/components/Table/useColumn";
 
 const userDashboard = () => {

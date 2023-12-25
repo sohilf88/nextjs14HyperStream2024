@@ -6,7 +6,7 @@ import Providers from "./../reduxtoolkit/store/ClientProvider";
 import Header from "./../components/Header";
 
 export const metadata: Metadata = {
-  title: "HyperStream CCTV RTMP Service",
+  title: "HyperStream CCTV Live Streaming Services",
   description: "HyperStream CCTV RTMP Service",
 };
 

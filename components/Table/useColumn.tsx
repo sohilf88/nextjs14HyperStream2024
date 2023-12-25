@@ -7,7 +7,7 @@ function useColumn() {
     {
       field: "name",
       headerName: "Name",
-      
+
       checkboxSelection: true,
       headerCheckboxSelection: true,
     },
@@ -18,7 +18,7 @@ function useColumn() {
     {
       field: "Action",
       filter: false,
-      editable:false,
+      editable: false,
       maxWidth: 150,
       cellRenderer: () => {
         return <Actions />;

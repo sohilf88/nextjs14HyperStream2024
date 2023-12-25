@@ -25,7 +25,8 @@ export type createCamera={
 
 export type cameraFeatureSlice={
     data:camera[],
-    selectedCamera:camera[]
+    selectedCamera:camera[],
+    onRowSelected:camera |null
 }
 
 export type user={
