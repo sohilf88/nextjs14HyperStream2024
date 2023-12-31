@@ -8,7 +8,7 @@ import { Modal } from "@mui/material";
 import { createCamera } from "@/typescript.definations";
 import {
   selectedCamera,
-  onRowSelected,
+  onRowSelectedSlice,
 } from "@/reduxtoolkit/features/cameraSlice";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
@@ -26,6 +26,7 @@ function SimpleTable({
     floatingFilter: true,
     flex: 1,
   });
+
   const dispatch = useAppDispatch();
   // below state is for MUI-Modal only
   const { isOpen } = useAppSelector((store) => store.modal);
@@ -37,8 +38,13 @@ function SimpleTable({
   }
   // select single row for and display into modal via ReduxToolkit Camera Slice with Reducer onRowSelected
   function onRowSelectedFunction(event: RowSelectedEvent) {
-    dispatch(onRowSelected(event.data));
-    // console.log(event.data);
+   if(event.node.isSelected()){
+    
+    dispatch(onRowSelectedSlice(event.data));
+
+   }
+   
+   
   }
 
   return (
@@ -49,10 +55,11 @@ function SimpleTable({
         rowData={data}
         // enableAdvancedFilter={true}
         rowSelection={"multiple"}
+        suppressRowDeselection={true}
         // rowMultiSelectWithClick={true}
         pagination={true}
-        onSelectionChanged={getSelectedRowsByCheckBox}
         onRowSelected={onRowSelectedFunction}
+        onSelectionChanged={getSelectedRowsByCheckBox}
       />
       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>
         <ModalData />

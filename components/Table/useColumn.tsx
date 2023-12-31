@@ -21,7 +21,8 @@ function useColumn() {
       editable: false,
       maxWidth: 150,
       cellRenderer: () => {
-        return <Actions />;
+        
+        return <Actions/>;
       },
     },
   ]);

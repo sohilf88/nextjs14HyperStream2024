@@ -3,7 +3,7 @@
 export type camera={
     _id:string,
     name:string,
-    distrct:string,
+    district:string,
     taluka:string,
     city:string,
     area:string,
@@ -14,7 +14,7 @@ export type camera={
 export type createCamera={
    
     name:string,
-    distrct:string,
+    district:string,
     taluka:string,
     city:string,
     area:string,

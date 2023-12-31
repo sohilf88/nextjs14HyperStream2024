@@ -39,7 +39,7 @@ export const cameraSlice=createSlice({
 
         },
         // below reducer is used to update Camera in User Dashboard
-        onRowSelected:(state,action:PayloadAction<camera |null>)=>{
+        onRowSelectedSlice:(state,action:PayloadAction<camera |null>)=>{
             state.onRowSelected=action.payload
 
         }
@@ -59,4 +59,4 @@ export const cameraSlice=createSlice({
 
 })
 export default cameraSlice.reducer
-export const {selectedCamera,onRowSelected}=cameraSlice.actions
+export const {selectedCamera,onRowSelectedSlice}=cameraSlice.actions
