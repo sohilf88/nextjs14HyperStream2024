@@ -1,9 +1,8 @@
 "use client";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose } from "@/reduxtoolkit/features/ModalSlice";
-import { useState,useCallback } from "react";
-import { onRowSelectedSlice } from "@/reduxtoolkit/features/cameraSlice";
+import { useState, useEffect } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -20,30 +19,35 @@ function ModalData() {
   const { isUpdate } = useAppSelector((store) => store.modal);
   const dispatch = useAppDispatch();
 
-  
-//   const [formState, setFormState] = useState({
-//     name: "",
-//     district: "",
-//     taluka: "",
-//     city: "",
-//     area: "",
-//     url: "",
-//   });
-  
-//   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-//     setFormState({
-//       ...formState,
-//       [event.target.name]: event.target.value,
-//     });
-//   }
+  const [name, setName] = useState<undefined | null | string>("");
+  const [id, setId] = useState<undefined | null | string>("");
+  const [district, setDistrict] = useState<undefined | null | string>("");
+  const [taluka, setTaluka] = useState<undefined | null | string>("");
+  const [city, setCity] = useState<undefined | null | string>("");
+  const [area, setArea] = useState<undefined | null | string>("");
+  const [url, setUrl] = useState<undefined | null | string>("");
+  // !useEffect is used due to clouser effect, useState is getting stale data if not used,
+  useEffect(() => {
+    setId(onRowSelected?._id);
+    setName(onRowSelected?.name);
+    setDistrict(onRowSelected?.district);
+    setTaluka(onRowSelected?.taluka);
+    setCity(onRowSelected?.city);
+    setArea(onRowSelected?.area);
+    setUrl(onRowSelected?.url);
+  }, [onRowSelected]);
+
+ 
+
+ 
 
   return (
     <Box sx={style} className="rounded shadow-md ">
       <form className="md:space-y-3 space-y-1">
         <TextField
-          
-          value={onRowSelected?.name}
-        //   defaultValue={formState.name}
+          onChange={(e) => setName(e.target.value)}
+        
+          value={name}
           color="primary"
           name="name"
           id="outlined-basic"
@@ -52,8 +56,8 @@ function ModalData() {
           fullWidth
         />
         <TextField
-          value={onRowSelected?.district}
-          
+          value={district}
+          onChange={(e) => setDistrict(e.target.value)}
           color="primary"
           id="filled-basic"
           label="District"
@@ -62,8 +66,8 @@ function ModalData() {
           fullWidth
         />
         <TextField
-          value={onRowSelected?.taluka}
-          
+          value={taluka}
+          onChange={(e) => setTaluka(e.target.value)}
           color="primary"
           id="outlined-basic"
           label="Taluka"
@@ -72,8 +76,8 @@ function ModalData() {
           fullWidth
         />
         <TextField
-          value={onRowSelected?.city}
-          
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
           name="city"
           color="primary"
           id="outlined-basic"
@@ -82,8 +86,8 @@ function ModalData() {
           fullWidth
         />
         <TextField
-          value={onRowSelected?.area}
-          
+          value={area}
+          onChange={(e) => setArea(e.target.value)}
           name="area"
           color="primary"
           id="outlined-basic"
@@ -92,8 +96,8 @@ function ModalData() {
           fullWidth
         />
         <TextField
-          value={onRowSelected?.url}
-          
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
           name="url"
           color="primary"
           id="outlined-basic"

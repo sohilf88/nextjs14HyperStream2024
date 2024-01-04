@@ -38,13 +38,9 @@ function SimpleTable({
   }
   // select single row for and display into modal via ReduxToolkit Camera Slice with Reducer onRowSelected
   function onRowSelectedFunction(event: RowSelectedEvent) {
-   if(event.node.isSelected()){
-    
-    dispatch(onRowSelectedSlice(event.data));
-
-   }
-   
-   
+    if (event.node.isSelected()) {
+      dispatch(onRowSelectedSlice(event.data));
+    }
   }
 
   return (
@@ -60,6 +56,7 @@ function SimpleTable({
         pagination={true}
         onRowSelected={onRowSelectedFunction}
         onSelectionChanged={getSelectedRowsByCheckBox}
+        enableCellChangeFlash={true}
       />
       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>
         <ModalData />
