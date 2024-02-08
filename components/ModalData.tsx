@@ -3,6 +3,7 @@ import { Box, TextField } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose } from "@/reduxtoolkit/features/ModalSlice";
 import { useState, useEffect } from "react";
+import useTableHook from "@/hooks/useTableHook";
 
 const style = {
   position: "absolute" as "absolute",
@@ -14,39 +15,20 @@ const style = {
   p: 4,
 };
 
-function ModalData() {
+function ModalData({onSubmit,handleClick,formData,updateSingleCamera}) {
   const { onRowSelected } = useAppSelector((store) => store.cameras);
   const { isUpdate } = useAppSelector((store) => store.modal);
   const dispatch = useAppDispatch();
-
-  const [name, setName] = useState<undefined | null | string>("");
-  const [id, setId] = useState<undefined | null | string>("");
-  const [district, setDistrict] = useState<undefined | null | string>("");
-  const [taluka, setTaluka] = useState<undefined | null | string>("");
-  const [city, setCity] = useState<undefined | null | string>("");
-  const [area, setArea] = useState<undefined | null | string>("");
-  const [url, setUrl] = useState<undefined | null | string>("");
-  // !useEffect is used due to clouser effect, useState is getting stale data if not used,
-  useEffect(() => {
-    setId(onRowSelected?._id);
-    setName(onRowSelected?.name);
-    setDistrict(onRowSelected?.district);
-    setTaluka(onRowSelected?.taluka);
-    setCity(onRowSelected?.city);
-    setArea(onRowSelected?.area);
-    setUrl(onRowSelected?.url);
-  }, [onRowSelected]);
-
  
+  const {name,district,city,area,_id,url,taluka}=formData
+  
 
- 
 
   return (
     <Box sx={style} className="rounded shadow-md ">
-      <form className="md:space-y-3 space-y-1">
+      <form onSubmit={onSubmit} className="md:space-y-3 space-y-1">
         <TextField
-          onChange={(e) => setName(e.target.value)}
-        
+          onChange={handleClick}
           value={name}
           color="primary"
           name="name"
@@ -57,7 +39,7 @@ function ModalData() {
         />
         <TextField
           value={district}
-          onChange={(e) => setDistrict(e.target.value)}
+          onChange={handleClick}
           color="primary"
           id="filled-basic"
           label="District"
@@ -67,7 +49,7 @@ function ModalData() {
         />
         <TextField
           value={taluka}
-          onChange={(e) => setTaluka(e.target.value)}
+          onChange={handleClick}
           color="primary"
           id="outlined-basic"
           label="Taluka"
@@ -77,7 +59,7 @@ function ModalData() {
         />
         <TextField
           value={city}
-          onChange={(e) => setCity(e.target.value)}
+          onChange={handleClick}
           name="city"
           color="primary"
           id="outlined-basic"
@@ -87,7 +69,7 @@ function ModalData() {
         />
         <TextField
           value={area}
-          onChange={(e) => setArea(e.target.value)}
+          onChange={handleClick}
           name="area"
           color="primary"
           id="outlined-basic"
@@ -97,7 +79,7 @@ function ModalData() {
         />
         <TextField
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={handleClick}
           name="url"
           color="primary"
           id="outlined-basic"
@@ -106,13 +88,14 @@ function ModalData() {
           fullWidth
         />
         <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2 justify-center ">
-          <button
+          <button onClick={updateSingleCamera(formData)}
             className=" flex-1 px-6 uppercase  text-white hover:bg-blue-600 py-2 bg-blue-500 rounded-xs shadow-lg active:shadow-md"
             type="submit"
           >
-            {isUpdate ? "ADD NEW" : "update"}
+            {isUpdate ? "update" : "ADD New Camera"}
           </button>
-          <button
+          
+          <button 
             onClick={() => dispatch(handleClose())}
             className="px-6 uppercase rounded-xs text-white hover:bg-red-600 py-2 bg-red-500  shadow-lg"
             type="button"

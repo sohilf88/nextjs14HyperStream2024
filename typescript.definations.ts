@@ -12,7 +12,7 @@ export type camera={
 
 }
 export type createCamera={
-   
+   _id?:string,
     name:string,
     district:string,
     taluka:string,
