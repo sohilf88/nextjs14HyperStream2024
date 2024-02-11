@@ -34,17 +34,45 @@ function useTableHook() {
   }
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
-    const data = await axios.get("camera");
+    try {
+        const data = await axios.get("camera");
     // console.log(data.data.result)
-    setRowData(data.data.result);
+        setRowData(data.data.result);
+      
+    } catch (error) {
+      const errorResult = (error as Error).message;
+    //   console.log(errorResult)
+      toast.error(errorResult)
+    }
+    
   };
 
-//   this is used to create new Camera detail
-  async function createNewCameraOnSubmit(e: React.ChangeEvent<HTMLInputElement>){
-    e.preventDefault()
+//   this is used to create new Camera or update exisiting camera detail
+  async function handleFormSubmit(){
+    
    
     try {
-       const response= await axios.post("camera/",{
+
+      if(formData._id){
+        const response= await axios.patch(`camera/${formData._id}`,{
+        name:formData.name,
+        district:formData.district,
+        taluka:formData.taluka,
+        area:formData.area,
+        city:formData.city,
+        url:formData.url
+       })
+       
+      if(response.status===200){
+        
+        getAllCameraDataFromBackEnd()
+        dispatch(handleClose())
+        dispatch(handleUpdate(false))
+    
+      }
+
+      }else{
+        const response= await axios.post("camera/",{
         name:formData.name,
         district:formData.district,
         taluka:formData.taluka,
@@ -58,6 +86,9 @@ function useTableHook() {
         setFormData(initialState)
        
       }
+        
+      }
+       
         
     } catch (error) {
       const errorResult = (error as Error).message;
@@ -93,39 +124,14 @@ function useTableHook() {
     
   }
 
-  async function updateSingleCamera(data:camera){
-
-        try {
-       const response= await axios.patch(`camera/${data._id}`,{
-        name:data.name,
-        district:data.district,
-        taluka:data.taluka,
-        area:data.area,
-        city:data.city,
-        url:data.url
-       })
-       
-      if(response.status===200){
-        
-        getAllCameraDataFromBackEnd()
-    
-      }
-        
-    } catch (error) {
-      const errorResult = (error as Error).message;
-    //   console.log(errorResult)
-      toast.error(errorResult)
-      
-    }
-    
-  }
-
-   function handleDataUpdate (previousData:createCamera)  {
-    setFormData(previousData)
+  
+// this function is used to get previous data from AG Grid event in Action Component 
+   function handleDataUpdateOnEditButton (paramsPreviousData)  {
+    setFormData(paramsPreviousData)
     dispatch(handleOpen())
-    dispatch(handleUpdate())
+    dispatch(handleUpdate(true))
   }
-  return [rowData,formData,getAllCameraDataFromBackEnd,createNewCameraOnSubmit,handleClick,handleDataUpdate,deleteSingleCamera]
+  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera]
     
   
 }

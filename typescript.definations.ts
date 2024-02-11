@@ -1,7 +1,7 @@
 
 // backend camera api data
 export type camera={
-    _id:string,
+    _id?:string,
     name:string,
     district:string,
     taluka:string,

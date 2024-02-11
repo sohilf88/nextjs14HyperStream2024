@@ -1,29 +1,30 @@
 import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { ColDef, AgGridEvent, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
+import { ColDef, AgGridEvent, ValueGetterParams } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
-import { Box, Modal } from "@mui/material";
-import { createCamera } from "@/typescript.definations";
+import { Box, Button, Modal ,ButtonGroup, Stack} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
+import PlayCircleTwoToneIcon from '@mui/icons-material/PlayCircleTwoTone';
 import Actions from "./Actions";
-import {
-  selectedCamera,
-  onRowSelectedSlice,
-} from "@/reduxtoolkit/features/cameraSlice";
+import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
-import { handleClose,handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
+import { handleClose,handleOpen } from "@/reduxtoolkit/features/ModalSlice";
 import useTableHook from "@/hooks/useTableHook";
 
 
 function SimpleTable() {
-  const [rowData,formData,getAllCameraDataFromBackEnd,createNewCameraOnSubmit,handleClick,handleDataUpdate,deleteSingleCamera,updateSingleCamera]=useTableHook()
+  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
   const dispatch = useAppDispatch();
   
   useEffect(() => {
+    
     getAllCameraDataFromBackEnd();
   }, []);
 
@@ -33,11 +34,7 @@ function SimpleTable() {
     flex: 1,
   });
 
-  // function handleUpdate (oldData:any)  {
-  //   setFormData(oldData)
-  //   dispatch(handleOpen())
-  //   dispatch(handleUpdate())
-  // }
+  
   const [cameraColDefs, setCameraColDefs] = useState<ColDef[]>([
     {
       field: "name",
@@ -55,8 +52,8 @@ function SimpleTable() {
       filter: false,
       editable: false,
       maxWidth: 150,
-      cellRenderer: (parmas) => {
-        return <Actions deleteCamera={deleteSingleCamera} handleDataUpdate={handleDataUpdate} params={parmas} />;
+      cellRenderer: (parmas:ValueGetterParams) => {
+        return <Actions deleteCamera={deleteSingleCamera} handleDataUpdateOnEditButton={handleDataUpdateOnEditButton} params={parmas} />;
       },
     },
   ]);
@@ -67,15 +64,32 @@ function SimpleTable() {
  
   function onGridReady(params: AgGridEvent) {
     
-    setGridReady(params);
+  
   }
+  const height=480;
   return (
-    <div className="ag-theme-quartz shadow-md" style={{ height: 550 }}>
-      <button onClick={()=>dispatch(handleOpen())}>ADD</button>
+    <>
+    <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-14 ">
+      <Stack justifyContent={"end"}  direction="row" spacing={3}>
+
+      
+
+      <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="outlined" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
+      
+      <Button   target="_blank" LinkComponent={Link} href="/admin" size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
+      <Button target="_blank" LinkComponent={Link} href="/admin" size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+      <Button size="large" variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+      
+      </Stack>
+    </div>
+    
+    <div className="ag-theme-quartz shadow-md" style={{ height: height }}>
+      
       <AgGridReact
         defaultColDef={defaultCols}
         columnDefs={cameraColDefs}
         rowData={rowData}
+        onGridReady={onGridReady}
         // enableAdvancedFilter={true}
         rowSelection={"multiple"}
         suppressRowDeselection={true}
@@ -87,12 +101,13 @@ function SimpleTable() {
       />
       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>
         <Box>
-        <ModalData updateSingleCamera={handleDataUpdate} onSubmit={createNewCameraOnSubmit} handleClick={handleClick} formData={formData}/>
+        <ModalData handleFormSubmit={handleFormSubmit} handleClick={handleClick} formData={formData}/>
         
         </Box>
       </Modal>
       <ToastContainer/>
     </div>
+    </>
   );
 }
 

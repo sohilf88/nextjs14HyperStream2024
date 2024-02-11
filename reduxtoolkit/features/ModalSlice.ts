@@ -1,32 +1,32 @@
 "use client"
 
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
-const initialState={
-    isOpen:false,
-    isUpdate:false,
-    
+const initialState = {
+    isOpen: false,
+    isUpdate: false,
+
 }
 
-export const modalSlice=createSlice({
-    name:"modal",
+export const modalSlice = createSlice({
+    name: "modal",
     initialState,
-    reducers:{
+    reducers: {
         // modal open state
-        handleOpen:(state)=>{
-            state.isOpen=true
+        handleOpen: (state) => {
+            state.isOpen = true
         },
         // modal close state
-        handleClose:(state)=>{
-            state.isOpen=false
+        handleClose: (state) => {
+            state.isOpen = false
         },
         // to add new camera and Change Modal update button name to New
-        handleUpdate:(state)=>{
-            state.isUpdate=true
+        handleUpdate: (state, action) => {
+            state.isUpdate = action.payload
         }
     }
 
 })
 
 export default modalSlice.reducer
-export const {handleClose, handleOpen,handleUpdate}=modalSlice.actions
+export const { handleClose, handleOpen, handleUpdate } = modalSlice.actions

@@ -1,7 +1,9 @@
 "use client";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField,Button } from "@mui/material";
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
-import { handleClose } from "@/reduxtoolkit/features/ModalSlice";
+import { handleClose,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { useState, useEffect } from "react";
 import useTableHook from "@/hooks/useTableHook";
 
@@ -15,18 +17,22 @@ const style = {
   p: 4,
 };
 
-function ModalData({onSubmit,handleClick,formData,updateSingleCamera}) {
-  const { onRowSelected } = useAppSelector((store) => store.cameras);
+function ModalData({handleFormSubmit,handleClick,formData}) {
+  
   const { isUpdate } = useAppSelector((store) => store.modal);
   const dispatch = useAppDispatch();
  
   const {name,district,city,area,_id,url,taluka}=formData
   
+const handleCloseOnClick=()=>{
+  dispatch(handleClose())
+  dispatch(handleUpdate(false))
 
+}
 
   return (
     <Box sx={style} className="rounded shadow-md ">
-      <form onSubmit={onSubmit} className="md:space-y-3 space-y-1">
+      <form  className="md:space-y-3 space-y-1">
         <TextField
           onChange={handleClick}
           value={name}
@@ -87,23 +93,24 @@ function ModalData({onSubmit,handleClick,formData,updateSingleCamera}) {
           variant="outlined"
           fullWidth
         />
-        <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2 justify-center ">
-          <button onClick={updateSingleCamera(formData)}
-            className=" flex-1 px-6 uppercase  text-white hover:bg-blue-600 py-2 bg-blue-500 rounded-xs shadow-lg active:shadow-md"
-            type="submit"
-          >
-            {isUpdate ? "update" : "ADD New Camera"}
-          </button>
-          
-          <button 
-            onClick={() => dispatch(handleClose())}
-            className="px-6 uppercase rounded-xs text-white hover:bg-red-600 py-2 bg-red-500  shadow-lg"
+        
+      </form>
+      <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2  justify-center ">
+          <Button startIcon={<AddTwoToneIcon/>} fullWidth   size="large" variant="outlined"  onClick={handleFormSubmit}
+            
             type="button"
           >
-            Cancel
-          </button>
+            {isUpdate ? "update" : "ADD New Camera"}
+          </Button>
+          
+          <Button startIcon={<ClearRoundedIcon/>} size="large" color="error" variant="outlined"
+            onClick={handleCloseOnClick}
+            
+            type="button"
+          >
+            Close
+          </Button>
         </Box>
-      </form>
     </Box>
   );
 }
