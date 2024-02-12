@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
 import { handleClose,handleOpen } from "@/reduxtoolkit/features/ModalSlice";
 import useTableHook from "@/hooks/useTableHook";
+import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
 
 
 function SimpleTable() {
@@ -66,6 +67,19 @@ function SimpleTable() {
     // console.log(params)
   
   }
+
+  // get no.of selected rows and add into ReduxToolkit
+  function getSelectedRowsByCheckBox(event: AgGridEvent) {
+    // console.log(event);
+    dispatch(selectedCamera(event.api.getSelectedRows()));
+  }
+  // select single row for and display into modal via ReduxToolkit Camera Slice with Reducer onRowSelected
+  function onRowSelectedFunction(event: RowSelectedEvent) {
+    if (event.node.isSelected()) {
+      dispatch(onRowSelectedSlice(event.data));
+    }
+  }
+
   const height=480;
   return (
     <>
@@ -93,8 +107,8 @@ function SimpleTable() {
         suppressRowDeselection={true}
         rowMultiSelectWithClick={true}
         pagination={true}
-        // onRowSelected={onRowSelectedFunction}
-        // onSelectionChanged={getSelectedRowsByCheckBox}
+        onRowSelected={onRowSelectedFunction}
+        onSelectionChanged={getSelectedRowsByCheckBox}
         // enableCellChangeFlash={true}
       />
       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>
