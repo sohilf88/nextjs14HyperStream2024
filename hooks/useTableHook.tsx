@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { toast } from 'react-toastify';
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
-import { camera, createCamera } from "@/typescript.definations";
+import { camera } from "@/typescript.definations";
 
 function useTableHook() {
     const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ function useTableHook() {
     url:""
   }
     // rowData is used to fill the userTable 
-    const [rowData, setRowData] = useState([]);
+    const [rowData, setRowData] = useState<camera[] | []>([]);
     // modal table data using formData
     const [formData,setFormData]=useState(initialState)
 
@@ -32,6 +32,7 @@ function useTableHook() {
     })
 
   }
+  console.log(rowData)
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
     try {
@@ -50,8 +51,7 @@ function useTableHook() {
 //   this is used to create new Camera or update exisiting camera detail
   async function handleFormSubmit(){
     
-   
-    try {
+       try {
 
       if(formData._id){
         const response= await axios.patch(`camera/${formData._id}`,{
@@ -65,7 +65,7 @@ function useTableHook() {
        
       if(response.status===200){
         
-        getAllCameraDataFromBackEnd()
+        await getAllCameraDataFromBackEnd()
         dispatch(handleClose())
         dispatch(handleUpdate(false))
     
@@ -82,7 +82,7 @@ function useTableHook() {
       })
        dispatch(handleClose())
       if(response.status===200){
-        getAllCameraDataFromBackEnd()
+        await getAllCameraDataFromBackEnd()
         setFormData(initialState)
        
       }
@@ -107,11 +107,7 @@ function useTableHook() {
        
       if(response.status===200){
         
-        getAllCameraDataFromBackEnd()
-       
-
-        
-        
+         getAllCameraDataFromBackEnd()
         
       }
         
@@ -126,7 +122,8 @@ function useTableHook() {
 
   
 // this function is used to get previous data from AG Grid event in Action Component 
-   function handleDataUpdateOnEditButton (paramsPreviousData)  {
+   function handleDataUpdateOnEditButton (paramsPreviousData:any)  {
+    
     setFormData(paramsPreviousData)
     dispatch(handleOpen())
     dispatch(handleUpdate(true))

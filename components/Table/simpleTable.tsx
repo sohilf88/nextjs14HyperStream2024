@@ -63,7 +63,7 @@ function SimpleTable() {
 
  
   function onGridReady(params: AgGridEvent) {
-    
+    // console.log(params)
   
   }
   const height=480;
@@ -89,8 +89,6 @@ function SimpleTable() {
         defaultColDef={defaultCols}
         columnDefs={cameraColDefs}
         rowData={rowData}
-        onGridReady={onGridReady}
-        // enableAdvancedFilter={true}
         rowSelection={"multiple"}
         suppressRowDeselection={true}
         rowMultiSelectWithClick={true}

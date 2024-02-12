@@ -4,8 +4,7 @@ import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
-import { useState, useEffect } from "react";
-import useTableHook from "@/hooks/useTableHook";
+import { modalProps } from "@/typescript.definations";
 
 const style = {
   position: "absolute" as "absolute",
@@ -17,7 +16,7 @@ const style = {
   p: 4,
 };
 
-function ModalData({handleFormSubmit,handleClick,formData}) {
+function ModalData({handleFormSubmit,handleClick,formData}:modalProps) {
   
   const { isUpdate } = useAppSelector((store) => store.modal);
   const dispatch = useAppDispatch();
@@ -103,7 +102,7 @@ const handleCloseOnClick=()=>{
             {isUpdate ? "update" : "ADD New Camera"}
           </Button>
           
-          <Button startIcon={<ClearRoundedIcon/>} size="large" color="error" variant="outlined"
+          <Button startIcon={<ClearRoundedIcon/>}  variant="outlined" size="large" color="error" 
             onClick={handleCloseOnClick}
             
             type="button"
