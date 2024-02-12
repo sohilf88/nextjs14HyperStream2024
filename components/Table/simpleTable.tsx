@@ -76,8 +76,8 @@ function SimpleTable() {
 
       <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="outlined" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
-      <Button   target="_blank" LinkComponent={Link} href="/admin" size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-      <Button target="_blank" LinkComponent={Link} href="/admin" size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+      <Button   target="_blank" LinkComponent={Link} href="/user" size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
+      <Button target="_blank" LinkComponent={Link} href="/user" size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
       <Button size="large" variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
       
       </Stack>
