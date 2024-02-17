@@ -60,7 +60,7 @@ function SimpleTable() {
   ]);
   
   // below state is for MUI-Modal only
-  const { isOpen } = useAppSelector((store) => store.modal);
+  const { isOpen } = useAppSelector((store) => store.root.modal);
 
  
   function onGridReady(params: AgGridEvent) {
