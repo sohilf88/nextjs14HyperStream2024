@@ -13,7 +13,7 @@ import Actions from "./Actions";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
-import { handleClose,handleOpen } from "@/reduxtoolkit/features/ModalSlice";
+import { handleClose,handleOpen, handlePlayAllCameras } from "@/reduxtoolkit/features/ModalSlice";
 import useTableHook from "@/hooks/useTableHook";
 import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
 
@@ -81,6 +81,18 @@ function SimpleTable() {
   }
 
   const height=480;
+
+  function playAllCamerasinNewTabOnClick(){
+  dispatch(handlePlayAllCameras(true))
+  window.open('/user', '_blank', 'noopener')
+
+}
+function playselectedCamerasinNewTabOnClick(){
+  dispatch(handlePlayAllCameras(false))
+  window.open('/user', '_blank', 'noopener')
+
+}
+
   return (
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-14 ">
@@ -90,9 +102,12 @@ function SimpleTable() {
 
       <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="outlined" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
-      <Button   target="_blank" LinkComponent={Link} href="/user" size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-      <Button target="_blank" LinkComponent={Link} href="/user" size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+      <Button   onClick={
+        playselectedCamerasinNewTabOnClick
+    } size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
+      <Button onClick={playAllCamerasinNewTabOnClick} target="_blank" LinkComponent={Link} href="/user" size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
       <Button size="large" variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+      
       
       </Stack>
     </div>

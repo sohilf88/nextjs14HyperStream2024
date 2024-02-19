@@ -18,7 +18,7 @@ const style = {
 
 function ModalData({handleFormSubmit,handleClick,formData}:modalProps) {
   
-  const { isUpdate } = useAppSelector((store) => store.modal);
+  const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();
  
   const {name,district,city,area,_id,url,taluka}=formData

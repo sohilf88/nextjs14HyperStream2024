@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* .ag-theme-quartz-manual {
     --ag-foreground-color: rgb(126, 46, 132);
     --ag-background-color: rgb(249, 245, 227);
@@ -13,3 +14,18 @@
     --ag-font-size: 17px;
     --ag-font-family: monospace;
 } */
+
+
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+  
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 0.2rem;
+  
+}
