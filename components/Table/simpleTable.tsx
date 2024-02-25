@@ -93,6 +93,7 @@ function playselectedCamerasinNewTabOnClick(){
 
 }
 
+
   return (
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-14 ">
@@ -124,6 +125,8 @@ function playselectedCamerasinNewTabOnClick(){
         pagination={true}
         onRowSelected={onRowSelectedFunction}
         onSelectionChanged={getSelectedRowsByCheckBox}
+        
+        
         // enableCellChangeFlash={true}
       />
       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>

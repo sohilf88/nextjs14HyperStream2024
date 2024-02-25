@@ -2,7 +2,7 @@
 
 function PlayAllCamerasByRandom() {
   return (
-    <div>PlayAllCamerasByRandom</div>
+    <div>Playall</div>
   )
 }
 

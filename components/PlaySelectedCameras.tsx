@@ -1,8 +1,18 @@
+"use client"
+
+import SliderCompoment from "./SliderCompoment"
 
 
 function PlaySelectedCameras() {
+
+
+
   return (
-    <div>PlaySelectedCameras</div>
+    <div>
+      <h1>selected play</h1>
+     
+    </div>
+   
   )
 }
 
