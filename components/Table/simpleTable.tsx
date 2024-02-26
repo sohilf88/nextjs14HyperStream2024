@@ -106,7 +106,7 @@ function playselectedCamerasinNewTabOnClick(){
       <Button   onClick={
         playselectedCamerasinNewTabOnClick
     } size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-      <Button onClick={playAllCamerasinNewTabOnClick} target="_blank" LinkComponent={Link} href="/user" size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+      <Button onClick={playAllCamerasinNewTabOnClick} size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
       <Button size="large" variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
       
       

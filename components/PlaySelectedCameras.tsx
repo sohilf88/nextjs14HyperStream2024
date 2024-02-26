@@ -1,6 +1,6 @@
 "use client"
 
-import SliderCompoment from "./SliderCompoment"
+
 
 
 function PlaySelectedCameras() {

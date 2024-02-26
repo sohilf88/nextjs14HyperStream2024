@@ -18,7 +18,7 @@ function user() {
  useEffect(()=>{
   getFilteredCameras()
  },[])
-  console.log(filteredData)
+
 return (
   <>
   
