@@ -1,10 +1,11 @@
+
 import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { ColDef, AgGridEvent, ValueGetterParams } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
-import { Box, Button, Modal ,ButtonGroup, Stack} from "@mui/material";
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
@@ -100,14 +101,15 @@ function playselectedCamerasinNewTabOnClick(){
       <Stack justifyContent={"end"}  direction="row" spacing={3}>
 
       
-
-      <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="outlined" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
+     
+      <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
       <Button   onClick={
         playselectedCamerasinNewTabOnClick
-    } size="large" variant="outlined" startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-      <Button onClick={playAllCamerasinNewTabOnClick} size="large" variant="outlined" color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
-      <Button size="large" variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+    } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
+      <Button onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+      <Button size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+     
       
       
       </Stack>

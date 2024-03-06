@@ -35,7 +35,7 @@ const handleCloseOnClick=()=>{
         <TextField
           onChange={handleClick}
           value={name}
-          color="primary"
+          color="info"
           name="name"
           id="outlined-basic"
           label="Camera Name"
@@ -45,7 +45,7 @@ const handleCloseOnClick=()=>{
         <TextField
           value={district}
           onChange={handleClick}
-          color="primary"
+          color="secondary"
           id="filled-basic"
           label="District"
           name="district"
@@ -66,7 +66,7 @@ const handleCloseOnClick=()=>{
           value={city}
           onChange={handleClick}
           name="city"
-          color="primary"
+          color="secondary"
           id="outlined-basic"
           label="City"
           variant="outlined"
@@ -76,7 +76,7 @@ const handleCloseOnClick=()=>{
           value={area}
           onChange={handleClick}
           name="area"
-          color="primary"
+          color="warning"
           id="outlined-basic"
           label="Area"
           variant="outlined"
@@ -86,7 +86,7 @@ const handleCloseOnClick=()=>{
           value={url}
           onChange={handleClick}
           name="url"
-          color="primary"
+          color="success"
           id="outlined-basic"
           label="CCTV Link (ex- rtmp://server.com/STREAM_KEY)"
           variant="outlined"
@@ -95,14 +95,14 @@ const handleCloseOnClick=()=>{
         
       </form>
       <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2  justify-center ">
-          <Button startIcon={<AddTwoToneIcon/>} fullWidth   size="large" variant="outlined"  onClick={handleFormSubmit}
+          <Button startIcon={<AddTwoToneIcon/>} fullWidth   size="large" variant="contained"  onClick={handleFormSubmit}
             
             type="button"
           >
             {isUpdate ? "update" : "ADD New Camera"}
           </Button>
           
-          <Button startIcon={<ClearRoundedIcon/>}  variant="outlined" size="large" color="error" 
+          <Button startIcon={<ClearRoundedIcon/>}  variant="contained" size="large" color="error" 
             onClick={handleCloseOnClick}
             
             type="button"

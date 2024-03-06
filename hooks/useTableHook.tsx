@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { toast } from 'react-toastify';
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
+import { DEFAULT_URL } from "@/utils";
 
 function useTableHook() {
     const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ function useTableHook() {
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
     try {
-        const data = await axios.get("camera");
+        const data = await axios.get(DEFAULT_URL+"camera");
     // console.log(data.data.result)
         setRowData(data.data.result);
       
@@ -54,7 +55,7 @@ function useTableHook() {
        try {
 
       if(formData._id){
-        const response= await axios.patch(`camera/${formData._id}`,{
+        const response= await axios.patch(`${DEFAULT_URL}camera/${formData._id}`,{
         name:formData.name,
         district:formData.district,
         taluka:formData.taluka,
@@ -72,7 +73,7 @@ function useTableHook() {
       }
 
       }else{
-        const response= await axios.post("camera/",{
+        const response= await axios.post(DEFAULT_URL+"camera/",{
         name:formData.name,
         district:formData.district,
         taluka:formData.taluka,
@@ -103,7 +104,7 @@ function useTableHook() {
   async function deleteSingleCamera(_id:string){
 
         try {
-       const response= await axios.delete(`camera/${_id}`)
+       const response= await axios.delete(`${DEFAULT_URL}camera/${_id}`)
        
       if(response.status===200){
         

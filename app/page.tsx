@@ -2,14 +2,12 @@
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Header from "./../components/Header";
-import axios from "axios";
+
 import SimpleTable from "@/components/Table/simpleTable";
 
 
 
 const userDashboard = () => {
-
-  axios.defaults.baseURL="http://localhost:5000/api/v1/";
 
    return (
     <div>

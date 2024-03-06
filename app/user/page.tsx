@@ -1,35 +1,65 @@
- "use client"
 import axios from 'axios';
-import SliderCompoment from '@/components/SliderCompoment';
-import { useAppSelector } from '@/reduxtoolkit/store/Hooks';
-import { useEffect,useState } from 'react';
+import HlsPlayer from '@/components/hslplayer';
+import TablePaginations from '@/components/Pagination';
+import PaginationClient from '@/components/Pagination';
+import { camera } from '@/typescript.definations';
 
 
-function user() {
+async function user({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+
+ 
+  const page = searchParams['page'] ?? '1'
+  const limit = searchParams['limit'] ?? '8'
+ const gridLimit=Number(limit)/2
+  const start=(Number(page)-1)*(Number(limit))
+  const end=start+Number(limit)
+ 
+  const response=await axios.get(`http://127.0.0.1:5000/api/v1/camera/filtered?page=${page}&limit=${limit}`)
   
-  const {isPlayAll}=useAppSelector((store)=>store.root.modal)
-  const {selectedCamera} =useAppSelector((store)=>store.root.cameras)
-  const [filteredData,setFilteredData]=useState()
-  async function getFilteredCameras(){
-    const response=await axios.get("http://127.0.0.1:5000/api/v1/camera/filtered")
-    setFilteredData(response.data.result)
-   
-  }
- useEffect(()=>{
-  getFilteredCameras()
- },[])
+ const hasNext=(end < response.data.totalCount)
+ const hasPrevious=(start>0)
+console.log(gridLimit)
+  
+
 
 return (
-  <>
-  
-  <div className='md:mt-44 lg:mt-16 2xl:mt-20'></div>
-  {
+<main className=''>
+  <div className='pt-7 pb-6'>
+    <div className="  ">
+      <PaginationClient hasNext={hasNext} hasPrevious={hasPrevious}/>
+    </div>
+   
+  </div>
+  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-3  mx-1  `}>
+      
+   {
+    response.data.result.map((item:camera)=>(
+      <div key={item._id}>
+         <HlsPlayer url={item.url}/>
+      </div>
+    ))
+   }
+   
     
-    // isPlayAll ?<PlayAllCamerasByRandom/>:<PlaySelectedCameras />
-    isPlayAll?<SliderCompoment selectedCamera={filteredData}/>:<SliderCompoment selectedCamera={selectedCamera}/>
-  }
- 
-  </>
+   
+   
+    
+   
+  </div>
+  {/* <div className=' absolute lg:bottom-16 xl:bottom-20  w-full'>
+    <div className="text-center">
+      <PaginationClient hasNext={hasNext} hasPrevious={hasPrevious}/>
+    </div>
+    
+   </div> */}
+   
+  </main>
+
+
 )
 }
 
