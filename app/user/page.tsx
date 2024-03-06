@@ -14,6 +14,7 @@ async function user({
  
   const page = searchParams['page'] ?? '1'
   const limit = searchParams['limit'] ?? '8'
+ 
  const gridLimit=Number(limit)/2
   const start=(Number(page)-1)*(Number(limit))
   const end=start+Number(limit)
@@ -22,15 +23,15 @@ async function user({
   
  const hasNext=(end < response.data.totalCount)
  const hasPrevious=(start>0)
-console.log(gridLimit)
+
   
 
 
 return (
 <main className=''>
   <div className='pt-7 pb-6'>
-    <div className="  ">
-      <PaginationClient hasNext={hasNext} hasPrevious={hasPrevious}/>
+    <div className="">
+      <PaginationClient data={response.data} hasNext={hasNext} hasPrevious={hasPrevious}/>
     </div>
    
   </div>

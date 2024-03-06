@@ -6,6 +6,7 @@ const initialState = {
     isOpen: false,
     isUpdate: false,
     isPlayAll: false,
+    isSelected: false,
 
 }
 
@@ -27,10 +28,13 @@ export const modalSlice = createSlice({
         },
         handlePlayAllCameras: (state, action: PayloadAction<boolean>) => {
             state.isPlayAll = action.payload
+        },
+        handleSelectedCameras: (state, action: PayloadAction<boolean>) => {
+            state.isSelected = action.payload
         }
     }
 
 })
 
 export default modalSlice.reducer
-export const { handleClose, handleOpen, handleUpdate, handlePlayAllCameras } = modalSlice.actions
+export const { handleClose, handleOpen, handleUpdate, handlePlayAllCameras, handleSelectedCameras } = modalSlice.actions

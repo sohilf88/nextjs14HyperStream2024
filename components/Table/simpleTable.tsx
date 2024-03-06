@@ -14,7 +14,7 @@ import Actions from "./Actions";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
-import { handleClose,handleOpen, handlePlayAllCameras } from "@/reduxtoolkit/features/ModalSlice";
+import { handleClose,handleOpen, handlePlayAllCameras,handleSelectedCameras } from "@/reduxtoolkit/features/ModalSlice";
 import useTableHook from "@/hooks/useTableHook";
 import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
 
@@ -23,6 +23,7 @@ function SimpleTable() {
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
+  const [isSelected,setIsSelected]=useState(false)
   const dispatch = useAppDispatch();
   
   useEffect(() => {
@@ -90,7 +91,7 @@ function SimpleTable() {
 }
 function playselectedCamerasinNewTabOnClick(){
   dispatch(handlePlayAllCameras(false))
-  window.open('/user', '_blank', 'noopener')
+  window.open('/user/selected', '_blank', 'noopener')
 
 }
 
