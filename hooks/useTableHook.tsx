@@ -33,7 +33,7 @@ function useTableHook() {
     })
 
   }
-  console.log(rowData)
+  
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
     try {

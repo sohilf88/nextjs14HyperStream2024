@@ -13,7 +13,7 @@ function Actions(props:any) {
   return (
     <Box>
       <IconButton size="small" onClick={()=>props.handleDataUpdateOnEditButton(props.params.data)}>
-        <EditTwoToneIcon color="primary" />
+        <EditTwoToneIcon color="warning" />
       </IconButton>
       
       <IconButton size="small" onClick={()=>props.deleteCamera(props.params.data._id)}>

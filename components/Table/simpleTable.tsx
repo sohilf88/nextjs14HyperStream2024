@@ -2,7 +2,7 @@
 import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { ColDef, AgGridEvent, ValueGetterParams } from "ag-grid-community"; //typeScript for ag grid
+import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { Box, Button, Modal ,ButtonGroup, Stack, Fab} from "@mui/material";
@@ -17,17 +17,19 @@ import ModalData from "@/components/ModalData";
 import { handleClose,handleOpen, handlePlayAllCameras,handleSelectedCameras } from "@/reduxtoolkit/features/ModalSlice";
 import useTableHook from "@/hooks/useTableHook";
 import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
+import { camera } from "@/typescript.definations";
 
 
 function SimpleTable() {
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
+  const [rowSelected,setRowSelected]=useState<camera[]| null>([])
   const [isSelected,setIsSelected]=useState(false)
   const dispatch = useAppDispatch();
   
   useEffect(() => {
-    
+    // @ts-ignore
     getAllCameraDataFromBackEnd();
   }, []);
 
@@ -45,6 +47,7 @@ function SimpleTable() {
 
       checkboxSelection: true,
       headerCheckboxSelection: true,
+      headerCheckboxSelectionFilteredOnly: true,
     },
     { field: "district", headerName: "District" },
     { field: "taluka", headerName: "Taluka" },
@@ -63,22 +66,24 @@ function SimpleTable() {
   
   // below state is for MUI-Modal only
   const { isOpen } = useAppSelector((store) => store.root.modal);
-
+//  const { selectedCamera } = useAppSelector((store) => store.root.cameras)
  
   function onGridReady(params: AgGridEvent) {
-    // console.log(params)
+   console.log(params.api.getValue)
+   
   
   }
 
   // get no.of selected rows and add into ReduxToolkit
   function getSelectedRowsByCheckBox(event: AgGridEvent) {
-    // console.log(event);
+    setRowSelected(event.api.getSelectedRows())
     dispatch(selectedCamera(event.api.getSelectedRows()));
   }
   // select single row for and display into modal via ReduxToolkit Camera Slice with Reducer onRowSelected
   function onRowSelectedFunction(event: RowSelectedEvent) {
     if (event.node.isSelected()) {
       dispatch(onRowSelectedSlice(event.data));
+     
     }
   }
 
@@ -95,7 +100,18 @@ function playselectedCamerasinNewTabOnClick(){
 
 }
 
+// check length of selected cameras is 0 or not
 
+ 
+  useEffect(()=>{
+if(rowSelected!=null && rowSelected.length >0){
+  setIsSelected(true)
+ }
+ if(rowSelected?.length===0 ){
+  setIsSelected(false)
+ }
+  },[rowSelected])
+ 
   return (
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-14 ">
@@ -105,27 +121,31 @@ function playselectedCamerasinNewTabOnClick(){
      
       <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
-      <Button   onClick={
+      <Button
+      disabled={!isSelected}
+         onClick={
         playselectedCamerasinNewTabOnClick
     } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-      <Button onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
-      <Button size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+      <Button  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+      <Button disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
      
       
       
       </Stack>
     </div>
     
-    <div className="ag-theme-quartz shadow-md" style={{ height: height }}>
+    <div className="ag-theme-quartz-dark shadow-xs" style={{ height: height }}>
       
       <AgGridReact
         defaultColDef={defaultCols}
         columnDefs={cameraColDefs}
-        rowData={rowData}
+        //@ts-ignore
+        rowData={rowData} 
         rowSelection={"multiple"}
         suppressRowDeselection={true}
         rowMultiSelectWithClick={true}
         pagination={true}
+        onGridReady={onGridReady}
         onRowSelected={onRowSelectedFunction}
         onSelectionChanged={getSelectedRowsByCheckBox}
         
