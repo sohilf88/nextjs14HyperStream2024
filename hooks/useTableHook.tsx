@@ -9,6 +9,7 @@ import { camera } from "@/typescript.definations";
 import { DEFAULT_URL } from "@/utils";
 
 function useTableHook() {
+  
     const dispatch = useAppDispatch();
     const initialState={
     _id:"",

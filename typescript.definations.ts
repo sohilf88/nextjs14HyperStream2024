@@ -1,5 +1,30 @@
 
 // backend camera api data
+export type Userdata = {
+    success: boolean,
+    message: string,
+    accessToken: string,
+    id: string
+}
+
+declare module "next-auth" {
+    interface Session {
+        user: Userdata
+    }
+}
+
+declare module "next-auth/jwt" {
+    interface JWT {
+        user: Userdata
+    }
+}
+declare module "next-auth/session" {
+    interface SESSION {
+        user: Userdata
+    }
+}
+
+
 export type camera = {
     _id?: string,
     name: string,

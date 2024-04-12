@@ -1,7 +1,13 @@
 
+async function admin() {
 
-function admin() {
-  return <div>admin</div>;
+
+
+
+  return <div>
+    <h1>admin page</h1>
+   
+  </div>;
 }
 
 export default admin;

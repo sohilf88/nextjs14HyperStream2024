@@ -69,7 +69,7 @@ function SimpleTable() {
 //  const { selectedCamera } = useAppSelector((store) => store.root.cameras)
  
   function onGridReady(params: AgGridEvent) {
-   console.log(params.api.getValue)
+   
    
   
   }
