@@ -1,14 +1,17 @@
 "use client"
-
-import axios from "axios";
 import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { toast } from 'react-toastify';
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
-import { DEFAULT_URL } from "@/utils";
+import useAxiosAuth from "./useAxiosAuth";
+
+
+
+
 
 function useTableHook() {
+  const axiosAuth=useAxiosAuth()
   
     const dispatch = useAppDispatch();
     const initialState={
@@ -18,7 +21,8 @@ function useTableHook() {
     taluka:"",
     city:"",
     area:"",
-    url:""
+    url:"",
+    isActive:true
   }
     // rowData is used to fill the userTable 
     const [rowData, setRowData] = useState<camera[] | []>([]);
@@ -27,9 +31,10 @@ function useTableHook() {
 
 //   handleClick is used to get data from modal Input
   function handleClick(e: React.ChangeEvent<HTMLInputElement>){
+    console.log(e.target.name,e.target.value)
     setFormData({
       ...formData,
-    
+     
     [e.target.name]:e.target.value
     })
 
@@ -38,13 +43,15 @@ function useTableHook() {
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
     try {
-        const data = await axios.get(DEFAULT_URL+"camera");
-    // console.log(data.data.result)
-        setRowData(data.data.result);
+        const response=await axiosAuth.get("/camera")
+        
+        
+    
+        setRowData(response.data.message);
       
     } catch (error) {
       const errorResult = (error as Error).message;
-    //   console.log(errorResult)
+      
       toast.error(errorResult)
     }
     
@@ -56,7 +63,7 @@ function useTableHook() {
        try {
 
       if(formData._id){
-        const response= await axios.patch(`${DEFAULT_URL}camera/${formData._id}`,{
+        const response= await axiosAuth.patch(`camera/${formData._id}`,{
         name:formData.name,
         district:formData.district,
         taluka:formData.taluka,
@@ -74,7 +81,7 @@ function useTableHook() {
       }
 
       }else{
-        const response= await axios.post(DEFAULT_URL+"camera/",{
+        const response= await axiosAuth.post("camera",{
         name:formData.name,
         district:formData.district,
         taluka:formData.taluka,
@@ -105,7 +112,7 @@ function useTableHook() {
   async function deleteSingleCamera(_id:string){
 
         try {
-       const response= await axios.delete(`${DEFAULT_URL}camera/${_id}`)
+       const response= await axiosAuth.delete(`camera/${_id}`)
        
       if(response.status===200){
         

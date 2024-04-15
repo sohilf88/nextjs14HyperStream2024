@@ -111,7 +111,7 @@ if(rowSelected!=null && rowSelected.length >0){
   setIsSelected(false)
  }
   },[rowSelected])
- 
+
   return (
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-14 ">

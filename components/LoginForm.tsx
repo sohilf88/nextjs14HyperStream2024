@@ -8,6 +8,8 @@ import { signIn } from "next-auth/react"
 import { Bounce, ToastContainer, toast } from "react-toastify"
 import { useRouter } from "next/navigation"
 import { AuthError } from "next-auth"
+import axios from '@/app/lib/axios';
+
 type props={
   callbackUrl?:string
 }
@@ -25,82 +27,83 @@ function LoginForm({callbackUrl}:props) {
     // console.log(callbackUrl)
     async function onSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
-        try {
-          const res= await signIn("credentials",{
-            redirect:false,
-            email,password,
-            
-            
-          })
-          console.log(res)
-          if(!res?.error){
-             router.push("/")
+        const response=await axios.post("auth/login",{
+          email,password
+        })
 
-          }
-          if(res?.error==="CredentialsSignin"){
-            setMaxAttempt(maxAttempt+1)
-            toast.error(`Invalid E-mail or Password,  Login Attempt: ${maxAttempt}/5`)
+        console.log(response.data)
+//         try {
+//           const res= await signIn("credentials",{
+//             redirect:false,
+//             email,password,
             
-            if(maxAttempt===3){
-              
-              toast.warning(`Account will get Blocked on 5th Attempt  `)
-              
-            }
-          }
-          if(res?.error==="Configuration"){
-            setMaxAttempt(1)
             
-            toast.info('🦄IP Address  Blocked for 2 min', {
-position: "top-center",
-autoClose: 120000,
-hideProgressBar: false,
-closeOnClick: false,
-pauseOnHover: false,
-draggable: true,
-progress: undefined,
-theme: "light",
-transition:Bounce,
-});
-          }
+//           })
+//           console.log(res)
+//           if(!res?.error){
+//              router.push("/")
+
+//           }
+//           if(res?.error==="CredentialsSignin"){
+//             setMaxAttempt(maxAttempt+1)
+//             toast.error(`Invalid E-mail or Password,  Login Attempt: ${maxAttempt}/5`)
+            
+//             if(maxAttempt===3){
+              
+//               toast.warning(`Account will get Blocked on 5th Attempt  `)
+              
+//             }
+//           }
+//           if(res?.error==="Configuration"){
+//             setMaxAttempt(1)
+            
+//             toast.info('🦄IP Address  Blocked for 2 min', {
+// position: "top-center",
+// autoClose: 120000,
+// hideProgressBar: false,
+// closeOnClick: false,
+// pauseOnHover: false,
+// draggable: true,
+// progress: undefined,
+// theme: "light",
+// transition:Bounce,
+// });
+//           }
           
         
        
           
-        } catch (error) {
-          console.log(error)
+//         } catch (error) {
+//           console.log(error)
 
-         if(error instanceof AuthError){
-          switch(error.type){
-            case "CredentialsSignin":
-              return toast.error("invalid credentials or Email Id")
+//          if(error instanceof AuthError){
+//           switch(error.type){
+//             case "CredentialsSignin":
+//               return toast.error("invalid credentials or Email Id")
 
-            default:
-               return toast.error("Unknown error")
-          } 
+//             default:
+//                return toast.error("Unknown error")
+//           } 
           
 
           
-         }
+//          }
           
-        }
+        
         
         
         
 
-    }
+    
 
     function handleKeyPress(event: KeyboardEvent<HTMLInputElement>) {
     
     setCapsLock(event.getModifierState('CapsLock'))
    
-    // Display a warning message if Caps Lock is on
-    // if (capsLockOn) {
-    //   setCapsLock(true)
-    // } else {
-    //   setCapsLock(false)
-    // }
+    
+    
   }
- 
+}
   return (
     <main className='px-2 max-w-full h-screen flex justify-center items-center bg-zinc-300'>
 
@@ -110,7 +113,7 @@ transition:Bounce,
           <div className='space-y-3'>
          <TextField onChange={(e)=>setEmail(e.target.value)} value={email} label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
          <TextField onChange={(e)=>setPassword(e.target.value)} value={password} label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
-          onKeyUp={handleKeyPress}></TextField>
+          ></TextField>
           <div className=' text-right px-2 py-2 text-xs'>
            {
             capslock?<span className=' text-red-600'>Caps Lock is <strong className='text-red-700'>ON</strong></span>:<span className=' text-green-800'>Capslock is <strong className='text-green-950-700'>OFF</strong></span>

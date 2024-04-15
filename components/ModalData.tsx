@@ -1,5 +1,5 @@
 "use client";
-import { Box, TextField,Button } from "@mui/material";
+import { Box, TextField,Button, Switch, FormGroup, FormControlLabel } from "@mui/material";
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
@@ -21,7 +21,7 @@ function ModalData({handleFormSubmit,handleClick,formData}:modalProps) {
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();
  
-  const {name,district,city,area,_id,url,taluka}=formData
+  const {name,district,city,area,_id,url,taluka,isActive}=formData
   
 const handleCloseOnClick=()=>{
   dispatch(handleClose())
@@ -92,6 +92,11 @@ const handleCloseOnClick=()=>{
           variant="outlined"
           fullWidth
         />
+       <Switch  onChange={handleClick} checked={isActive} name="isActive" />
+      
+   
+ 
+         
         
       </form>
       <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2  justify-center ">

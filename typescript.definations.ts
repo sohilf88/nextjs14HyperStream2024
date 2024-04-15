@@ -18,11 +18,7 @@ declare module "next-auth/jwt" {
         user: Userdata
     }
 }
-declare module "next-auth/session" {
-    interface SESSION {
-        user: Userdata
-    }
-}
+
 
 
 export type camera = {
@@ -34,6 +30,7 @@ export type camera = {
     area: string,
     location: string,
     url: string,
+    isActive: boolean
 
 
 }
@@ -52,6 +49,7 @@ export type createCamera = {
     area: string,
     location: string,
     url: string,
+    isActive: boolean
 
 }
 

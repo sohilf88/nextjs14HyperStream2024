@@ -15,15 +15,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import StreamIcon from '@mui/icons-material/Stream';
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import {signOut} from "next-auth/react"
 const pages = ["Dashobard", "Admin", "Other"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
 
-  async function logOut(){
-    await signOut();
-  }
+  
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -160,7 +158,8 @@ function ResponsiveAppBar() {
             >
               
               <MenuItem>
-              {/* <button onClick={logOut}>signout</button> */}
+             
+              
               <Link href={"/api/auth/signout"}>signout</Link>
               </MenuItem>
             </Menu>

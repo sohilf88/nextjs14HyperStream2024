@@ -11,11 +11,11 @@ import { redirect } from "next/navigation";
 
 const userDashboard = async() => {
   const user=await auth()
-  if(!user?.user){
+  if(!user?.user.accessToken){
     redirect("/auth/signin")
   }
  
- 
+ console.log(process.env.NEXT_PUBLIC_URL)
 return (
     <div>
       <Header></Header>
@@ -26,7 +26,7 @@ return (
         <SimpleTable />
        
       </div>
-     <h1>{user.user.accessToken}</h1>
+     
     
     </div>
   );

@@ -3,6 +3,8 @@ import NextAuth from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import { Userdata } from "./next-auth.type";
+import axios from "./app/lib/axios";
+
 
 
 // export const {handlers:{GET,POST},auth,signIn,signOut } = NextAuth({
@@ -51,21 +53,14 @@ const credentialsConfig = CredentialsProvider({
     async authorize(credentials) {
 
         const { email, password } = credentials as any
-        const res = await fetch("http://localhost:5000/api/v1/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
+        const res = await axios.post("/auth/login", {
+            email, password
+        })
 
-        const user = await res.json();
+        const user = res.data
         // console.log(user)
 
-        if (user && user.accessToken) {
+        if (user ) {
 
             return user;
         } else return null;
