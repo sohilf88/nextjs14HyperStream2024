@@ -2,7 +2,7 @@
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Header from "./../components/Header";
-import { auth, signOut } from "@/auth";
+// import { auth, signOut } from "@/auth";
 
 import SimpleTable from "@/components/Table/simpleTable";
 import { redirect } from "next/navigation";
@@ -10,12 +10,7 @@ import { redirect } from "next/navigation";
 
 
 const userDashboard = async() => {
-  const user=await auth()
-  if(!user?.user?.accessToken){
-    redirect("/auth/signin")
-  }
- 
- console.log(process.env.NEXT_PUBLIC_URL)
+  
 return (
     <div>
       <Header></Header>
