@@ -4,11 +4,11 @@ import { Button, TextField } from "@mui/material"
 import Link from "next/link"
 import { useState } from "react"
 
-import { signIn } from "next-auth/react"
+
 import { Bounce, ToastContainer, toast } from "react-toastify"
 import { useRouter } from "next/navigation"
-import { AuthError } from "next-auth"
-import axios from '@/app/lib/axios';
+
+import {axiosAuth} from '@/app/lib/axios';
 
 type props={
   callbackUrl?:string
@@ -27,9 +27,9 @@ function LoginForm({callbackUrl}:props) {
     // console.log(callbackUrl)
     async function onSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
-        const response=await axios.post("auth/login",{
+        const response=await axiosAuth.post("auth/login",{
           email,password
-        })
+        },{"withCredentials":true})
 
         console.log(response.data)
 //         try {
