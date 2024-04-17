@@ -4,14 +4,14 @@ import axios from "axios"
 
 export default axios.create({
     baseURL: process.env.NEXT_PUBLIC_URL,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Access-Control-Allow-Credentials": true },
 });
 
 export const axiosAuth = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_URL,
+    // baseURL: process.env.NEXT_PUBLIC_URL,
     headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true
+
 
     }
 })

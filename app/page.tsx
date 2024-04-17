@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 
 const userDashboard = async() => {
   const user=await auth()
-  if(!user?.user.accessToken){
+  if(!user?.user?.accessToken){
     redirect("/auth/signin")
   }
  
