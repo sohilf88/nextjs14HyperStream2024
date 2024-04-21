@@ -27,11 +27,19 @@ function LoginForm({callbackUrl}:props) {
     // console.log(callbackUrl)
     async function onSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
-        const response=await axiosAuth.post("auth/login",{
+        try {
+          const response=await axiosAuth.post("auth/login",{
           email,password
-        },{"withCredentials":true})
-
-        console.log(response.data)
+        })
+         console.log(response)
+        if(response.data?.success){
+          router.push(callbackUrl?callbackUrl:"/")
+        }
+          
+        } catch (error:any) {
+          toast.error(error.message)
+        }
+        
 //         try {
 //           const res= await signIn("credentials",{
 //             redirect:false,

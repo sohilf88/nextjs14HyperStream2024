@@ -15,13 +15,27 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import StreamIcon from '@mui/icons-material/Stream';
 import Link from "next/link";
-import {signOut} from "next-auth/react"
+import { axiosAuth } from "@/app/lib/axios";
+import { useRouter } from "next/navigation";
+
 const pages = ["Dashobard", "Admin", "Other"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
-
-  
+ const router=useRouter()
+  async function Logout(){
+    try {
+      const response= await axiosAuth.post("/auth/logout",{"withCredentials":true})
+      console.log(response)
+      if(response.status===200){
+        router.push("/auth/login")
+      }
+      
+    } catch (error:any) {
+      console.log(error.message)
+    }
+   
+  }
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -160,7 +174,7 @@ function ResponsiveAppBar() {
               <MenuItem>
              
               
-              <Link href={"/api/auth/signout"}>signout</Link>
+              <Button onClick={Logout}>Logout</Button>
               </MenuItem>
             </Menu>
           </Box>

@@ -4,14 +4,16 @@ import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { toast } from 'react-toastify';
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
-import useAxiosAuth from "./useAxiosAuth";
+import { axiosAuth } from "@/app/lib/axios";
+
+
 
 
 
 
 
 function useTableHook() {
-  const axiosAuth=useAxiosAuth()
+  
   
     const dispatch = useAppDispatch();
     const initialState={
@@ -43,16 +45,16 @@ function useTableHook() {
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
     try {
-        const response=await axiosAuth.get("/camera")
+        const response=await axiosAuth("/camera")
         
         
     
         setRowData(response.data.message);
       
-    } catch (error) {
+    } catch (error:any) {
       const errorResult = (error as Error).message;
-      
-      toast.error(errorResult)
+      console.log(error.message)
+      toast.error(error.message)
     }
     
   };

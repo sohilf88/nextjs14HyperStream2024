@@ -1,20 +1,24 @@
-"use client"
+// "use client"
 
-import axios from "@/app/lib/axios"
-// import { useSession } from "next-auth/react"
+// import { axiosAuth } from "@/app/lib/axios"
+// // import { useSession } from "next-auth/react"
 
-const useRefreshToken = () => {
-    // const { data: session } = useSession()
-   
-    const refreshToken = async () => {
-        const res = await axios.get("auth/refresh", { withCredentials: true })
-        // console.log(res,session)
-        // if (session) {
-        //     session.user.accessToken = res.data.aceessToken
-        // }
-    }
-    return refreshToken
+// const useRefreshToken = () => {
+//     // const { data: session } = useSession()
 
-}
+//     const generateRefreshToken = async () => {
+//         try {
+//             const res = await axiosAuth.get("auth/refresh")
 
-export default useRefreshToken
+//         } catch (error: any) {
+//             console.log(error.message)
+
+//         }
+
+
+//     }
+//     return generateRefreshToken
+
+// }
+
+// export default useRefreshToken

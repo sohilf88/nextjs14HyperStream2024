@@ -2,10 +2,10 @@
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Header from "./../components/Header";
-// import { auth, signOut } from "@/auth";
+
 
 import SimpleTable from "@/components/Table/simpleTable";
-import { redirect } from "next/navigation";
+
 
 
 
