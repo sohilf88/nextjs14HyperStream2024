@@ -1,4 +1,4 @@
-import axios from 'axios';
+"use client"
 import HlsPlayer from '@/components/hslplayer';
 import TablePaginations from '@/components/Pagination';
 import PaginationClient from '@/components/Pagination';
@@ -20,8 +20,8 @@ async function user({
   const start=(Number(page)-1)*(Number(limit))
   const end=start+Number(limit)
  
-  const response=await axiosAuth.get(`camera/filtered?page=${page}&limit=${limit}`)
-  // console.log(response.data)
+  const response=await axiosAuth.get(`camera/filtered?page=${page}&limit=${limit}`,{withCredentials:true})
+  
  const hasNext=(end < response.data.totalCount)
  const hasPrevious=(start>0)
 

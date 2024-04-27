@@ -1,18 +1,20 @@
 "use client"
 import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
-
-
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from 'sonner';
 
 
 
 
 
 function useTableHook() {
+  const router=useRouter()
   
   
     const dispatch = useAppDispatch();
@@ -45,16 +47,22 @@ function useTableHook() {
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
     try {
-        const response=await axiosAuth("/camera")
+        const response=await axiosAuth.get("/camera")
         
         
     
         setRowData(response.data.message);
       
-    } catch (error:any) {
-      const errorResult = (error as Error).message;
-      console.log(error.message)
-      toast.error(error.message)
+    } catch (error) {
+      const errorResult = (error as AxiosError);
+      console.log(errorResult.response?.statusText)
+      if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
+        router.push("/auth/login")
+        
+
+      }
+      // toast.error(errorResult)
+      toast.error("refresh Token Expired")
     }
     
   };
@@ -102,9 +110,14 @@ function useTableHook() {
        
         
     } catch (error) {
-      const errorResult = (error as Error).message;
-    //   console.log(errorResult)
-      toast.error(errorResult)
+      const errorResult = (error as AxiosError);
+      console.log(errorResult.response?.statusText)
+      if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
+        router.push("/auth/login")
+        
+
+      }
+      toast.info(errorResult.message)
       
       
     }
@@ -123,9 +136,13 @@ function useTableHook() {
       }
         
     } catch (error) {
-      const errorResult = (error as Error).message;
-    //   console.log(errorResult)
-      toast.error(errorResult)
+      const errorResult = (error as AxiosError);
+      console.log(errorResult.response?.statusText)
+      if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
+        // router.push("/auth/login")
+        
+
+      }
       
     }
     

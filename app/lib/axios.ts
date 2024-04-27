@@ -18,15 +18,15 @@ export const axiosAuth = axios.create({
 
 })
 
- axiosAuth.interceptors.response.use(
+axiosAuth.interceptors.response.use(
     (response) => {
         return response;
     },
     async function (error) {
         const originalRequest = error.config;
-
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        // console.log(error.response)
+        if (error.response.status === 401  && !originalRequest.sent) {
+            originalRequest.sent = true;
 
             try {
                 await generateRefreshToken();
@@ -44,6 +44,6 @@ export const generateRefreshToken = async () => {
         await axiosAuth.get(`/auth/refresh`);
     } catch (error: any) {
         console.error("error.message");
-        
+
     }
 };
