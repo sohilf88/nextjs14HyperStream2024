@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
-// import { toast } from 'react-toastify';
+
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
@@ -49,20 +49,15 @@ function useTableHook() {
     try {
         const response=await axiosAuth.get("/camera")
         
-        
+        console.log(response.data)
     
         setRowData(response.data.message);
       
     } catch (error) {
       const errorResult = (error as AxiosError);
-      console.log(errorResult.response?.statusText)
-      if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
-        router.push("/auth/login")
-        
-
-      }
-      // toast.error(errorResult)
-      toast.error("refresh Token Expired")
+      if(!errorResult.response)
+       toast.error("Connectivity Error to Backend")
+      
     }
     
   };
@@ -111,13 +106,8 @@ function useTableHook() {
         
     } catch (error) {
       const errorResult = (error as AxiosError);
-      console.log(errorResult.response?.statusText)
-      if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
-        router.push("/auth/login")
-        
-
-      }
-      toast.info(errorResult.message)
+      
+      toast.success(errorResult?.response?.data?.message)
       
       
     }
@@ -139,7 +129,7 @@ function useTableHook() {
       const errorResult = (error as AxiosError);
       console.log(errorResult.response?.statusText)
       if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
-        // router.push("/auth/login")
+      toast.error(errorResult.message)
         
 
       }

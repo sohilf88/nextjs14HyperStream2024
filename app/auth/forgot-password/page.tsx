@@ -17,7 +17,7 @@ function page() {
       {/* below div is used to add padding only */}
       <div className="pb-2"></div> 
       <Button type='submit' variant='contained' color='secondary' size='large'>submit</Button>
-       <span className='text-purple-700 font-light text-base text-right'><Link href="/login">Return to Login </Link></span>
+       <span className='text-purple-700 font-light text-base text-right'><Link href="/auth/login">Return to Login </Link></span>
       </div>
       
   </form>

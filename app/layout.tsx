@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import 'react-toastify/dist/ReactToastify.css';
+
 import Providers from "./../reduxtoolkit/store/ClientProvider";
 import { Toaster } from 'sonner';
 
@@ -25,7 +25,12 @@ export default function RootLayout({
         <Providers>
          
           {children}
-          <Toaster/>
+          <Toaster 
+          richColors
+          closeButton
+          visibleToasts={6}
+          
+          />
         </Providers>
         
       </body>

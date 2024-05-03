@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+
 import { Box, Button, Modal ,ButtonGroup, Stack, Fab} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
@@ -158,7 +158,7 @@ if(rowSelected!=null && rowSelected.length >0){
         
         </Box>
       </Modal>
-      <ToastContainer/>
+     
     </div>
     </>
   );
