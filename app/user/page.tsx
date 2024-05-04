@@ -1,6 +1,6 @@
 "use client"
 import HlsPlayer from '@/components/hslplayer';
-import TablePaginations from '@/components/Pagination';
+
 import PaginationClient from '@/components/Pagination';
 import { camera } from '@/typescript.definations';
 import { axiosAuth } from '../lib/axios';
@@ -20,8 +20,8 @@ async function user({
   const start=(Number(page)-1)*(Number(limit))
   const end=start+Number(limit)
  
-  const response=await axiosAuth.get(`camera/filtered?page=${page}&limit=${limit}`,{withCredentials:true})
-  
+  const response=await axiosAuth.get(`/camera/filtered?page=${page}&limit=${limit}`,{withCredentials:true})
+  console.log(response)
  const hasNext=(end < response.data.totalCount)
  const hasPrevious=(start>0)
 
@@ -29,6 +29,7 @@ async function user({
 
 
 return (
+
 <main className=''>
   <div className='pt-7 pb-6'>
     <div className="">
@@ -39,7 +40,7 @@ return (
   <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-3  mx-1  `}>
       
    {
-    response.data.result.map((item:camera)=>(
+    response.data && response.data.message.map((item:camera)=>(
       <div key={item._id}>
          <HlsPlayer url={item.url}/>
       </div>
@@ -52,13 +53,7 @@ return (
     
    
   </div>
-  {/* <div className=' absolute lg:bottom-16 xl:bottom-20  w-full'>
-    <div className="text-center">
-      <PaginationClient hasNext={hasNext} hasPrevious={hasPrevious}/>
-    </div>
-    
-   </div> */}
-   
+     
   </main>
 
 

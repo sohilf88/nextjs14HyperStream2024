@@ -127,12 +127,11 @@ function useTableHook() {
         
     } catch (error) {
       const errorResult = (error as AxiosError);
-      console.log(errorResult.response?.statusText)
-      if(errorResult.response?.status===403 || errorResult.response?.status===401 && errorResult.response?.statusText==="Unauthorized" ){
+      
       toast.error(errorResult.message)
         
 
-      }
+      
       
     }
     

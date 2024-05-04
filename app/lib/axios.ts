@@ -25,7 +25,7 @@ axiosAuth.interceptors.response.use(
     async function (error) {
         const originalRequest = error.config;
         // console.log(error.response.data.message)
-        if (error.response.status === 401 && error.response.data.message === "TokenExpiredError" && !originalRequest.sent) {
+        if (error.response.status === 401 && error.response.data.message === "TokenExpiredError" || error.response.data.message === "JsonWebTokenError" && !originalRequest.sent) {
             originalRequest.sent = true;
 
             try {
