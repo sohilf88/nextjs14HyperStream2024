@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
-import { AxiosError } from "axios";
+import { AxiosError, isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from 'sonner';
 
@@ -54,9 +54,12 @@ function useTableHook() {
         setRowData(response.data.message);
       
     } catch (error) {
-      const errorResult = (error as AxiosError);
-      if(!errorResult.response)
-       toast.error("Connectivity Error to Backend")
+      if (isAxiosError(error)){
+        console.log(error.response?.statusText)
+      }
+      // const errorResult = (error as AxiosError);
+      // if(!errorResult.response)
+      //  toast.error("Connectivity Error to Backend")
       
     }
     

@@ -64,3 +64,10 @@ export type user = {
     email: string,
     password?: string
 }
+
+
+export type customError = {
+    success: boolean,
+    message: string,
+    status: number
+}

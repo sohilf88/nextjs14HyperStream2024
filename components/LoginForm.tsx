@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 import { useRouter } from "next/navigation"
 
 import {axiosAuth} from '@/app/lib/axios';
+import { AxiosError, isAxiosError } from 'axios';
+import { customError } from '@/typescript.definations';
 
 type props={
   callbackUrl?:string
@@ -39,13 +41,33 @@ function LoginForm({callbackUrl}:props) {
           router.push(callbackUrl?callbackUrl:"/")
         }
           
-        } catch (error:any) {
-          toast.error(error.message)
+        } catch (error:unknown) {
+          console.log(error)
+          
+         if(isAxiosError(error) && error.response?.data){
+          const errorResponse = error.response.data as customError
+
+          if(error.response?.data.status===401){
+           toast.error(errorResponse.message)
+          }
+          if(error.response?.status===429){
+            console.log("error")
+           toast.warning(error.response.data)
+          }
+         
+          
+          
+                    
+         
+         
+          
+        
         }
+        
       
 
 
-
+      }
  
 }
  function handleKeyPress(event: KeyboardEvent<HTMLInputElement>) {

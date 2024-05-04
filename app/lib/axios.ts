@@ -1,4 +1,6 @@
-import axios from "axios"
+import { customError } from "@/typescript.definations";
+import axios, { isAxiosError } from "axios"
+import { toast } from "sonner";
 
 export default axios.create({
     baseURL: process.env.NEXT_PUBLIC_URL,
@@ -42,8 +44,11 @@ axiosAuth.interceptors.response.use(
 export const generateRefreshToken = async () => {
     try {
         await axiosAuth.get(`/auth/refresh`);
-    } catch (error: any) {
-        console.error("error.message");
+    } catch (error: unknown) {
+        if (isAxiosError(error) && error.response?.data) {
+            const errorResponse = error.response.data as customError
+            toast.error(errorResponse.message)
+        }
 
     }
 };

@@ -5,20 +5,25 @@ import { cookies } from "next/headers";
 
 
 export async function middleware(request: NextRequest) {
+    console.log(process.env.NEXT_PUBLIC_URL)
 
     const jwtCookies = cookies()
+    const optioncookies=request.cookies
     const response = NextResponse.next()
     // if refresh cookie deleted then run this function
+    console.log(optioncookies)
     if (!jwtCookies.has("jwtRe")) {
+
         return NextResponse.redirect(new URL("/auth/login", request.url))
     }
-    
-    if (jwtCookies.has("jwtRe") ) {
+
+    if (jwtCookies.has("jwtRe")) {
 
         if (!jwtCookies.has("jwtAccess")) {
 
             try {
-                const res = await fetch("http://localhost:5000/api/v1/auth/refresh", { method: "GET", credentials: "include", headers: { Cookie: cookies().toString() } })
+                console.log("running")
+                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/refresh`, { method: "GET", credentials: "include", headers: { Cookie: cookies().toString() } })
 
                 const cookie: any = res.headers.getSetCookie()
                 response.cookies.set({
@@ -26,6 +31,7 @@ export async function middleware(request: NextRequest) {
                     value: cookie,
 
                 })
+                console.log(cookie)
                 return response
 
             } catch (error) {
@@ -51,5 +57,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/", "/admin", "/user", "/auth/reset-password"]
+    matcher: ["/", "/admin", "/user/:page*", "/auth/reset-password"]
 }
