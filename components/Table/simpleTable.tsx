@@ -27,7 +27,29 @@ function SimpleTable() {
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
   const [isSelected,setIsSelected]=useState(false)
   const dispatch = useAppDispatch();
+ 
+  // for table height size
+  const [width, setWidth] = useState(0)
+  // const [heightofViewport, setheightofViewport] = useState(0)
+
+  const handleWindowResize = () => {
+    setWidth(window.innerWidth);
+    // setheightofViewport(window.innerHeight);
+  }
+  if(width>1600){
+    var height=640
+  }else{
+    height=480
+  }
+  useEffect(() => {
+    // component is mounted and window is available
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
+    // unsubscribe from the event on component unmount
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, []);
   
+
   useEffect(() => {
     // @ts-ignore
     getAllCameraDataFromBackEnd();
@@ -86,9 +108,17 @@ function SimpleTable() {
      
     }
   }
+// table dynamic size based upon windows resolution
 
-  const height=480;
+ 
 
+  // let height=480;
+//   if(window.innerWidth>1600){
+//     height=620;
+//   }else {
+//    height=480
+//   }
+//  console.log(window.innerWidth)
   function playAllCamerasinNewTabOnClick(){
   dispatch(handlePlayAllCameras(true))
   window.open('/user', '_blank', 'noopener')
@@ -114,7 +144,7 @@ if(rowSelected!=null && rowSelected.length >0){
 
   return (
     <>
-    <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-14 ">
+    <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
       <Stack justifyContent={"end"}  direction="row" spacing={3}>
 
       

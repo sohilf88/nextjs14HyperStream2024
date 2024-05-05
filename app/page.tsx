@@ -15,7 +15,7 @@ return (
     <div>
       <Header></Header>
       
-      <div className="uppercase md:mx-4 px-1 sm:px-4 md:px-8 md:mt-2 xl:mt-7 3xl:mt-20 ">
+      <div className="uppercase md:mx-4 px-1 sm:px-4 md:px-8 md:mt-2 xl:mt-7  ">
         {/* The AG Grid component */}
        
         <SimpleTable />

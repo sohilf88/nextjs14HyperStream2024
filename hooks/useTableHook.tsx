@@ -12,14 +12,14 @@ import { toast } from 'sonner';
 
 export function errorHandler(error:unknown){
   if(isAxiosError(error) && error.response?.data){
-          if( error.response?.data.status===400){
+          if( error.response?.data.status===400 || error.response?.data.status===401){
             // const errorResponse = error.response.data
           return  toast.error(error.response.data.message)
           }
            
-          else if(error.response?.data.status===401){
-          return toast.info(error.message)
-          }
+          // else if(error.response?.data.status===401){
+          // return toast.info(error.response.data.message)
+          // }
           else if(error.response?.status===429){
             // console.log("error")
           return toast.warning(error.response.data)

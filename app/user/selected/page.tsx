@@ -4,6 +4,7 @@
 import PaginationControls from "@/components/PaginationControls"
 import HlsPlayer from "@/components/hslplayer"
 import { useAppSelector } from "@/reduxtoolkit/store/Hooks"
+import { camera } from "@/typescript.definations"
 
 function page({
   searchParams,
@@ -22,23 +23,28 @@ function page({
     const hasNext=(end < selectedCamera.length)
     const hasPrevious=(start>0)
   return (
-    <div className="grid grid-cols-3 gap-x-1 gap-y-3">
-        <div className='pt-5 pb-5 col-span-full text-center font-semibold text-white text-xl tracking-wider shadow-md px-2 bg-zinc-800 shadow-xl'>
+    <main>
+       <div className='h-16 flex items-center justify-center font-semibold text-white/60 text-xl tracking-wider px-2 bg-zinc-800 shadow-xl'>
           <PaginationControls
            hasNextPage={hasNext}
            hasPrevPage={hasPrevious}
            totalCount={selectedCamera.length}
           />
         </div>
+        <div className="py-1 3xl:py-6"></div>
+      <div className=" mx-1 grid grid-cols-3 gap-x-1 gap-y-1 3xl:gap-y-3 3xl:gap-x-3">
+       
+   
       
    {
-    entries.map((item)=>(
-      <div className="shadow-lg" key={item._id}>
+    entries.map((item:camera)=>(
+      <div className="shadow-xl" key={item._id}>
          <HlsPlayer url={item.url}/>
       </div>
     ))
    }
    </div>
+   </main>
   )
 }
 
