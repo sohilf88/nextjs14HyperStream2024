@@ -4,13 +4,14 @@ import { Button, TextField } from "@mui/material"
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from 'sonner';
-
+import { errorHandler } from '@/hooks/useTableHook';
 
 import { useRouter } from "next/navigation"
 
 import {axiosAuth} from '@/app/lib/axios';
 import { AxiosError, isAxiosError } from 'axios';
 import { customError } from '@/typescript.definations';
+import useTableHook from '@/hooks/useTableHook';
 
 type props={
   callbackUrl?:string
@@ -18,6 +19,7 @@ type props={
 
 function LoginForm({callbackUrl}:props) {
 
+ 
   
   
   
@@ -25,9 +27,10 @@ function LoginForm({callbackUrl}:props) {
     const [email,setEmail] =useState("")
     const [password,setPassword] =useState("")
     const [capslock,setCapsLock] =useState(false)
-    const [maxAttempt,setMaxAttempt] =useState(1)
+
+
     const router=useRouter()
-    // console.log(callbackUrl)
+   
     async function onSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
         
@@ -38,35 +41,14 @@ function LoginForm({callbackUrl}:props) {
         })
         //  console.log(response)
         if(response.data?.success){
+         
           router.push(callbackUrl?callbackUrl:"/")
         }
           
-        } catch (error:unknown) {
-          console.log(error)
-          
-         if(isAxiosError(error) && error.response?.data){
-          const errorResponse = error.response.data as customError
-
-          if(error.response?.data.status===401){
-           toast.error(errorResponse.message)
-          }
-          if(error.response?.status===429){
-            console.log("error")
-           toast.warning(error.response.data)
-          }
-         
-          
-          
-                    
-         
-         
-          
+        } catch (error) {
         
-        }
-        
-      
-
-
+          errorHandler(error)
+       
       }
  
 }

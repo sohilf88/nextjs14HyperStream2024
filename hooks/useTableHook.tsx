@@ -3,15 +3,33 @@ import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
-import { camera } from "@/typescript.definations";
+import { camera, customError } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
 import { AxiosError, isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from 'sonner';
 
 
+export function errorHandler(error:unknown){
+  if(isAxiosError(error) && error.response?.data){
+          if( error.response?.data.status===400){
+            // const errorResponse = error.response.data
+          return  toast.error(error.response.data.message)
+          }
+           
+          else if(error.response?.data.status===401){
+          return toast.info(error.message)
+          }
+          else if(error.response?.status===429){
+            // console.log("error")
+          return toast.warning(error.response.data)
+          }else{
+            return error
+          }
+         
 
-
+}
+}
 
 function useTableHook() {
   const router=useRouter()
@@ -54,12 +72,7 @@ function useTableHook() {
         setRowData(response.data.message);
       
     } catch (error) {
-      if (isAxiosError(error)){
-        console.log(error.response?.statusText)
-      }
-      // const errorResult = (error as AxiosError);
-      // if(!errorResult.response)
-      //  toast.error("Connectivity Error to Backend")
+      errorHandler(error)
       
     }
     
@@ -108,11 +121,8 @@ function useTableHook() {
        
         
     } catch (error) {
-      const errorResult = (error as AxiosError);
-      
-      toast.success(errorResult?.response?.data?.message)
-      
-      
+      errorHandler(error)
+       
     }
     
   }
@@ -129,13 +139,8 @@ function useTableHook() {
       }
         
     } catch (error) {
-      const errorResult = (error as AxiosError);
-      
-      toast.error(errorResult.message)
-        
-
-      
-      
+      errorHandler(error)
+    
     }
     
   }

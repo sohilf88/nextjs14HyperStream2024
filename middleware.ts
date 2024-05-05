@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
     console.log(process.env.NEXT_PUBLIC_URL)
 
     const jwtCookies = cookies()
-    const optioncookies=request.cookies
+    const optioncookies = request.cookies
     const response = NextResponse.next()
     // if refresh cookie deleted then run this function
     console.log(optioncookies)
@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
         if (!jwtCookies.has("jwtAccess")) {
 
             try {
-                console.log("running")
+                // console.log("running")
                 const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/refresh`, { method: "GET", credentials: "include", headers: { Cookie: cookies().toString() } })
 
                 const cookie: any = res.headers.getSetCookie()
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
                     value: cookie,
 
                 })
-                console.log(cookie)
+                // console.log(cookie)
                 return response
 
             } catch (error) {
