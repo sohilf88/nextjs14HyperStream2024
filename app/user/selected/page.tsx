@@ -18,20 +18,22 @@ function page({
   
     const {selectedCamera}=useAppSelector((store)=>store.root.cameras)
     const entries = selectedCamera.slice(start, end)
+    
     const hasNext=(end < selectedCamera.length)
     const hasPrevious=(start>0)
   return (
-    <div className="grid grid-cols-3 gap-x-1 gap-y-3 mx-1">
-        <div className='pt-5 pb-5 col-span-full text-center font-semibold text-white text-xl tracking-wider shadow-md px-2'>
+    <div className="grid grid-cols-3 gap-x-1 gap-y-3">
+        <div className='pt-5 pb-5 col-span-full text-center font-semibold text-white text-xl tracking-wider shadow-md px-2 bg-zinc-800 shadow-xl'>
           <PaginationControls
            hasNextPage={hasNext}
            hasPrevPage={hasPrevious}
+           totalCount={selectedCamera.length}
           />
         </div>
       
    {
     entries.map((item)=>(
-      <div key={item._id}>
+      <div className="shadow-lg" key={item._id}>
          <HlsPlayer url={item.url}/>
       </div>
     ))

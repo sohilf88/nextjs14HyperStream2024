@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-zinc-700">
+      <body className="bg-black/60">
        
         <Providers>
          
