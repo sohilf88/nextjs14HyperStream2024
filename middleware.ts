@@ -57,5 +57,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/", "/admin", "/user/:page*", "/auth/reset-password"]
+    matcher: ["/", "/admin", "/user/:page*"]
 }

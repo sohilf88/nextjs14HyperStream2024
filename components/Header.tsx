@@ -17,6 +17,7 @@ import StreamIcon from '@mui/icons-material/Stream';
 import Link from "next/link";
 import { axiosAuth } from "@/app/lib/axios";
 import { useRouter } from "next/navigation";
+import { errorHandler } from "@/hooks/useTableHook";
 
 const pages = ["Dashobard", "Admin", "Other"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -31,8 +32,9 @@ function ResponsiveAppBar() {
         router.push("/auth/login")
       }
       
-    } catch (error:any) {
-      console.log(error.message)
+    } catch (error:unkown) {
+      errorHandler(error)
+      // console.log(error.message)
     }
    
   }
@@ -174,6 +176,10 @@ function ResponsiveAppBar() {
               <MenuItem>
              
               
+              <Button onClick={Logout}>Logout</Button>
+              <Button onClick={Logout}>Logout</Button>
+              <Button onClick={Logout}>Logout</Button>
+              <Button onClick={Logout}>Logout</Button>
               <Button onClick={Logout}>Logout</Button>
               </MenuItem>
             </Menu>
