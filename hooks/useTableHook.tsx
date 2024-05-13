@@ -23,9 +23,11 @@ export function errorHandler(error:unknown){
           else if(error.response?.status===429){
             // console.log("error")
           return toast.warning(error.response.data)
-          }else{
-            return error
+          }else if(error.status===500){
+             return toast.error(error.message)
           }
+             
+          
          
 
 }

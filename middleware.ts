@@ -5,13 +5,14 @@ import { cookies } from "next/headers";
 
 
 export async function middleware(request: NextRequest) {
-    console.log(process.env.NEXT_PUBLIC_URL)
+    // console.log(process.env.NEXT_PUBLIC_URL)
+
 
     const jwtCookies = cookies()
-    const optioncookies = request.cookies
+
     const response = NextResponse.next()
     // if refresh cookie deleted then run this function
-    console.log(optioncookies)
+
     if (!jwtCookies.has("jwtRe")) {
 
         return NextResponse.redirect(new URL("/auth/login", request.url))
@@ -50,9 +51,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/auth/login", request.url))
     }
 
-
-
-
+   
     return NextResponse.next()
 }
 

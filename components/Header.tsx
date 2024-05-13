@@ -18,9 +18,10 @@ import Link from "next/link";
 import { axiosAuth } from "@/app/lib/axios";
 import { useRouter } from "next/navigation";
 import { errorHandler } from "@/hooks/useTableHook";
+import { Paper, Stack } from "@mui/material";
 
 const pages = ["Dashobard", "Admin", "Other"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Logout"];
 
 function ResponsiveAppBar() {
  const router=useRouter()
@@ -150,38 +151,42 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+         <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="" />
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               
-              <MenuItem>
-             
               
-              <Button onClick={Logout}>Logout</Button>
-              <Button onClick={Logout}>Logout</Button>
-              <Button onClick={Logout}>Logout</Button>
-              <Button onClick={Logout}>Logout</Button>
-              <Button onClick={Logout}>Logout</Button>
-              </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button component={Link} href={"/auth/profile"}>Profile</Button>
+                </MenuItem>
+                 
+                    
+                 
+                    <MenuItem onClick={handleCloseUserMenu}> 
+                    <Button onClick={Logout}>Logout</Button>
+                    </MenuItem>
+                   
+                   
+            
             </Menu>
           </Box>
         </Toolbar>
