@@ -3,9 +3,9 @@ import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
-import { camera, customError } from "@/typescript.definations";
+import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
-import { AxiosError, isAxiosError } from "axios";
+import {  isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from 'sonner';
 
@@ -35,8 +35,6 @@ export function errorHandler(error:unknown){
 
 function useTableHook() {
   const router=useRouter()
-  
-  
     const dispatch = useAppDispatch();
     const initialState={
     _id:"",
@@ -100,6 +98,8 @@ function useTableHook() {
         await getAllCameraDataFromBackEnd()
         dispatch(handleClose())
         dispatch(handleUpdate(false))
+        setFormData( initialState)
+  
     
       }
 
@@ -132,7 +132,7 @@ function useTableHook() {
   async function deleteSingleCamera(_id:string){
 
         try {
-       const response= await axiosAuth.delete(`camera/${_id}`)
+       const response= await axiosAuth.delete(`/camera/${_id}`)
        
       if(response.status===200){
         
@@ -155,7 +155,7 @@ function useTableHook() {
     dispatch(handleOpen())
     dispatch(handleUpdate(true))
   }
-  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera]
+  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData]
     
   
 }

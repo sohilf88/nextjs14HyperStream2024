@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 
-function ModalData({handleFormSubmit,handleClick,formData}:modalProps) {
+function ModalData({handleFormSubmit,handleClick,formData,setFormData}:modalProps) {
   
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();
@@ -24,6 +24,9 @@ function ModalData({handleFormSubmit,handleClick,formData}:modalProps) {
   const {name,district,city,area,_id,url,taluka,isActive}=formData
   
 const handleCloseOnClick=()=>{
+  setFormData({
+    name:"",district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:false
+  })
   dispatch(handleClose())
   dispatch(handleUpdate(false))
 

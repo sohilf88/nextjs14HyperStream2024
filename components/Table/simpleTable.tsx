@@ -21,7 +21,7 @@ import { camera } from "@/typescript.definations";
 
 
 function SimpleTable() {
-  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,]=useTableHook()
+  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
@@ -180,11 +180,12 @@ if(rowSelected!=null && rowSelected.length >0){
         onSelectionChanged={getSelectedRowsByCheckBox}
         
         
+        
         // enableCellChangeFlash={true}
       />
       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>
         <Box>
-        <ModalData handleFormSubmit={handleFormSubmit} handleClick={handleClick} formData={formData}/>
+        <ModalData handleFormSubmit={handleFormSubmit} handleClick={handleClick} formData={formData} setFormData={setFormData}/>
         
         </Box>
       </Modal>

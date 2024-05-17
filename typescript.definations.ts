@@ -7,17 +7,7 @@ export type Userdata = {
     id: string
 }
 
-declare module "next-auth" {
-    interface Session {
-        user: Userdata
-    }
-}
 
-declare module "next-auth/jwt" {
-    interface JWT {
-        user: Userdata
-    }
-}
 
 
 
@@ -39,6 +29,7 @@ export type modalProps = {
     handleFormSubmit: () => Promise<void>,
     handleClick: (e: React.ChangeEvent<HTMLInputElement>) => void,
     formData: camera,
+    setFormData: () => {}
 }
 export type createCamera = {
     _id?: string,
@@ -62,7 +53,8 @@ export type cameraFeatureSlice = {
 export type user = {
     _id: string,
     email: string,
-    password?: string
+    password?: string,
+    roles: []
 }
 
 
