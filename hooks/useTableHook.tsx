@@ -34,6 +34,8 @@ export function errorHandler(error:unknown){
 }
 
 function useTableHook() {
+  const {id}=useAppSelector((store)=>store.root.cameras)
+  const [roles,setRoles]=useState("admin")
   const router=useRouter()
     const dispatch = useAppDispatch();
     const initialState={
@@ -64,12 +66,32 @@ function useTableHook() {
   
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
+    console.log(id)
     try {
+      if(roles==="root" && id==="user"){
+        const response=await axiosAuth.get(`admin/cameras/all`)
+        
+       console.log(response.data)
+        setRowData(response.data.message);
+      }
+      else if(roles==="root" && id!==null){
+        const response=await axiosAuth.get(`admin/cameras/specific?userId=${id}`)
+        
+       console.log(response.data)
+        setRowData(response.data.message);
+      }
+       
+      else {
         const response=await axiosAuth.get("/camera")
         
         console.log(response.data)
-    
         setRowData(response.data.message);
+      }
+        
+        
+        // console.log(response.data)
+    
+        // setRowData(response.data.message);
       
     } catch (error) {
       errorHandler(error)
@@ -155,7 +177,7 @@ function useTableHook() {
     dispatch(handleOpen())
     dispatch(handleUpdate(true))
   }
-  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData]
+  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]
     
   
 }

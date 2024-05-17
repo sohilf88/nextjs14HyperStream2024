@@ -21,13 +21,13 @@ import { camera } from "@/typescript.definations";
 
 
 function SimpleTable() {
-  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData]=useTableHook()
+  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
   const [isSelected,setIsSelected]=useState(false)
   const dispatch = useAppDispatch();
- 
+
   // for table height size
   const [width, setWidth] = useState(0)
   // const [heightofViewport, setheightofViewport] = useState(0)

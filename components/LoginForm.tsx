@@ -42,7 +42,7 @@ function LoginForm({callbackUrl}:props) {
         //  console.log(response)
         if(response.data?.success){
          
-          router.push(callbackUrl?callbackUrl:"/")
+          router.push(callbackUrl?callbackUrl:"/dashboard/user")
         }
           
         } catch (error) {

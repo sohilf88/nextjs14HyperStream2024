@@ -5,6 +5,7 @@ const initialState={
     data:[],
     selectedCamera:[],
     onRowSelected:null,
+    id:""
 } as cameraFeatureSlice
 
 
@@ -23,10 +24,13 @@ export const cameraSlice=createSlice({
         onRowSelectedSlice:(state,action:PayloadAction<camera |null>)=>{
             state.onRowSelected=action.payload
 
+        },
+        getUserId: (state, action: PayloadAction<string>)=>{
+            state.id = action.payload
         }
     },
     
 
 })
 export default cameraSlice.reducer
-export const {selectedCamera,onRowSelectedSlice}=cameraSlice.actions
+export const { selectedCamera, onRowSelectedSlice, getUserId }=cameraSlice.actions

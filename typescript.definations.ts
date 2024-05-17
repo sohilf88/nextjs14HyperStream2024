@@ -30,6 +30,7 @@ export type modalProps = {
     handleClick: (e: React.ChangeEvent<HTMLInputElement>) => void,
     formData: camera,
     setFormData: () => {}
+    setRowData: () => {}
 }
 export type createCamera = {
     _id?: string,
@@ -47,7 +48,8 @@ export type createCamera = {
 export type cameraFeatureSlice = {
     data: camera[],
     selectedCamera: camera[],
-    onRowSelected: camera | null
+    onRowSelected: camera | null,
+    id:string
 }
 
 export type user = {
