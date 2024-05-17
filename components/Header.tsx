@@ -20,8 +20,8 @@ import { useRouter } from "next/navigation";
 import { errorHandler } from "@/hooks/useTableHook";
 import { Paper, Stack } from "@mui/material";
 
-const pages = ["Dashobard", "Admin", "Other"];
-const settings = ["Profile", "Account", "Logout"];
+const pages = ["dashboard", "admin"];
+
 
 function ResponsiveAppBar() {
  const router=useRouter()
@@ -33,7 +33,7 @@ function ResponsiveAppBar() {
         router.push("/auth/login")
       }
       
-    } catch (error:unkown) {
+    } catch (error:unknown) {
       errorHandler(error)
       // console.log(error.message)
     }
@@ -115,7 +115,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography href={`/${page}`} component={Link} textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
