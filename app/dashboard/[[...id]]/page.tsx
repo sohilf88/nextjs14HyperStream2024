@@ -11,9 +11,14 @@ import { useAppDispatch } from "@/reduxtoolkit/store/Hooks";
 import { getUserId } from "@/reduxtoolkit/features/cameraSlice";
 
 
+type paramsType={
+  params:{
+    id:string[]
+  }
+}
 
-
-const userDashboard = ({params}:any) => {
+const userDashboard = ({params}:paramsType) => {
+console.log(params.id)
 const [data,setData]=useState([])
   const {id}=params
   

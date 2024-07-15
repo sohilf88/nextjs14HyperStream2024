@@ -22,6 +22,9 @@ export const axiosAuth = axios.create({
 
 axiosAuth.interceptors.response.use(
     (response) => {
+        
+        
+        console.log(response)
         return response;
     },
     async function (error) {
@@ -35,6 +38,7 @@ axiosAuth.interceptors.response.use(
                 return axiosAuth(originalRequest);
             } catch (refreshError) {
                 console.error("Token refresh failed:", refreshError);
+                return refreshError
             }
         }
         return Promise.reject(error);
@@ -52,3 +56,6 @@ export const generateRefreshToken = async () => {
 
     }
 };
+
+
+

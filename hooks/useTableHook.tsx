@@ -35,7 +35,8 @@ export function errorHandler(error:unknown){
 
 function useTableHook() {
   const {id}=useAppSelector((store)=>store.root.cameras)
-  const [roles,setRoles]=useState("admin")
+  const {roles}=useAppSelector((store)=>store.root.userRole)
+  // const [roles,setRoles]=useState("user")
   const router=useRouter()
     const dispatch = useAppDispatch();
     const initialState={
@@ -68,23 +69,23 @@ function useTableHook() {
    const getAllCameraDataFromBackEnd = async () => {
     console.log(id)
     try {
-      if(roles==="root" && id==="user"){
+      if(roles.includes("root") && !id){
         const response=await axiosAuth.get(`admin/cameras/all`)
         
-       console.log(response.data)
+      //  console.log(response.data)
         setRowData(response.data.message);
       }
-      else if(roles==="root" && id!==null){
+      else if(roles.includes("root") && id!==null){
         const response=await axiosAuth.get(`admin/cameras/specific?userId=${id}`)
         
-       console.log(response.data)
+      //  console.log(response.data)
         setRowData(response.data.message);
       }
        
       else {
         const response=await axiosAuth.get("/camera")
         
-        console.log(response.data)
+        // console.log(response.data)
         setRowData(response.data.message);
       }
         
@@ -92,6 +93,7 @@ function useTableHook() {
         // console.log(response.data)
     
         // setRowData(response.data.message);
+        console.log(rowData)
       
     } catch (error) {
       errorHandler(error)

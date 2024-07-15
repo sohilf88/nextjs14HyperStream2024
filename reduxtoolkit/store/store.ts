@@ -6,6 +6,7 @@ import { cameraSlice } from "../features/cameraSlice";
 import { modalSlice } from "../features/ModalSlice";
 
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { userSlice } from "../features/userSlice";
 
 const createNoopStorage = () => {
   return {
@@ -32,6 +33,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   cameras: cameraSlice.reducer,
   modal: modalSlice.reducer,
+  userRole: userSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

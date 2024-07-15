@@ -2,6 +2,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { cookies } from "next/headers";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+import { jwtAccessType } from "./typescript.definations";
+
+
+
+
 
 
 export async function middleware(request: NextRequest) {
@@ -9,9 +15,18 @@ export async function middleware(request: NextRequest) {
 
 
     const jwtCookies = cookies()
+    //  const token = jwtCookies.get("jwtAccess")?.value
+    // const decoded = jwtDecode(token) as jwtAccessType;
+
+
+
+    // console.log(decoded.roles.includes("root"))
 
     const response = NextResponse.next()
     // if refresh cookie deleted then run this function
+    // if (decoded && !decoded.roles.includes("root") && request.url.match("/admin")) {
+    //     return NextResponse.redirect(new URL("/dashboard", request.url))
+    // }
 
     if (!jwtCookies.has("jwtRe")) {
 
@@ -32,7 +47,8 @@ export async function middleware(request: NextRequest) {
                     value: cookie,
 
                 })
-                // console.log(cookie)
+                // console.log(response)
+                
                 return response
 
             } catch (error) {
@@ -51,10 +67,10 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/auth/login", request.url))
     }
 
-   
+
     return NextResponse.next()
 }
 
 export const config = {
-    matcher: ["/", "/admin", "/user/:page*"]
+    matcher: ["/", "/admin", "/user/:page*", "/dashboard"]
 }

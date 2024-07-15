@@ -8,7 +8,14 @@ export type Userdata = {
 }
 
 
-
+export type user = {
+    username: string,
+    roles: string[],
+    email: string,
+    _id: string,
+    active: boolean,
+    password?: string
+}
 
 
 export type camera = {
@@ -49,7 +56,7 @@ export type cameraFeatureSlice = {
     data: camera[],
     selectedCamera: camera[],
     onRowSelected: camera | null,
-    id:string
+    id: string | undefined | null
 }
 
 export type user = {
@@ -64,4 +71,13 @@ export type customError = {
     success: boolean,
     message: string,
     status: number
+}
+
+
+export type jwtAccessType = {
+
+    username: String,
+    email: String
+    roles: string[],
+    _id: string
 }

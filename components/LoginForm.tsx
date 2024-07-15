@@ -12,6 +12,8 @@ import {axiosAuth} from '@/app/lib/axios';
 import { AxiosError, isAxiosError } from 'axios';
 import { customError } from '@/typescript.definations';
 import useTableHook from '@/hooks/useTableHook';
+import { useAppDispatch } from '@/reduxtoolkit/store/Hooks';
+import { handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 
 type props={
   callbackUrl?:string
@@ -30,7 +32,7 @@ function LoginForm({callbackUrl}:props) {
 
 
     const router=useRouter()
-   
+   const dispatch=useAppDispatch()
     async function onSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
         
@@ -41,8 +43,10 @@ function LoginForm({callbackUrl}:props) {
         })
         //  console.log(response)
         if(response.data?.success){
-         
+          console.log(response.data)
+         dispatch(handleUserRoles(response.data.data.roles))
           router.push(callbackUrl?callbackUrl:"/dashboard/user")
+          
         }
           
         } catch (error) {
