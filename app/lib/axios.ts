@@ -24,7 +24,7 @@ axiosAuth.interceptors.response.use(
     (response) => {
         
         
-        console.log(response)
+        // console.log(response)
         return response;
     },
     async function (error) {
@@ -34,7 +34,7 @@ axiosAuth.interceptors.response.use(
             originalRequest.sent = true;
 
             try {
-                await generateRefreshToken();
+                await generateNewAccessToken();
                 return axiosAuth(originalRequest);
             } catch (refreshError) {
                 console.error("Token refresh failed:", refreshError);
@@ -45,7 +45,7 @@ axiosAuth.interceptors.response.use(
     }
 );
 
-export const generateRefreshToken = async () => {
+export const generateNewAccessToken = async () => {
     try {
         await axiosAuth.get(`/auth/refresh`);
     } catch (error: unknown) {

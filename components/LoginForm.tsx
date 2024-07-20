@@ -42,10 +42,15 @@ function LoginForm({callbackUrl}:props) {
           
         })
         //  console.log(response)
-        if(response.data?.success){
-          console.log(response.data)
+        if(response.data?.success ){
+          // console.log(response.data.data.roles.includes("root"))
          dispatch(handleUserRoles(response.data.data.roles))
-          router.push(callbackUrl?callbackUrl:"/dashboard/user")
+         if(response.data.data.roles.includes("root")){
+          router.push(callbackUrl?callbackUrl:"/admin")
+         }else{
+           router.push(callbackUrl?callbackUrl:"/dashboard")
+         }
+          
           
         }
           

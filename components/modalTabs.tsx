@@ -19,46 +19,36 @@ import {
 } from "@/components/ui/tabs"
 import { errorHandler } from "@/hooks/useTableHook"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 
-export default function userProfile() {
+export type user={username:string,email:string,roles:string[]}
+type propsType={
+    user:user,
+    id:string,
+    open:Boolean,
+    setIsopen:(open:Boolean)=>{},
+    getAllUsers:()=>{}
+}
+export default function ChangeProfile({open,setIsopen,user,id,getAllUsers}:propsType) {
     const router=useRouter()
 
     const [profile,setProfile]=useState({
-        username:"",
-        email:"",
-        roles:[],
+        username:user.username,
+        email:user.email,
+        roles:user.roles,
       
-       
     })
      const [password,setPassword]=useState({
-        current:"",
+        
         new:"",
         confirmNew:"",
       
        
     })
-    // fetch data from backend on componenet mount
-    const getUserProfileDetail=async()=>{
-        try {
-        const {data}=await axiosAuth.get("/users/profile")
-        
-         if(data.success){
-            setProfile({
-                username:data.message.username,
-                email:data.message.email,
-                roles:data.message.roles
-            })
-         }
-        } catch (error:unknown) {
-            errorHandler(error)
-        }
-        
-    }
-    useEffect(()=>{
-      getUserProfileDetail()
-    },[])
+   
+
+    console.log(profile)
     // handle profile detail only
     function onChange(event: React.ChangeEvent<HTMLInputElement>){
        
@@ -72,18 +62,18 @@ export default function userProfile() {
     async function handlePasswordFormSubmit(event: React.FormEvent<HTMLFormElement>){
       event.preventDefault()
       try {
-        const response=await axiosAuth.patch("/auth/change-password",{
-          currentPassword:password.current,
+        const response=await axiosAuth.patch(`/admin/users/${id}`,{
+          
           newPassword:password.new,
           confirmNewPassword:password.confirmNew
 
         })
-        console.log(response)
+        console.log(response.data)
 
         if(response.data.success){
           toast.success(response.data?.message)
           setTimeout(()=>{
-           router.push("/dashboard")
+           router.push("/admin")
           },1200)
         }
       } catch (error) {
@@ -97,16 +87,19 @@ export default function userProfile() {
      async function handleUserForm(event: React.FormEvent<HTMLFormElement>){
       event.preventDefault()
       try {
-        const response=await axiosAuth.patch("/users/profile",{
+        const response=await axiosAuth.patch(`/admin/users/${id}`,{
           username:profile.username
 
         })
         // console.log(response)
 
-        if(response.data.success){
-          toast.success("username updated")
+        if(response.data){
+          toast.success("Profile updated")
+          getAllUsers()
+          setIsopen(!open)
           setTimeout(()=>{
-           router.push("/dashboard")
+          
+           router.push("/admin")
           },1200)
         }
       } catch (error) {
@@ -116,9 +109,9 @@ export default function userProfile() {
       }
     }
   return (
-    <div className=" backdrop-blur-sm backdrop-opacity-70   text-base w-screen h-screen flex items-center justify-center bg-zinc-700">
+    <div className="backdrop-blur-sm backdrop-opacity-70 text-base w-screen h-screen flex items-center justify-center ">
     
-    <Tabs defaultValue="account" className="max-w-xl w-full mx-2 md:mx-0">
+    <Tabs defaultValue="account" className="max-w-xl w-full mx-2 md:mx-0 ">
       <TabsList className="grid w-full grid-cols-2 ">
         <TabsTrigger className="" value="account">account</TabsTrigger>
         <TabsTrigger value="password">password</TabsTrigger>
@@ -137,22 +130,22 @@ export default function userProfile() {
             
             <div className="space-y-1">
               <Label htmlFor="username">Username</Label>
-              <Input required onChange={onChange} id="username" defaultValue={profile.username} />
+              <Input onChange={onChange} required id="username" defaultValue={profile.username} />
             </div>
             <div className="space-y-1">
               <Label htmlFor="roles">Roles</Label>
-              <Input required  disabled id="roles" defaultValue={profile.roles}/>
+              <Input required  id="roles" defaultValue={profile.roles}/>
             </div>
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
-              <Input required disabled id="email" defaultValue={profile.email} />
+              <Input onChange={onChange} required id="email" defaultValue={profile.email} />
             </div>
           </CardContent>
           <CardFooter className="flex gap-2">
             <Button type="submit" className="flex-1">Save Changes</Button>
             <Button onClick={(e)=>{
               e.preventDefault();
-              router.push("/dashboard")
+              router.push("/admin")
             }} className="bg-red-500 border-red-200 hover:bg-red-600 ">Cancel</Button>
             
           </CardFooter>
@@ -171,9 +164,9 @@ export default function userProfile() {
           </CardHeader>
           <form onSubmit={handlePasswordFormSubmit}>
           <CardContent className="space-y-2">
-            <div className="space-y-1">
+            <div className="space-y-1 opacity-0">
               <Label htmlFor="current">Current password</Label>
-              <Input  required onChange={onChangePassword} id="current" type="password" value={password.current} />
+              <Input disabled onChange={onChangePassword} id="current" type="password"  />
             </div>
             <div className="space-y-1">
               <Label htmlFor="new" >New password</Label>
