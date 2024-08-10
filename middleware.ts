@@ -13,12 +13,15 @@ import { jwtAccessType } from "./typescript.definations";
 export async function middleware(request: NextRequest) {
     // console.log(process.env.NEXT_PUBLIC_URL)
 
-
+    
     const jwtCookies = cookies()
     //  const token = jwtCookies.get("jwtAccess")?.value
     // const decoded = jwtDecode(token) as jwtAccessType;
 
-
+    // if (jwtCookies.has("jwtAccess") && jwtCookies.has("jwtRe") ) {
+       
+    //     return NextResponse.redirect(new URL("/auth/login", request.url))
+    // }
 
     // console.log(decoded.roles.includes("root"))
 

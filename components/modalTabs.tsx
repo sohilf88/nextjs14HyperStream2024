@@ -21,24 +21,51 @@ import { errorHandler } from "@/hooks/useTableHook"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import RadioBtn from "./RadioBtn"
 
-export type user={username:string,email:string,roles:string[]}
+export type user={id:string,username:string,email:string,roles:string}
 type propsType={
     user:user,
-    id:string,
+    
     open:Boolean,
     setIsopen:(open:Boolean)=>{},
     getAllUsers:()=>{}
 }
-export default function ChangeProfile({open,setIsopen,user,id,getAllUsers}:propsType) {
-    const router=useRouter()
 
+const roleAndAttribute:{label:string,value:string,accessType:string,description:string}[]=[
+    {
+        label:"Super Admin",
+        value:"root",
+        
+        accessType:"Read,Write and Delete",
+        description:"Entire Application"
+    },
+    {
+        label:"Admin",
+        value:"admin",
+        
+        accessType:"Read,Write and Delete",
+        description:"Own Camera DashBoard"
+    },
+    {
+        label:"User",
+        value:"user",
+        
+        accessType:"Read only",
+        description:"User Camera DashBoard"
+    }
+]
+export default function ChangeProfile({open,setIsopen,user,getAllUsers}:propsType) {
+    const router=useRouter()
+    
     const [profile,setProfile]=useState({
         username:user.username,
         email:user.email,
         roles:user.roles,
+        id:user.id
       
     })
+    const [value,setValue]=useState<string |null>(profile.roles)
      const [password,setPassword]=useState({
         
         new:"",
@@ -62,16 +89,19 @@ export default function ChangeProfile({open,setIsopen,user,id,getAllUsers}:props
     async function handlePasswordFormSubmit(event: React.FormEvent<HTMLFormElement>){
       event.preventDefault()
       try {
-        const response=await axiosAuth.patch(`/admin/users/${id}`,{
+        // console.log(id)
+        // console.log(profile.id)
+        const response=await axiosAuth.patch(`/admin/users/update-password/${profile.id}`,{
           
-          newPassword:password.new,
-          confirmNewPassword:password.confirmNew
+          password:password.new,
+          confirmPassword:password.confirmNew
 
         })
-        console.log(response.data)
+        console.log(response)
 
         if(response.data.success){
           toast.success(response.data?.message)
+          setIsopen(!open)
           setTimeout(()=>{
            router.push("/admin")
           },1200)
@@ -83,15 +113,17 @@ export default function ChangeProfile({open,setIsopen,user,id,getAllUsers}:props
       }
 
     }
+    console.log(value)
 
      async function handleUserForm(event: React.FormEvent<HTMLFormElement>){
       event.preventDefault()
       try {
-        const response=await axiosAuth.patch(`/admin/users/${id}`,{
-          username:profile.username
+        const response=await axiosAuth.patch(`/admin/users/${profile.id}`,{
+          username:profile.username,
+          roles:value
 
         })
-        // console.log(response)
+        
 
         if(response.data){
           toast.success("Profile updated")
@@ -133,20 +165,45 @@ export default function ChangeProfile({open,setIsopen,user,id,getAllUsers}:props
               <Input onChange={onChange} required id="username" defaultValue={profile.username} />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="roles">Roles</Label>
-              <Input required  id="roles" defaultValue={profile.roles}/>
+             
+                 <h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white"><strong>User Roles </strong></h3>
+<ul className="grid w-full gap-6 md:grid-cols-2">
+
+    {roleAndAttribute.map((item)=>(
+        <li key={item.value}>
+        <input type="radio" id={item.label} name="roles" value={item.value} className="hidden peer" required checked={value===item.value}
+        onChange={(e)=>setValue(e.target.value)}
+        
+        />
+        <label htmlFor={item.label} className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">                           
+            <div className="block">
+                <div className="w-full text-lg font-semibold">{item.label}</div>
+                <div className="w-full">
+                    <div>{item.accessType}</div>
+                    <div>{item.description}</div>
+                </div>
+            </div>
+            <svg className="w-5 h-5 ms-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+        </label>
+    </li>
+
+    ))}
+    
+   
+</ul>
+              {/* <RadioBtn profile={profile} onChange={onChange} roles={profile.roles}/> */}
+             
             </div>
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
-              <Input onChange={onChange} required id="email" defaultValue={profile.email} />
+              <Input disabled onChange={onChange} required id="email" defaultValue={profile.email} />
             </div>
           </CardContent>
           <CardFooter className="flex gap-2">
             <Button type="submit" className="flex-1">Save Changes</Button>
-            <Button onClick={(e)=>{
-              e.preventDefault();
-              router.push("/admin")
-            }} className="bg-red-500 border-red-200 hover:bg-red-600 ">Cancel</Button>
+            <Button type="button" onClick={()=>setIsopen(false)} className="bg-red-500 border-red-200 hover:bg-red-600 ">Cancel</Button>
             
           </CardFooter>
           </form>
@@ -173,17 +230,14 @@ export default function ChangeProfile({open,setIsopen,user,id,getAllUsers}:props
               <Input required  onChange={onChangePassword} id="new" type="password"  value={password.new}/>
             </div>
             <div className="space-y-1">
-              <Label htmlFor="confirmNew" >Confirm Password</Label>
+              <Label htmlFor="confirmNew">Confirm Password</Label>
               <Input required  onChange={onChangePassword} id="confirmNew" type="password" value={password.confirmNew} />
             </div>
           </CardContent>
         <CardFooter className="flex gap-2">
             <Button type="submit" className="flex-1">Save password</Button>
             
-            <Button onClick={(e)=>{
-              e.preventDefault();
-              router.push("/dashboard")
-            }} className="bg-red-500 border-red-200 hover:bg-red-600 ">Cancel</Button>
+            <Button type="button" onClick={()=>setIsopen(false)}  className="bg-red-500 border-red-200 hover:bg-red-600 ">Cancel</Button>
             
           </CardFooter>
           
