@@ -69,8 +69,9 @@ function ResponsiveAppBar() {
           <Typography flexGrow="1"
             variant="h6"
             noWrap
+            textTransform={"uppercase"}
             component={Link}
-            href="/"
+            href="/dashboard"
             sx={{
               
               display: { xs: "none", md: "flex" },
@@ -79,9 +80,10 @@ function ResponsiveAppBar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              
             }}
           >
-            HyperStream.
+            HyperStream..
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -115,7 +117,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography href={`/${page}`} component={Link} textAlign="center">{page}</Typography>
+                  <Typography  href={`/${page}`} component={Link} textTransform={"uppercase"} textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -125,7 +127,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component={Link}
-            href="/"
+            href="/dashboard"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -142,9 +144,11 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
+              component={Link}
+               href={`/${page}`}
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                // onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "yellow", display: "block" }}
               >
                 {page}
               </Button>
@@ -152,9 +156,9 @@ function ResponsiveAppBar() {
           </Box>
 
          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="User settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User" src="#" />
               </IconButton>
             </Tooltip>
             <Menu

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState,useEffect } from "react";
-import { axiosAuth } from "../lib/axios";
+
 import Link from "next/link";
 import { user } from "@/typescript.definations";
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
@@ -13,7 +13,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import NoAccountsTwoToneIcon from '@mui/icons-material/NoAccountsTwoTone';
 import VideoCameraFrontTwoToneIcon from '@mui/icons-material/VideoCameraFrontTwoTone';
 import UnfoldMoreDoubleTwoToneIcon from '@mui/icons-material/UnfoldMoreDoubleTwoTone';
-import Badge from '@mui/material/Badge';
+import KeyboardReturnTwoToneIcon from '@mui/icons-material/KeyboardReturnTwoTone';
 
 import ChangeProfile from "@/components/modalTabs";
 import {  isAxiosError } from "axios";
@@ -21,7 +21,8 @@ import AccessDenied from "@/components/http403";
 
 import Header from "@/components/Header";
 import { toast } from "sonner";
-function admin() {
+import { axiosAuth } from "@/app/lib/axios";
+function trash() {
   const [users,setUsers]=useState([])
   // const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
@@ -29,13 +30,12 @@ function admin() {
   const [clear,setClear]=useState(false)
   const [errorState,setErrorState]=useState(false)
   const [user,setUser]=useState("")
-  // const [id,setId]=useState("")
+  
  
-
-const getAllUsers=async()=>{
+// get disable users by use of isActive:false
+const getAllDisableUsers=async()=>{
   try {
-  const response=await axiosAuth.get("/admin/users?isActive=true")
-  console.log(response.data)
+  const response=await axiosAuth.get("/admin/users?isActive=false")
 
  if(response.data){
   setUsers(response.data)
@@ -51,18 +51,21 @@ const getAllUsers=async()=>{
     
   }
 }
+
+// fetch users on page load
 useEffect(()=>{
-  getAllUsers()
+  getAllDisableUsers()
 },[])
 
-// console.log(users)
+// get user detail on edit icon function
+
 async function getUserDetail(userid:string){
    
   try {
      const userDetail=await axiosAuth.get(`/admin/users/${userid}`)
     
      if(userDetail.data){
-      setUser(userDetail.data)
+      setUser(userDetail.data.message)
       
       setIsopen(true)
 
@@ -73,10 +76,10 @@ async function getUserDetail(userid:string){
  
  
 }
-
+// search user by email id function
 async function onSubmit(e:React.FormEvent<HTMLFormElement>){
   e.preventDefault()
-  const response=await axiosAuth.get(`/admin/users?isActive=true&email=${email}`)
+  const response=await axiosAuth.get(`/admin/users?isActive=false&email=${email}`)
   setClear(!clear)
   if(response.data){
     setUsers(response.data)
@@ -84,27 +87,51 @@ async function onSubmit(e:React.FormEvent<HTMLFormElement>){
 }
 
 // console.log(user)
-async function onClickAndDisable(userid:string){
+async function onClickDelete(userid:string){
   try {
-     const response=await axiosAuth.patch(`/admin/users/${userid}`,{isActive:false})
+     const response=await axiosAuth.delete(`/admin/users/${userid}`)
      if(response.data){
-      toast.success(response.data)
-      await getAllUsers()
+      toast.success(response.data.message)
+      await getAllDisableUsers()
      }
     // console.log(response)
   } catch (error) {
     console.log(error)
     errorHandler(error)
   }
+
+  // Restore function
+
+  
  
  
  
   
 }
+
+async function onClickRestoreUser(userid:string){
+  try {
+     const response=await axiosAuth.patch(`/admin/users/${userid}`,{isActive:true})
+     if(response.data){
+      toast.success(response.data.message)
+      await getAllDisableUsers()
+     }
+    // console.log(response)
+  } catch (error) {
+    console.log(error)
+    errorHandler(error)
+  }
+
+  // Restore function
+
+    
+}
+// clear search button function
+
 async function onClickClearButton(){
   setEmail("")
   setClear(!clear)
- await getAllUsers()
+ await getAllDisableUsers()
 }
 
 return (
@@ -133,13 +160,8 @@ return (
         <p className="text-white text-lg font-semibold">Search User with E-mail</p>
         </div>
         <div className=" text-white flex items-center lg:gap-5 text-lg font-semibold" >
-          <span><Typography>TOTAL-5</Typography></span>
-          <span><Typography>ACTIVE-4</Typography></span>
-          <span><Typography>INACTIVE-1</Typography></span>
-        <Badge  badgeContent={1} color="success" >
-        <Button variant="contained" color="secondary" startIcon={<AutoDeleteTwoToneIcon/>} component={Link} className=""  href="/admin/trash">trash</Button>
-        </Badge>
-        <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/trash">new user</Button>
+        
+        <Button color="inherit" size="large" startIcon={<KeyboardReturnTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-red-600"  href="/admin">back</Button>
         {/* <Link className="text-lg font-semibold hover:text-green-500"  href="/admin/signup"><PersonAddAltTwoToneIcon></PersonAddAltTwoToneIcon> New User</Link> */}
         </div>
         
@@ -183,8 +205,11 @@ return (
          <div className="  text-2xl  flex items-center  justify-end gap-2">
          
 
-         <Button color="secondary" variant="contained" type="button" value={user._id} onClick={(e)=>onClickAndDisable(e.currentTarget.value)} startIcon={<NoAccountsTwoToneIcon/>}>disable account</Button>
+         <Button color="error" variant="contained" type="button" value={user._id} onClick={(e)=>onClickDelete(e.currentTarget.value)} startIcon={<NoAccountsTwoToneIcon/>}>delete forever</Button>
          <Button variant="contained" component={Link} href={`/dashboard/${user._id}`} color="success" startIcon={<VideoCameraFrontTwoToneIcon/>}>cameras</Button>
+          <Button value={user._id} type="button"  variant="text" color="warning" startIcon={<VideoCameraFrontTwoToneIcon/>}
+          onClick={(e)=>onClickRestoreUser(e.currentTarget.value)}
+          >Restore</Button>
          </div>
          
         
@@ -201,8 +226,8 @@ return (
            
           </div>
          
-          </div> */}
-         
+          </div>
+          */}
            
           </form>
 
@@ -211,11 +236,11 @@ return (
   
    </section>
    
-     <Modal open={open} onClose={() =>setIsopen(false)}>
+      <Modal open={open} onClose={() =>setIsopen(false)}>
       <Box>
-        <ChangeProfile getAllUsers={getAllUsers} user={user} open={open} setIsopen={setIsopen}/>
+        <ChangeProfile getAllUsers={getAllDisableUsers} user={user} open={open} setIsopen={setIsopen}/>
         </Box>
-       </Modal>
+       </Modal> *
    
   </main>
   </>
@@ -224,4 +249,4 @@ return (
 
 }
 
-export default admin;
+export default trash;

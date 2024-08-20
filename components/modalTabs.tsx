@@ -221,7 +221,7 @@ export default function ChangeProfile({open,setIsopen,user,getAllUsers}:propsTyp
           </CardHeader>
           <form onSubmit={handlePasswordFormSubmit}>
           <CardContent className="space-y-2">
-            <div className="space-y-1 opacity-0">
+            <div className="space-y-1">
               <Label htmlFor="current">Current password</Label>
               <Input disabled onChange={onChangePassword} id="current" type="password"  />
             </div>

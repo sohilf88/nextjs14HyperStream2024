@@ -11,8 +11,10 @@ import { toast } from 'sonner';
 
 
 export function errorHandler(error:unknown){
+  console.log(error)
   if(isAxiosError(error) && error.response?.data){
-          if( error.response?.data.status===400 || error.response?.data.status===401 || error.response?.data.status===404){
+    
+          if( error.response?.status===400 || error.response?.status===401 || error.response?.status===404 || error.response?.status===500){
             // const errorResponse = error.response.data
           return  toast.error(error.response.data.message)
           }
@@ -23,14 +25,18 @@ export function errorHandler(error:unknown){
           else if(error.response?.status===429){
             // console.log("error")
           return toast.warning(error.response.data)
-          }else if(error.status===500){
-             return toast.error(error.message)
+          }
+          else if(error.response?.status===409){
+            // console.log("error")
+          return toast.warning(error.response.data.message)
           }
              
+             
           
-         
-
-}
+}else{
+            const errorMessage=error as Error
+            toast.error(errorMessage.message)
+          }
 }
 
 function useTableHook() {
