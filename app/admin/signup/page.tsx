@@ -5,48 +5,39 @@ import Link from "next/link"
 import { useState } from "react"
 import { toast } from 'sonner';
 import { errorHandler } from '@/hooks/useTableHook';
-
 import { useRouter } from "next/navigation"
-
 import {axiosAuth} from '@/app/lib/axios';
-import { AxiosError, isAxiosError } from 'axios';
-import { customError } from '@/typescript.definations';
-import useTableHook from '@/hooks/useTableHook';
 import { useAppDispatch } from '@/reduxtoolkit/store/Hooks';
-import { handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 
-type props={
-  callbackUrl?:string
-}
 
-function LoginForm({callbackUrl}:props) {
 
- 
+function signupForm() {
+  
+   
   
   
-  
-    
-    const [userDetail,setUserDetail] =useState({
-      username:"",
-      email:"",
-      password:"",
-      confirmPassword:"",
-      roles:"",
-      isActive:true
-    })
-    console.log(userDetail)
-    // const [password,setPassword] =useState("")
     const [capslock,setCapsLock] =useState(false)
 
-   function onChange(event:React.ChangeEvent<HTMLFormElement>){
-     setUserDetail({...userDetail,[event.target.name]: event.target.value})
-   }
+ 
     const router=useRouter()
    const dispatch=useAppDispatch()
-   const{ username,email,password,confirmPassword,roles,isActive}=userDetail
-    async function onSubmit(event: React.FormEvent<HTMLFormElement | HTMLInputElement | HTMLTextAreaElement>){
-      
-        event.preventDefault()
+
+    async function onSubmit(event: React.FormEvent<HTMLFormElement >){
+      const formData=new FormData(event.currentTarget)
+      event.preventDefault()
+      // get all formData with for of
+      // for (let[key,value] of formData.entries()){
+        
+      //   {key:value}
+      // }
+      const username=formData.get("username")
+      const email=formData.get("email")
+      const password=formData.get("password")
+      const confirmPassword=formData.get("confirmPassword")
+      const roles=formData.get("roles")
+      const isActive=true
+      //  console.log(username,email,password,confirmPassword,roles,isActive)
+        
         
         try {
           const response=await axiosAuth.post("auth/signup",{
@@ -84,11 +75,11 @@ function LoginForm({callbackUrl}:props) {
         <h1 className='mb-5 font-sans text-center leading-7 font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl text-purple-900'>create new user</h1>
         <form  onSubmit={onSubmit} className='flex flex-col gap-6 ' action="">
           <div className='space-y-3'>
-            <TextField name="username" onKeyUp={handleKeyPress} onChange={onChange} value={username} label="username" required={true} fullWidth type='text' color='secondary' placeholder='Enter Username'></TextField>
-         <TextField onKeyUp={handleKeyPress} onChange={onChange} name="email" value={email} label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
-         <TextField  onKeyUp={handleKeyPress} onChange={onChange} name="password" value={password} label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
+            <TextField name="username"  label="username"  required={true} fullWidth type='text' color='secondary' placeholder='Enter Username'></TextField>
+         <TextField  name="email" label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
+         <TextField  onKeyUp={handleKeyPress} name="password" label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
           ></TextField>
-           <TextField  onKeyUp={handleKeyPress} onChange={onChange} name="confirmPassword"  value={confirmPassword} label=" confirmPassword" required={true} fullWidth type='password' color='secondary' placeholder='confirm password'
+           <TextField  onKeyUp={handleKeyPress}name="confirmPassword"  label="confirmPassword" required={true} fullWidth type='password' color='secondary' placeholder='confirm password'
           ></TextField>
           <div onKeyUp={handleKeyPress} className=' text-right px-2 py-2 text-xs'>
            {
@@ -101,7 +92,7 @@ function LoginForm({callbackUrl}:props) {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="roles"
-        onChange={onChange}
+       
         
       >
         <FormControlLabel value="user" control={<Radio />} label="User" />
@@ -126,4 +117,4 @@ function LoginForm({callbackUrl}:props) {
   )
 }
 
-export default LoginForm
+export default signupForm

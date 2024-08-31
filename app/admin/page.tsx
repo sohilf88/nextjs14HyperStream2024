@@ -25,7 +25,7 @@ import AccessDenied from "@/components/http403";
 
 import Header from "@/components/Header";
 import { toast } from "sonner";
-
+import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 
 function admin() {
   const [users,setUsers]=useState<usersData>({success:false,message:[],totalUsers:0})
@@ -145,7 +145,7 @@ return (
         <Badge  badgeContent={Number(users.totalUsers)-(Number(users.message.length))} color="success" >
         <Button variant="contained" color="secondary" startIcon={<AutoDeleteTwoToneIcon/>} component={Link} className=""  href="/admin/trash">trash</Button>
         </Badge>
-        <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/trash">new user</Button>
+        <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/signup">new user</Button>
         {/* <Link className="text-lg font-semibold hover:text-green-500"  href="/admin/signup"><PersonAddAltTwoToneIcon></PersonAddAltTwoToneIcon> New User</Link> */}
         </div>
         
@@ -177,7 +177,7 @@ return (
           <div className="flex justify-between">
           <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s Profile `}</Typography>
           {/* <button type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>Edit</button> */}
-          <IconButton color="warning"  aria-label="edit" type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>
+          <IconButton  color="inherit" size="large"  aria-label="edit" type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>
   <EditTwoToneIcon />
 </IconButton>
           </div>

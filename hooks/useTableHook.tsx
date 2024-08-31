@@ -73,7 +73,7 @@ function useTableHook() {
   
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
-    console.log(id)
+    // console.log(id)
     try {
       if(roles.includes("root") && !id){
         const response=await axiosAuth.get(`admin/cameras/all`)
@@ -99,7 +99,7 @@ function useTableHook() {
         // console.log(response.data)
     
         // setRowData(response.data.message);
-        console.log(rowData)
+        // console.log(rowData)
       
     } catch (error) {
       errorHandler(error)
