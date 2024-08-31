@@ -3,7 +3,7 @@
 import { useState,useEffect } from "react";
 
 import Link from "next/link";
-import { user } from "@/typescript.definations";
+import { user, usersData } from "@/typescript.definations";
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
 import { errorHandler } from "@/hooks/useTableHook";
@@ -23,7 +23,7 @@ import Header from "@/components/Header";
 import { toast } from "sonner";
 import { axiosAuth } from "@/app/lib/axios";
 function trash() {
-  const [users,setUsers]=useState([])
+  const [users,setUsers]=useState<usersData>()
   // const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
   const [open,setIsopen]=useState(false)
@@ -91,7 +91,8 @@ async function onClickDelete(userid:string){
   try {
      const response=await axiosAuth.delete(`/admin/users/${userid}`)
      if(response.data){
-      toast.success(response.data.message)
+      // toast.success(response.data.message)
+      toast.error(response.data.message)
       await getAllDisableUsers()
      }
     // console.log(response)
@@ -186,7 +187,7 @@ return (
     
    
     {
-      users ? users.map((user:user)=>(
+      users ? users.message.map((user:user)=>(
         <form
         className=" rounded-sm bg-slate-600 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5   transition-all duration-100 xl:hover:scale-[1.01] last:mb-10 shadow-2xl h-full"
          key={user._id}>

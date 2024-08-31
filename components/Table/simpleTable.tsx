@@ -5,7 +5,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab} from "@mui/material";
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
@@ -145,10 +145,11 @@ if(rowSelected!=null && rowSelected.length >0){
   return (
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
-      <Stack justifyContent={"end"}  direction="row" spacing={3}>
-
-      
      
+      <Stack justifyContent={"end"}  direction="row" spacing={3}>
+      
+      
+ 
       <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
       <Button

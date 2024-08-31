@@ -1,5 +1,9 @@
 "use client"
 
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import NoAccountsTwoToneIcon from '@mui/icons-material/NoAccountsTwoTone';
+import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
+
 import { useState,useEffect } from "react";
 import { axiosAuth } from "../lib/axios";
 import Link from "next/link";
@@ -10,7 +14,7 @@ import { errorHandler } from "@/hooks/useTableHook";
 import { Modal,IconButton, Button, Typography, Box, Input, TextField, Fab } from "@mui/material";
 import CameraTwoToneIcon from '@mui/icons-material/CameraTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import NoAccountsTwoToneIcon from '@mui/icons-material/NoAccountsTwoTone';
+
 import VideoCameraFrontTwoToneIcon from '@mui/icons-material/VideoCameraFrontTwoTone';
 import UnfoldMoreDoubleTwoToneIcon from '@mui/icons-material/UnfoldMoreDoubleTwoTone';
 import Badge from '@mui/material/Badge';
@@ -21,8 +25,10 @@ import AccessDenied from "@/components/http403";
 
 import Header from "@/components/Header";
 import { toast } from "sonner";
+
+
 function admin() {
-  const [users,setUsers]=useState([])
+  const [users,setUsers]=useState<usersData>({success:false,message:[],totalUsers:0})
   // const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
   const [open,setIsopen]=useState(false)
@@ -60,9 +66,9 @@ async function getUserDetail(userid:string){
    
   try {
      const userDetail=await axiosAuth.get(`/admin/users/${userid}`)
-    
+    console.log(userDetail)
      if(userDetail.data){
-      setUser(userDetail.data)
+      setUser(userDetail.data.message)
       
       setIsopen(true)
 
@@ -79,7 +85,7 @@ async function onSubmit(e:React.FormEvent<HTMLFormElement>){
   const response=await axiosAuth.get(`/admin/users?isActive=true&email=${email}`)
   setClear(!clear)
   if(response.data){
-    setUsers(response.data)
+    setUsers(response.data.message)
   }
 }
 
@@ -88,7 +94,7 @@ async function onClickAndDisable(userid:string){
   try {
      const response=await axiosAuth.patch(`/admin/users/${userid}`,{isActive:false})
      if(response.data){
-      toast.success(response.data)
+      toast.success(response.data.message)
       await getAllUsers()
      }
     // console.log(response)
@@ -133,10 +139,10 @@ return (
         <p className="text-white text-lg font-semibold">Search User with E-mail</p>
         </div>
         <div className=" text-white flex items-center lg:gap-5 text-lg font-semibold" >
-          <span><Typography>TOTAL-5</Typography></span>
-          <span><Typography>ACTIVE-4</Typography></span>
-          <span><Typography>INACTIVE-1</Typography></span>
-        <Badge  badgeContent={1} color="success" >
+          <span><Typography><AssignmentIndIcon/>{" "}TOTAL-<span>{users.totalUsers}</span></Typography></span>
+          <span><Typography><PeopleAltTwoToneIcon/>{" "}ACTIVE-{(Number(users.message.length))}</Typography></span>
+          <span><Typography><NoAccountsTwoToneIcon/>{" "}INACTIVE-{Number(users.totalUsers)-(Number(users.message.length))}</Typography></span>
+        <Badge  badgeContent={Number(users.totalUsers)-(Number(users.message.length))} color="success" >
         <Button variant="contained" color="secondary" startIcon={<AutoDeleteTwoToneIcon/>} component={Link} className=""  href="/admin/trash">trash</Button>
         </Badge>
         <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/trash">new user</Button>
@@ -164,7 +170,7 @@ return (
     
    
     {
-      users ? users.map((user:user)=>(
+      users.message ? users.message?.map((user:user)=>(
         <form
         className=" rounded-sm bg-slate-600 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5   transition-all duration-100 xl:hover:scale-[1.01] last:mb-10 shadow-2xl h-full"
          key={user._id}>

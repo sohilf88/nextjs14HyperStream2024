@@ -81,3 +81,9 @@ export type jwtAccessType = {
     roles: string[],
     _id: string
 }
+
+export type usersData = {
+    success: boolean,
+    message: [],
+    totalUsers: number
+}

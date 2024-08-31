@@ -1,4 +1,4 @@
-"use client"
+
 import axios from '@/app/lib/axios'
 
 import { errorHandler } from '@/hooks/useTableHook'
@@ -7,19 +7,23 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
 
-function page() {
-  const [email,setEmail]=useState("")
-  async function formSubmit(e: React.ChangeEvent< HTMLFormElement>){
+ function forgotPassword() {
+  // const [email,setEmail]=useState("")
+  
+  async function formSubmit(formdata: FormData){
+    "use server"
     try {
-      e.preventDefault()
+      const email=formdata.get("email")
+    
     const {data}=await axios.post("/auth/forgot-password",{email})
-    console.log(data)
+    // console.log(data)
     if(data.success){
       toast.info(data.message)
+
     }
     } catch (error:unknown) {
       console.log(error)
-      errorHandler(error)
+      // errorHandler(error)
     }
     
 
@@ -30,12 +34,12 @@ function page() {
       
     <div className="lg:max-w-2xl md:max-w-xl sm:max-w-md w-full py-4 px-8 h-72   bg-white rounded shadow-2xl">
       
-  <form onSubmit={formSubmit} >
+  <form action={formSubmit} >
     
     <div className="flex flex-col mt-6 gap-4">
       
       <Typography variant="h6" color={'purple'}>Forgot password?</Typography>
-      <TextField onChange={(e)=>setEmail(e.target.value)} value={email} required={true} type='email' color='secondary' fullWidth id="standard-basic" label="E-mail address" variant="outlined" />
+      <TextField  required={true} type='email' id="email" color='secondary' fullWidth  label="E-mail address" variant="outlined" />
       {/* below div is used to add padding only */}
       <div className="pb-2"></div> 
       <Button type='submit' variant='contained' color='secondary' size='large'>submit</Button>
@@ -48,4 +52,4 @@ function page() {
   )
 }
 
-export default page
+export default forgotPassword

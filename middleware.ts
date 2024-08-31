@@ -13,23 +13,19 @@ import { jwtAccessType } from "./typescript.definations";
 export async function middleware(request: NextRequest) {
     // console.log(process.env.NEXT_PUBLIC_URL)
 
-    
+
     const jwtCookies = cookies()
-    //  const token = jwtCookies.get("jwtAccess")?.value
-    // const decoded = jwtDecode(token) as jwtAccessType;
 
-    // if (jwtCookies.has("jwtAccess") && jwtCookies.has("jwtRe") ) {
-       
-    //     return NextResponse.redirect(new URL("/auth/login", request.url))
+    // console.log((jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/"))
+
+    // if (jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/auth/login") {
+
+    //     return NextResponse.redirect(new URL("/dashboard", request.url))
+
     // }
-
-    // console.log(decoded.roles.includes("root"))
 
     const response = NextResponse.next()
-    // if refresh cookie deleted then run this function
-    // if (decoded && !decoded.roles.includes("root") && request.url.match("/admin")) {
-    //     return NextResponse.redirect(new URL("/dashboard", request.url))
-    // }
+
 
     if (!jwtCookies.has("jwtRe")) {
 
@@ -39,7 +35,7 @@ export async function middleware(request: NextRequest) {
     if (jwtCookies.has("jwtRe")) {
 
         if (!jwtCookies.has("jwtAccess")) {
-
+            console.log("Running this middleware to get jwtAccess cookie")
             try {
                 // console.log("running")
                 const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/refresh`, { method: "GET", credentials: "include", headers: { Cookie: cookies().toString() } })
@@ -51,7 +47,7 @@ export async function middleware(request: NextRequest) {
 
                 })
                 // console.log(response)
-                
+
                 return response
 
             } catch (error) {
@@ -74,6 +70,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
 }
 
+
+
 export const config = {
-    matcher: ["/", "/admin", "/user/:page*", "/dashboard"]
+    matcher: ["/admin/:page*", "/user/:page*", "/dashboard", "/"]
 }

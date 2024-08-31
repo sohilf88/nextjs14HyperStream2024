@@ -75,7 +75,7 @@ export default function ChangeProfile({open,setIsopen,user,getAllUsers}:propsTyp
     })
    
 
-    console.log(profile)
+    // console.log(profile)
     // handle profile detail only
     function onChange(event: React.ChangeEvent<HTMLInputElement>){
        

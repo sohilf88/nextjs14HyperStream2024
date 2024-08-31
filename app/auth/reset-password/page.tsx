@@ -34,9 +34,11 @@ function page() {
     
     <div className="flex flex-col mt-6 gap-4 ">
       
+      
       <Typography sx={{textAlign:"center"}} variant="h5"  color={'purple'}>Reset password?</Typography>
-      <TextField onChange={(e)=>setPassword(e.target.value)} value={password} required={true} type='password' color='secondary' fullWidth id="standard-basic" label="password" variant="outlined" />
-      <TextField onChange={(e)=>setConfirmPassword(e.target.value)} value={confirmPassword} required={true} type='password' color='secondary' fullWidth id="standard-basic" label="confirm password" variant="outlined" />
+       <TextField onChange={(e)=>setPassword(e.target.value)} value={password} required={true} type='password' color='secondary' fullWidth id="standard-basic" label="Token" variant="outlined" />
+      <TextField onChange={(e)=>setPassword(e.target.value)} value={password} required={true} type='password' color='secondary' fullWidth id="standard-basic" label="Password" variant="outlined" />
+      <TextField onChange={(e)=>setConfirmPassword(e.target.value)} value={confirmPassword} required={true} type='password' color='secondary' fullWidth id="standard-basic" label="Confirm Password" variant="outlined" />
       <br />
       {
        password!==confirmPassword ?<span className='text-xs text-red-600'>password does not match</span>:null
