@@ -5,13 +5,13 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField} from "@mui/material";
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
 import PlayCircleTwoToneIcon from '@mui/icons-material/PlayCircleTwoTone';
 import Actions from "./Actions";
-import Link from "next/link";
+
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
 import { handleClose,handleOpen, handlePlayAllCameras,handleSelectedCameras } from "@/reduxtoolkit/features/ModalSlice";
@@ -23,7 +23,7 @@ import { camera } from "@/typescript.definations";
 function SimpleTable() {
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
  
-  const [gridReady, setGridReady] = useState(null);
+  const [gridReady, setGridReady] = useState<AgGridEvent>();
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
   const [isSelected,setIsSelected]=useState(false)
   const dispatch = useAppDispatch();
@@ -92,7 +92,7 @@ function SimpleTable() {
  
   function onGridReady(params: AgGridEvent) {
    
-   
+   setGridReady(params)
   
   }
 
@@ -108,17 +108,7 @@ function SimpleTable() {
      
     }
   }
-// table dynamic size based upon windows resolution
 
- 
-
-  // let height=480;
-//   if(window.innerWidth>1600){
-//     height=620;
-//   }else {
-//    height=480
-//   }
-//  console.log(window.innerWidth)
   function playAllCamerasinNewTabOnClick(){
   dispatch(handlePlayAllCameras(true))
   window.open('/user', '_blank', 'noopener')
@@ -148,8 +138,7 @@ if(rowSelected!=null && rowSelected.length >0){
      
       <Stack justifyContent={"end"}  direction="row" spacing={3}>
       
-      
- 
+       
       <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
       <Button

@@ -9,31 +9,42 @@ import { errorHandler } from '@/hooks/useTableHook';
 import { useRouter } from "next/navigation"
 
 import {axiosAuth} from '@/app/lib/axios';
-import { AxiosError, isAxiosError } from 'axios';
-import { customError } from '@/typescript.definations';
-import useTableHook from '@/hooks/useTableHook';
+import {z} from "zod"
+
 import { useAppDispatch } from '@/reduxtoolkit/store/Hooks';
 import { handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 
-type props={
-  callbackUrl?:string
-}
 
-function LoginForm({callbackUrl}:props) {
 
+function LoginForm() {
+
+  const loginSchema=z.object({
+    email:z.string().email(),
+    password:z.string().min(5)
+    
+  })
  
   
-  
+
   
     
     const [email,setEmail] =useState("")
     const [password,setPassword] =useState("")
     const [capslock,setCapsLock] =useState(false)
 
+  
+
+ 
 
     const router=useRouter()
    const dispatch=useAppDispatch()
     async function onSubmit(event: React.FormEvent<HTMLFormElement>){
+       
+    const data=loginSchema.parse({
+    email,
+    password
+  })
+  console.log(data)
         event.preventDefault()
         
         try {
@@ -46,9 +57,9 @@ function LoginForm({callbackUrl}:props) {
           // console.log(response.data.data.roles.includes("root"))
          dispatch(handleUserRoles(response.data.data.roles))
          if(response.data.data.roles.includes("root")){
-          router.push(callbackUrl?callbackUrl:"/admin")
+          router.push("/admin")
          }else{
-           router.push(callbackUrl?callbackUrl:"/dashboard")
+           router.push("/dashboard")
          }
           
           

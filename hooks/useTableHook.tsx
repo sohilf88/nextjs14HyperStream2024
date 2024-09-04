@@ -58,11 +58,11 @@ function useTableHook() {
     // rowData is used to fill the userTable 
     const [rowData, setRowData] = useState<camera[] | []>([]);
     // modal table data using formData
-    const [formData,setFormData]=useState(initialState)
+    const [formData,setFormData]=useState<camera  >(initialState)
 
 //   handleClick is used to get data from modal Input
   function handleClick(e: React.ChangeEvent<HTMLInputElement>){
-    console.log(e.target.name,e.target.value)
+    // console.log(e.target.name,e.target.value)
     setFormData({
       ...formData,
      
@@ -96,10 +96,6 @@ function useTableHook() {
       }
         
         
-        // console.log(response.data)
-    
-        // setRowData(response.data.message);
-        // console.log(rowData)
       
     } catch (error) {
       errorHandler(error)
@@ -128,7 +124,7 @@ function useTableHook() {
         await getAllCameraDataFromBackEnd()
         dispatch(handleClose())
         dispatch(handleUpdate(false))
-        setFormData( initialState)
+        setFormData(initialState)
   
     
       }

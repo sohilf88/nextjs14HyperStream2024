@@ -7,7 +7,7 @@ import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import { useState,useEffect } from "react";
 import { axiosAuth } from "../lib/axios";
 import Link from "next/link";
-import { user } from "@/typescript.definations";
+import { user, userDetail, usersData } from "@/typescript.definations";
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
 import { errorHandler } from "@/hooks/useTableHook";
@@ -34,14 +34,16 @@ function admin() {
   const [open,setIsopen]=useState(false)
   const [clear,setClear]=useState(false)
   const [errorState,setErrorState]=useState(false)
-  const [user,setUser]=useState("")
+  const [userData,setUserData]=useState<user>(
+    
+  )
   // const [id,setId]=useState("")
  
 
 const getAllUsers=async()=>{
   try {
   const response=await axiosAuth.get("/admin/users?isActive=true")
-  console.log(response.data)
+  // console.log(response.data)
 
  if(response.data){
   setUsers(response.data)
@@ -66,9 +68,9 @@ async function getUserDetail(userid:string){
    
   try {
      const userDetail=await axiosAuth.get(`/admin/users/${userid}`)
-    console.log(userDetail)
+    // console.log(userDetail)
      if(userDetail.data){
-      setUser(userDetail.data.message)
+      setUserData(userDetail.data.message)
       
       setIsopen(true)
 
@@ -99,7 +101,7 @@ async function onClickAndDisable(userid:string){
      }
     // console.log(response)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     errorHandler(error)
   }
  
@@ -192,25 +194,7 @@ return (
          <Button color="secondary" variant="contained" type="button" value={user._id} onClick={(e)=>onClickAndDisable(e.currentTarget.value)} startIcon={<NoAccountsTwoToneIcon/>}>disable account</Button>
          <Button variant="contained" component={Link} href={`/dashboard/${user._id}`} color="success" startIcon={<VideoCameraFrontTwoToneIcon/>}>cameras</Button>
          </div>
-         
-        
-         
-         {/* <div className="">
-          
-            
-          <div className="flex items-center justify-end gap-4">
-          <Link className="flex   items-center gap-1" href={`/dashboard/${user._id}`}>
-            
-           <CameraTwoToneIcon fontSize="small" className=" text-white "/><Typography>cameras</Typography>
-          </Link>
-          
-           
-          </div>
-         
-          </div> */}
-         
-           
-          </form>
+        </form>
 
       )):<><div className="bg-white w-full h-full">No Access</div></>
     }
@@ -219,7 +203,8 @@ return (
    
      <Modal open={open} onClose={() =>setIsopen(false)}>
       <Box>
-        <ChangeProfile getAllUsers={getAllUsers} user={user} open={open} setIsopen={setIsopen}/>
+        {/* @ts-ignore */}
+        <ChangeProfile getAllUsers={getAllUsers} userData={userData} open={open} setIsopen={setIsopen}/>
         </Box>
        </Modal>
    

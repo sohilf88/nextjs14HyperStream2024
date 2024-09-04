@@ -25,7 +25,7 @@ export type camera = {
     taluka: string,
     city: string,
     area: string,
-    location: string,
+    // location: string,
     url: string,
     isActive: boolean
 
@@ -36,7 +36,7 @@ export type modalProps = {
     handleFormSubmit: () => Promise<void>,
     handleClick: (e: React.ChangeEvent<HTMLInputElement>) => void,
     formData: camera,
-    setFormData: () => {}
+    setFormData: (state:camera[]) => {}
     setRowData: () => {}
 }
 export type createCamera = {
@@ -59,11 +59,11 @@ export type cameraFeatureSlice = {
     id: string | undefined | null
 }
 
-export type user = {
+export type userDetail = {
     _id: string,
     email: string,
     password?: string,
-    roles: []
+    roles: string
 }
 
 
