@@ -10,7 +10,7 @@ import Link from "next/link";
 import { user, userDetail, usersData } from "@/typescript.definations";
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
-import { errorHandler } from "@/hooks/useTableHook";
+import { errorHandler } from "@/hooks/useTableHook";222
 import { Modal,IconButton, Button, Typography, Box, Input, TextField, Fab } from "@mui/material";
 import CameraTwoToneIcon from '@mui/icons-material/CameraTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
@@ -27,7 +27,9 @@ import Header from "@/components/Header";
 import { toast } from "sonner";
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 
+
 function admin() {
+  
   const [users,setUsers]=useState<usersData>({success:false,message:[],totalUsers:0})
   // const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
@@ -53,7 +55,7 @@ const getAllUsers=async()=>{
   } catch (error) {
     console.log(error)
   //  need to add error status condition below
-    if(isAxiosError(error) && error.response?.status===401){
+    if(isAxiosError(error) && error.response?.status===403){
      setErrorState(!errorState)
     }
     

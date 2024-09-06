@@ -37,7 +37,7 @@ return (
     </div>
    
   </div>
-  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-3  mx-1  `}>
+  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} 3xl:grid-cols-5 gap-x-1 gap-y-3  mx-1  `}>
       
    {
     response.data && response.data.message.map((item:camera)=>(

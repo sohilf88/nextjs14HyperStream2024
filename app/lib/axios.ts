@@ -11,11 +11,11 @@ export default axios.create({
 export const axiosAuth = axios.create({
     baseURL: process.env.NEXT_PUBLIC_URL,
 
-    headers: {
-        "Content-Type": "application/json",
+    // headers: {
+    //     "Content-Type": "application/json",
 
 
-    },
+    // },
     "withCredentials": true
 
 })
@@ -23,14 +23,14 @@ export const axiosAuth = axios.create({
 axiosAuth.interceptors.response.use(
     (response) => {
         
+        // return normal response as it is
         
-        // console.log(response)
         return response;
     },
     async function (error) {
         const originalRequest = error.config;
         // console.log(error.response.data.message)
-        if (error.response.status === 401 && error.response.data.message === "TokenExpiredError" || error.response.data.message === "JsonWebTokenError" && !originalRequest.sent) {
+        if (error.response.status === 401  && !originalRequest.sent) {
             originalRequest.sent = true;
 
             try {
@@ -52,6 +52,8 @@ export const generateNewAccessToken = async () => {
         if (isAxiosError(error) && error.response?.data) {
             const errorResponse = error.response.data as customError
             toast.error(errorResponse.message)
+            
+
         }
 
     }
