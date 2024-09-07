@@ -41,7 +41,7 @@ function admin() {
 const getAllUsers=async()=>{
   try {
   const response=await axiosAuth.get("/admin/users?isActive=true")
-  console.log(response.data)
+  // console.log(response.data)
 
  if(response.data){
   setUsers(response.data)
@@ -49,9 +49,9 @@ const getAllUsers=async()=>{
 }
 
   } catch (error) {
-    console.log(error)
+    // console.log(error)
   //  need to add error status condition below
-    if(isAxiosError(error) && error.response?.status===401){
+    if(isAxiosError(error) && error.response?.status===403){
      setErrorState(!errorState)
     }
     
@@ -66,7 +66,7 @@ async function getUserDetail(userid:string){
    
   try {
      const userDetail=await axiosAuth.get(`/admin/users/${userid}`)
-    console.log(userDetail)
+    // console.log(userDetail)
      if(userDetail.data){
       setUser(userDetail.data.message)
       
@@ -195,20 +195,7 @@ return (
          
         
          
-         {/* <div className="">
-          
-            
-          <div className="flex items-center justify-end gap-4">
-          <Link className="flex   items-center gap-1" href={`/dashboard/${user._id}`}>
-            
-           <CameraTwoToneIcon fontSize="small" className=" text-white "/><Typography>cameras</Typography>
-          </Link>
-          
-           
-          </div>
-         
-          </div> */}
-         
+      
            
           </form>
 

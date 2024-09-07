@@ -32,35 +32,35 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/auth/login", request.url))
     }
 
-    if (jwtCookies.has("jwtRe")) {
+    // if (jwtCookies.has("jwtRe")) {
 
-        if (!jwtCookies.has("jwtAccess")) {
-            console.log("Running this middleware to get jwtAccess cookie")
-            try {
-                // console.log("running")
-                const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/refresh`, { method: "GET", credentials: "include", headers: { Cookie: cookies().toString() } })
+    //     if (!jwtCookies.has("jwtAccess")) {
+    //         console.log("Running this middleware to get jwtAccess cookie")
+    //         try {
+    //             // console.log("running")
+    //             const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/refresh`, { method: "GET", credentials: "include", headers: { Cookie: cookies().toString() } })
 
-                const cookie: any = res.headers.getSetCookie()
-                response.cookies.set({
-                    name: 'jwtAccess',
-                    value: cookie,
+    //             const cookie: any = res.headers.getSetCookie()
+    //             response.cookies.set({
+    //                 name: 'jwtAccess',
+    //                 value: cookie,
 
-                })
-                // console.log(response)
+    //             })
+    //             // console.log(response)
 
-                return response
+    //             return response
 
-            } catch (error) {
-                const errorResult = (error as Error);
-                if (errorResult) {
-                    return NextResponse.redirect(new URL("/auth/login", request.url))
-                }
-            }
+    //         } catch (error) {
+    //             const errorResult = (error as Error);
+    //             if (errorResult) {
+    //                 return NextResponse.redirect(new URL("/auth/login", request.url))
+    //             }
+    //         }
 
 
 
-        }
-    }
+    //     }
+    // }
 
     if (!jwtCookies.has("jwtAccess") && !jwtCookies.has("jwtRe")) {
         return NextResponse.redirect(new URL("/auth/login", request.url))
