@@ -7,7 +7,7 @@ import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import { useState,useEffect } from "react";
 import { axiosAuth } from "../lib/axios";
 import Link from "next/link";
-import { user } from "@/typescript.definations";
+import { user, usersData } from "@/typescript.definations";
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
 import { errorHandler } from "@/hooks/useTableHook";
@@ -145,7 +145,7 @@ return (
         <Badge  badgeContent={Number(users.totalUsers)-(Number(users.message.length))} color="success" >
         <Button variant="contained" color="secondary" startIcon={<AutoDeleteTwoToneIcon/>} component={Link} className=""  href="/admin/trash">trash</Button>
         </Badge>
-        <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/trash">new user</Button>
+        <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/signup">new user</Button>
         {/* <Link className="text-lg font-semibold hover:text-green-500"  href="/admin/signup"><PersonAddAltTwoToneIcon></PersonAddAltTwoToneIcon> New User</Link> */}
         </div>
         

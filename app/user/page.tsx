@@ -21,7 +21,7 @@ async function user({
   const end=start+Number(limit)
  
   const response=await axiosAuth.get(`/camera/filtered?page=${page}&limit=${limit}`,{withCredentials:true})
-  console.log(response)
+  // console.log(response)
  const hasNext=(end < response.data.totalCount)
  const hasPrevious=(start>0)
 
@@ -46,12 +46,7 @@ return (
       </div>
     ))
    }
-   
-    
-   
-   
-    
-   
+  
   </div>
      
   </main>
