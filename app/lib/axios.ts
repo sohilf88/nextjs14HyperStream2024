@@ -30,7 +30,7 @@ axiosAuth.interceptors.response.use(
     async function (error) {
         const originalRequest = error.config;
         // console.log(error.response.data.message)
-        if (error.response.status === 401 && error.response.data.message === "TokenExpiredError" || error.response.data.message === "JsonWebTokenError" && !originalRequest.sent) {
+        if (error.response.status === 401  && !originalRequest.sent) {
             originalRequest.sent = true;
 
             try {
@@ -52,6 +52,7 @@ export const generateNewAccessToken = async () => {
         if (isAxiosError(error) && error.response?.data) {
             const errorResponse = error.response.data as customError
             toast.error(errorResponse.message)
+            // error.response.headers["set-cookie"]
         }
 
     }
