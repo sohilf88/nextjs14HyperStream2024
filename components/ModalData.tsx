@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 
-function ModalData({handleFormSubmit,handleClick,formData,setFormData}:modalProps) {
+function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
   
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();

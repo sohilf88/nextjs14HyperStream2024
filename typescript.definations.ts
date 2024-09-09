@@ -59,7 +59,7 @@ export type cameraFeatureSlice = {
     id: string | undefined | null
 }
 
-export type user = {
+export type userDetail = {
     _id: string,
     email: string,
     password?: string,

@@ -148,7 +148,7 @@ function ResponsiveAppBar() {
                href={`/${page}`}
                 key={page}
                 // onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "yellow", display: "block" }}
+                sx={{ my: 2, color: "whitesmoke", display: "block" }}
               >
                 {page}
               </Button>
