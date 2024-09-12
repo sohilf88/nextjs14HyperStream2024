@@ -1,11 +1,11 @@
 "use client"
 import { AgGridReact } from "ag-grid-react"; // React Grid Logic
-import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
+// import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+// import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField} from "@mui/material";
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
@@ -21,6 +21,8 @@ import { camera } from "@/typescript.definations";
 import DriveFolderUploadTwoToneIcon from '@mui/icons-material/DriveFolderUploadTwoTone';
 import { axiosAuth } from "@/app/lib/axios";
 import axios from "axios"
+import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
 
 function SimpleTable() {
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
@@ -28,6 +30,7 @@ function SimpleTable() {
   const [gridReady, setGridReady] = useState(null);
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
     const [isSelected,setIsSelected]=useState(false)
+    const [isDeleted,setIsDeleted]=useState(false)
   const dispatch = useAppDispatch();
 
 // multiple Camera delete Function
@@ -37,16 +40,21 @@ async function deleteMultipleCameras(){
     deleteMultiples?.push(row._id as string)
   })
   try {
+    setIsDeleted(true)
      const response=await axios.all(deleteMultiples.map((id)=>(
       axiosAuth.delete(`/camera/${id}`)
      
   )
 )
 )
- console.log(response)
+ 
   
   if(response){
+    // @ts-ignore
+    
     getAllCameraDataFromBackEnd()
+    setIsDeleted(false)
+    toast.warning("camera deleted")
   }
     
   } catch (error) {
@@ -67,18 +75,67 @@ async function deleteMultipleCameras(){
   }else{
     height=480
   }
-  useEffect(() => {
-    // component is mounted and window is available
-    handleWindowResize();
-    window.addEventListener('resize', handleWindowResize);
-    // unsubscribe from the event on component unmount
-    return () => window.removeEventListener('resize', handleWindowResize);
-  }, []);
+  // useEffect(() => {
+  //   // component is mounted and window is available
+  //   handleWindowResize();
+  //   window.addEventListener('resize', handleWindowResize);
+  //   // unsubscribe from the event on component unmount
+  //   return () => window.removeEventListener('resize', handleWindowResize);
+  // }, []);
   
+  // file upload function
+   const onSubmit = async (formData:FormData) => {
+    const file=formData.get("file")
+    console.log(file)
+    if (!file) return
 
+    try {
+      const data = new FormData()
+      
+      data.set('file', file)
+     const response =await axiosAuth.post("/camera/bulk-import",data)
+      console.log(response.data)
+     if(response.data){
+      // @ts-ignore
+     await getAllCameraDataFromBackEnd()
+      toast.success(response.data.message)
+     }
+      
+    } catch (error) {
+      // Handle errors here
+      errorHandler(error)
+    }
+  } 
+  // form Data for file input
+ const Fileupload=()=>{
+  const {pending}=useFormStatus()
+  return (
+    <>
+      <label htmlFor="file" className="block">
+     
+      <span className="sr-only">choose csv</span>
+      <input name="file"  id="file" type="file" className="block w-full text-sm text-gray-300
+        file:me-4 file:py-2 file:px-6
+        file:rounded-sm file:border-1
+        file:text-sm file:font-semibold
+        file:bg-blue-600 file:text-white
+        hover:file:bg-blue-700
+        file:disabled:opacity-50 file:disabled:pointer-events-none
+             
+      "/>
+      
+    </label>
+    <Button size="large" type="submit" disabled={pending} color="error" variant="text">{pending ?"uploading...":"upload"}</Button>
+    </>
+  )
+ }
   useEffect(() => {
     // @ts-ignore
      getAllCameraDataFromBackEnd();
+     handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
+    // unsubscribe from the event on component unmount
+    return () => window.removeEventListener('resize', handleWindowResize);
   }, []);
 
   const [defaultCols, setDefaultCols] = useState<ColDef>({
@@ -174,15 +231,37 @@ if(rowSelected!=null && rowSelected.length >0){
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
      
       <Stack  direction="row" spacing={3}>
-        <Stack  direction="row" gap={1}  border={1}>
-          <Button
-
-          component="label"
-          htmlFor="excel"
-           size="small"  color="inherit" startIcon={<DriveFolderUploadTwoToneIcon />}>import csv</Button>
-           <Button>upload</Button>
-          <input type="file" name="file" id="excel" className="hidden" 
-          />
+        <Stack  direction="row" alignItems={"center"} >
+         
+        <div className="max-w-xs shadow-inner ">
+  <form className="flex" action={onSubmit}>
+    <Fileupload></Fileupload>
+     
+    {/* <label htmlFor="file" className="block">
+     
+      <span className="sr-only">choose csv</span>
+      <input id="file" type="file" className="block w-full text-sm text-gray-400
+        file:me-4 file:py-2 file:px-4
+        file:rounded-lg file:border-0
+        file:text-sm file:font-semibold
+        file:bg-blue-600 file:text-white
+        hover:file:bg-blue-700
+        file:disabled:opacity-50 file:disabled:pointer-events-none
+       
+       
+       
+      "/>
+      
+    </label>
+    <Button color="inherit" variant="text">upload</Button> */}
+     
+   
+  </form>
+</div>
+          
+        
+          
+         
         </Stack>
         <Stack justifyContent={"flex-end"} direction={"row"} spacing={3} flex={1}>
           <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
@@ -193,7 +272,7 @@ if(rowSelected!=null && rowSelected.length >0){
         playselectedCamerasinNewTabOnClick
     } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
       <Button  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
-      <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+      <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>{isDeleted?"deleting...":"Delete many"}</Button>
         </Stack>
       
       
@@ -205,7 +284,7 @@ if(rowSelected!=null && rowSelected.length >0){
       </Stack>
     </div>
     
-    <div className="ag-theme-quartz-dark shadow-xs" style={{ height: height }}>
+    <div className="ag-theme-quartz-dark shadow-lg" style={{ height: height }}>
       
       <AgGridReact
         defaultColDef={defaultCols}

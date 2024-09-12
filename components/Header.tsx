@@ -183,13 +183,7 @@ function ResponsiveAppBar() {
                   <Button component={Link} href={"/auth/profile"}>Profile</Button>
                   {/* <Button component={Link} href={"/dashboard/import"}>bulk import</Button> */}
                 </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                  {/* <Button component={Link} href={"/auth/profile"}>Profile</Button> */}
-                  <Button component={Link} href={"/dashboard/bulk-import"}>Bulk import</Button>
-                </MenuItem>
-                 
-                    
-                 
+                
                     <MenuItem onClick={handleCloseUserMenu}> 
                     <Button onClick={Logout}>Logout</Button>
                     </MenuItem>
