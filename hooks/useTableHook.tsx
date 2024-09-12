@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
-import {  isAxiosError } from "axios";
+import axios, {  isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from 'sonner';
 
@@ -41,8 +41,10 @@ export function errorHandler(error:unknown){
 
 function useTableHook() {
   const {id}=useAppSelector((store)=>store.root.cameras)
+
   const {roles}=useAppSelector((store)=>store.root.userRole)
   // const [roles,setRoles]=useState("user")
+
   const router=useRouter()
     const dispatch = useAppDispatch();
     const initialState={
@@ -73,7 +75,7 @@ function useTableHook() {
   
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
-    console.log(id)
+    // console.log(id)
     try {
       if(roles.includes("root") && !id){
         const response=await axiosAuth.get(`admin/cameras/all`)
@@ -99,7 +101,7 @@ function useTableHook() {
         // console.log(response.data)
     
         // setRowData(response.data.message);
-        console.log(rowData)
+        // console.log(rowData)
       
     } catch (error) {
       errorHandler(error)
@@ -176,8 +178,9 @@ function useTableHook() {
     }
     
   }
+// deleteMultiple Cameras in 
 
-  
+
 // this function is used to get previous data from AG Grid event in Action Component 
    function handleDataUpdateOnEditButton (paramsPreviousData:any)  {
     

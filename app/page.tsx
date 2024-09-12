@@ -1,13 +1,11 @@
-
+"use server"
+import { redirect } from 'next/navigation'
 const userDashboard = async() => {
   
-return (
-    <div>
-     home
-     
-    
-    </div>
-  );
+
+redirect("/dashboard")
+
+return;
 };
 
 export default userDashboard;

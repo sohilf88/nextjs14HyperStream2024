@@ -10,6 +10,7 @@ const config = {
   ],
   prefix: "",
   theme: {
+    
     container: {
       center: true,
       padding: "2rem",
@@ -18,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        "loginImage":"url(/public/background.webp)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

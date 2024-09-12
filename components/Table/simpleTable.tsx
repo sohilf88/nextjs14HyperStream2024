@@ -15,19 +15,45 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
 import { handleClose,handleOpen, handlePlayAllCameras,handleSelectedCameras } from "@/reduxtoolkit/features/ModalSlice";
-import useTableHook from "@/hooks/useTableHook";
+import useTableHook, { errorHandler } from "@/hooks/useTableHook";
 import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
 import { camera } from "@/typescript.definations";
-
+import DriveFolderUploadTwoToneIcon from '@mui/icons-material/DriveFolderUploadTwoTone';
+import { axiosAuth } from "@/app/lib/axios";
+import axios from "axios"
 
 function SimpleTable() {
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
-  const [isSelected,setIsSelected]=useState(false)
+    const [isSelected,setIsSelected]=useState(false)
   const dispatch = useAppDispatch();
 
+// multiple Camera delete Function
+async function deleteMultipleCameras(){
+  let deleteMultiples=[] as string[]
+  rowSelected && rowSelected.map((row:camera)=>{
+    deleteMultiples?.push(row._id as string)
+  })
+  try {
+     const response=await axios.all(deleteMultiples.map((id)=>(
+      axiosAuth.delete(`/camera/${id}`)
+     
+  )
+)
+)
+ console.log(response)
+  
+  if(response){
+    getAllCameraDataFromBackEnd()
+  }
+    
+  } catch (error) {
+    errorHandler(error)
+  }
+ 
+}
   // for table height size
   const [width, setWidth] = useState(0)
   // const [heightofViewport, setheightofViewport] = useState(0)
@@ -52,7 +78,7 @@ function SimpleTable() {
 
   useEffect(() => {
     // @ts-ignore
-    getAllCameraDataFromBackEnd();
+     getAllCameraDataFromBackEnd();
   }, []);
 
   const [defaultCols, setDefaultCols] = useState<ColDef>({
@@ -96,6 +122,7 @@ function SimpleTable() {
   
   }
 
+  // console.log(rowSelected)
   // get no.of selected rows and add into ReduxToolkit
   function getSelectedRowsByCheckBox(event: AgGridEvent) {
     setRowSelected(event.api.getSelectedRows())
@@ -146,11 +173,19 @@ if(rowSelected!=null && rowSelected.length >0){
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
      
-      <Stack justifyContent={"end"}  direction="row" spacing={3}>
-      
-      
- 
-      <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
+      <Stack  direction="row" spacing={3}>
+        <Stack  direction="row" gap={1}  border={1}>
+          <Button
+
+          component="label"
+          htmlFor="excel"
+           size="small"  color="inherit" startIcon={<DriveFolderUploadTwoToneIcon />}>import csv</Button>
+           <Button>upload</Button>
+          <input type="file" name="file" id="excel" className="hidden" 
+          />
+        </Stack>
+        <Stack justifyContent={"flex-end"} direction={"row"} spacing={3} flex={1}>
+          <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
       
       <Button
       disabled={!isSelected}
@@ -158,7 +193,12 @@ if(rowSelected!=null && rowSelected.length >0){
         playselectedCamerasinNewTabOnClick
     } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
       <Button  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
-      <Button disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+      <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>Delete Cameras</Button>
+        </Stack>
+      
+      
+ 
+      
      
       
       

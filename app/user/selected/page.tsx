@@ -1,18 +1,16 @@
 "use client"
 
-
 import PaginationControls from "@/components/PaginationControls"
 import HlsPlayer from "@/components/hslplayer"
 import { useAppSelector } from "@/reduxtoolkit/store/Hooks"
 import { camera } from "@/typescript.definations"
+import { useSearchParams } from "next/navigation"
 
-function page({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-    const page = searchParams['page'] ?? '1'
-   const per_page = searchParams['per_page'] ?? '6'
+function page() {
+  const searchParams=useSearchParams()
+  const page=searchParams.get("page") ?? '1'
+  const per_page=searchParams.get("per_page") ?? '6'
+  
    const start = (Number(page) - 1) * Number(per_page) // 0, 5, 10 ...
    const end = start + Number(per_page) // 5, 10, 15 ...
 

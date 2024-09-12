@@ -7,6 +7,7 @@ import ResponsiveAppBar from "@/components/Header";
 
 import { useAppDispatch } from "@/reduxtoolkit/store/Hooks";
 import { getUserId } from "@/reduxtoolkit/features/cameraSlice";
+import useTableHook from "@/hooks/useTableHook";
 
 
 type paramsType={
@@ -15,7 +16,9 @@ type paramsType={
   }
 }
 
+
 const userDashboard = ({params}:paramsType) => {
+  const [getAllCameraDataFromBackEnd]=useTableHook()
 
 const {id}=params
   
@@ -30,7 +33,7 @@ return (
       <div className="uppercase md:mx-4 px-1 sm:px-4 md:px-8 md:mt-2 xl:mt-7  ">
         {/* The AG Grid component */}
        
-        <SimpleTable/>
+        <SimpleTable getAllCameraDataFromBackEnd={getAllCameraDataFromBackEnd}/>
        
       </div>
      
