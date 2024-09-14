@@ -57,13 +57,13 @@ useEffect(()=>{
 return (
 
 <main className=''>
-  <div className='pt-7 pb-6'>
+  <div className='pt-3 pb-5'>
     <div className="">
       <PaginationClient data={data} hasNext={hasNext} hasPrevious={hasPrevious}/>
     </div>
    
   </div>
-  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-3  mx-1  `}>
+  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-1  mx-1  `}>
       
    {
     data && data.message.map((item:camera)=>(
