@@ -5,13 +5,17 @@ import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
+<<<<<<< HEAD
 import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, IconButton, Badge} from "@mui/material";
+=======
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel} from "@mui/material";
+>>>>>>> 15-formImprovement
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
 import PlayCircleTwoToneIcon from '@mui/icons-material/PlayCircleTwoTone';
 import Actions from "./Actions";
-import Link from "next/link";
+
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import ModalData from "@/components/ModalData";
 import { handleClose,handleOpen, handlePlayAllCameras,handleSelectedCameras } from "@/reduxtoolkit/features/ModalSlice";
@@ -31,7 +35,7 @@ function SimpleTable() {
   const {role}=useAppSelector((store)=>store.root.userRole)
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
  
-  const [gridReady, setGridReady] = useState(null);
+  const [gridReady, setGridReady] = useState<AgGridEvent>();
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
     const [isSelected,setIsSelected]=useState(false)
     const [isDeleted,setIsDeleted]=useState(false)
@@ -184,7 +188,7 @@ async function deleteMultipleCameras(){
  
   function onGridReady(params: AgGridEvent) {
    
-   
+   setGridReady(params)
   
   }
 
@@ -201,17 +205,7 @@ async function deleteMultipleCameras(){
      
     }
   }
-// table dynamic size based upon windows resolution
 
- 
-
-  // let height=480;
-//   if(window.innerWidth>1600){
-//     height=620;
-//   }else {
-//    height=480
-//   }
-//  console.log(window.innerWidth)
   function playAllCamerasinNewTabOnClick(){
   dispatch(handlePlayAllCameras(true))
   window.open('/user', '_blank', 'noopener')
@@ -240,6 +234,7 @@ if(rowSelected!=null && rowSelected.length >0){
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
     
      
+<<<<<<< HEAD
      <main className="flex gap-5 items-center ">
         <section></section>
     
@@ -260,6 +255,14 @@ if(rowSelected!=null && rowSelected.length >0){
      
       <div className=" flex flex-1 gap-5  justify-end">
     <Button
+=======
+      <Stack justifyContent={"end"}  direction="row" spacing={3}>
+      
+       
+      <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
+      
+      <Button
+>>>>>>> 15-formImprovement
       disabled={!isSelected}
          onClick={
         playselectedCamerasinNewTabOnClick

@@ -23,8 +23,8 @@ export const axiosAuth = axios.create({
 axiosAuth.interceptors.response.use(
     (response) => {
         
+        // return normal response as it is
         
-        // console.log(response)
         return response;
     },
     async function (error) {
@@ -52,7 +52,12 @@ export const generateNewAccessToken = async () => {
         if (isAxiosError(error) && error.response?.data) {
             const errorResponse = error.response.data as customError
             toast.error(errorResponse.message)
+<<<<<<< HEAD
             // error.response.headers["set-cookie"]
+=======
+            
+
+>>>>>>> 15-formImprovement
         }
 
     }

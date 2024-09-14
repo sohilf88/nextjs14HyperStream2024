@@ -16,7 +16,12 @@ const style = {
   p: 4,
 };
 
+<<<<<<< HEAD
 function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
+=======
+
+function ModalData({handleFormSubmit,handleClick,formData,setFormData}:modalProps) {
+>>>>>>> 15-formImprovement
   
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();
@@ -24,8 +29,10 @@ function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
   const {name,district,city,area,_id,url,taluka,isActive}=formData
   
 const handleCloseOnClick=()=>{
+ 
   setFormData({
-    name:"",district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:false
+     // @ts-ignore
+    district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:false,name:""
   })
   dispatch(handleClose())
   dispatch(handleUpdate(false))

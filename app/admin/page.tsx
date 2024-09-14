@@ -7,10 +7,14 @@ import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import { useState,useEffect } from "react";
 import { axiosAuth } from "../lib/axios";
 import Link from "next/link";
+<<<<<<< HEAD
 import { user, usersData } from "@/typescript.definations";
+=======
+import { user, userDetail, usersData } from "@/typescript.definations";
+>>>>>>> 15-formImprovement
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
-import { errorHandler } from "@/hooks/useTableHook";
+import { errorHandler } from "@/hooks/useTableHook";222
 import { Modal,IconButton, Button, Typography, Box, Input, TextField, Fab } from "@mui/material";
 import CameraTwoToneIcon from '@mui/icons-material/CameraTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
@@ -25,16 +29,20 @@ import AccessDenied from "@/components/http403";
 
 import Header from "@/components/Header";
 import { toast } from "sonner";
+import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 
 
 function admin() {
+  
   const [users,setUsers]=useState<usersData>({success:false,message:[],totalUsers:0})
   // const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
   const [open,setIsopen]=useState(false)
   const [clear,setClear]=useState(false)
   const [errorState,setErrorState]=useState(false)
-  const [user,setUser]=useState("")
+  const [userData,setUserData]=useState<user>(
+    
+  )
   // const [id,setId]=useState("")
  
 
@@ -68,7 +76,7 @@ async function getUserDetail(userid:string){
      const userDetail=await axiosAuth.get(`/admin/users/${userid}`)
     // console.log(userDetail)
      if(userDetail.data){
-      setUser(userDetail.data.message)
+      setUserData(userDetail.data.message)
       
       setIsopen(true)
 
@@ -99,7 +107,7 @@ async function onClickAndDisable(userid:string){
      }
     // console.log(response)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     errorHandler(error)
   }
  
@@ -177,7 +185,7 @@ return (
           <div className="flex justify-between">
           <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s Profile `}</Typography>
           {/* <button type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>Edit</button> */}
-          <IconButton color="warning"  aria-label="edit" type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>
+          <IconButton  color="inherit" size="large"  aria-label="edit" type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>
   <EditTwoToneIcon />
 </IconButton>
           </div>
@@ -192,12 +200,16 @@ return (
          <Button color="secondary" variant="contained" type="button" value={user._id} onClick={(e)=>onClickAndDisable(e.currentTarget.value)} startIcon={<NoAccountsTwoToneIcon/>}>disable account</Button>
          <Button variant="contained" component={Link} href={`/dashboard/${user._id}`} color="success" startIcon={<VideoCameraFrontTwoToneIcon/>}>cameras</Button>
          </div>
+<<<<<<< HEAD
          
         
          
       
            
           </form>
+=======
+        </form>
+>>>>>>> 15-formImprovement
 
       )):<><div className="bg-white w-full h-full">No Access</div></>
     }
@@ -206,7 +218,8 @@ return (
    
      <Modal open={open} onClose={() =>setIsopen(false)}>
       <Box>
-        <ChangeProfile getAllUsers={getAllUsers} user={user} open={open} setIsopen={setIsopen}/>
+        {/* @ts-ignore */}
+        <ChangeProfile getAllUsers={getAllUsers} userData={userData} open={open} setIsopen={setIsopen}/>
         </Box>
        </Modal>
    

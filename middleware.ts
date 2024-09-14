@@ -18,11 +18,11 @@ export async function middleware(request: NextRequest) {
 
     // console.log((jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/"))
 
-    // if (jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/auth/login") {
+    if (jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/auth/login") {
 
-    //     return NextResponse.redirect(new URL("/dashboard", request.url))
+        return NextResponse.redirect(new URL("/dashboard", request.url))
 
-    // }
+    }
 
     const response = NextResponse.next()
 

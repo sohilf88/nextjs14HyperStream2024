@@ -18,17 +18,19 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { errorHandler } from "@/hooks/useTableHook"
+import { userDetail } from "@/typescript.definations"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { toast } from "sonner"
 
 
 export type user={id:string,username:string,email:string,roles:string}
+
 type propsType={
-    user:user,
+    userData:user,
     
     open:Boolean,
-    setIsopen:(open:Boolean)=>{},
+    setIsopen:Dispatch<SetStateAction<boolean>>,
     getAllUsers:()=>{}
 }
 
@@ -55,14 +57,18 @@ const roleAndAttribute:{label:string,value:string,accessType:string,description:
         description:"User Camera DashBoard"
     }
 ]
+<<<<<<< HEAD
 export default function ChangeProfile({open,setIsopen,user,getAllUsers}:any) {
+=======
+export default function ChangeProfile({open,setIsopen,userData,getAllUsers}:propsType) {
+>>>>>>> 15-formImprovement
     const router=useRouter()
     
     const [profile,setProfile]=useState({
-        username:user.username,
-        email:user.email,
-        roles:user.roles,
-        id:user.id
+        username:userData.username,
+        email:userData.email,
+        roles:userData.roles,
+        id:userData.id
       
     })
     const [value,setValue]=useState<string |null>(profile.roles)
@@ -113,7 +119,7 @@ export default function ChangeProfile({open,setIsopen,user,getAllUsers}:any) {
       }
 
     }
-    console.log(value)
+    // console.log(value)
 
      async function handleUserForm(event: React.FormEvent<HTMLFormElement>){
       event.preventDefault()

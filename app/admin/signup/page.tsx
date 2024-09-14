@@ -5,10 +5,9 @@ import Link from "next/link"
 import { useState } from "react"
 import { toast } from 'sonner';
 import { errorHandler } from '@/hooks/useTableHook';
-
 import { useRouter } from "next/navigation"
-
 import {axiosAuth} from '@/app/lib/axios';
+<<<<<<< HEAD
 
 
 
@@ -20,13 +19,45 @@ function SignUPFrom() {
     const router=useRouter()
  
     async function onSubmit(formData:FormData){
+=======
+import { useAppDispatch } from '@/reduxtoolkit/store/Hooks';
+
+
+
+function signupForm() {
+  
+   
+  
+  
+    const [capslock,setCapsLock] =useState(false)
+
+ 
+    const router=useRouter()
+   const dispatch=useAppDispatch()
+
+    async function onSubmit(event: React.FormEvent<HTMLFormElement >){
+      const formData=new FormData(event.currentTarget)
+      event.preventDefault()
+      // get all formData with for of
+      // for (let[key,value] of formData.entries()){
+        
+      //   {key:value}
+      // }
+>>>>>>> 15-formImprovement
       const username=formData.get("username")
       const email=formData.get("email")
       const password=formData.get("password")
       const confirmPassword=formData.get("confirmPassword")
       const roles=formData.get("roles")
+<<<<<<< HEAD
     
        console.log( username,email,password,confirmPassword,roles) 
+=======
+      const isActive=true
+      //  console.log(username,email,password,confirmPassword,roles,isActive)
+        
+        
+>>>>>>> 15-formImprovement
         try {
           const response=await axiosAuth.post("auth/signup",{
           username,email,password,confirmPassword,roles
@@ -63,11 +94,19 @@ function SignUPFrom() {
         <h1 className='mb-5 font-sans text-center leading-7 font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl text-purple-900'>create new user</h1>
         <form  action={onSubmit} className='flex flex-col gap-6 ' >
           <div className='space-y-3'>
+<<<<<<< HEAD
             <TextField name="username"  label="username" required={true} fullWidth type='text' color='secondary' placeholder='Enter Username'></TextField>
          <TextField  name="email" label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
          <TextField  onKeyUp={handleKeyPress}  name="password"  label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
           ></TextField>
            <TextField  onKeyUp={handleKeyPress}  name="confirmPassword"  label=" confirmPassword" required={true} fullWidth type='password' color='secondary' placeholder='confirm password'
+=======
+            <TextField name="username"  label="username"  required={true} fullWidth type='text' color='secondary' placeholder='Enter Username'></TextField>
+         <TextField  name="email" label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
+         <TextField  onKeyUp={handleKeyPress} name="password" label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
+          ></TextField>
+           <TextField  onKeyUp={handleKeyPress}name="confirmPassword"  label="confirmPassword" required={true} fullWidth type='password' color='secondary' placeholder='confirm password'
+>>>>>>> 15-formImprovement
           ></TextField>
           <div onKeyUp={handleKeyPress} className=' text-right px-2 py-2 text-xs'>
            {
@@ -80,7 +119,11 @@ function SignUPFrom() {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="roles"
+<<<<<<< HEAD
         
+=======
+       
+>>>>>>> 15-formImprovement
         
       >
         <FormControlLabel value="user" control={<Radio />} label="User" />
@@ -105,4 +148,8 @@ function SignUPFrom() {
   )
 }
 
+<<<<<<< HEAD
 export default SignUPFrom
+=======
+export default signupForm
+>>>>>>> 15-formImprovement
