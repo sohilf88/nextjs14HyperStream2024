@@ -5,7 +5,7 @@ import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, IconButton} from "@mui/material";
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, IconButton, Badge} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
@@ -23,8 +23,12 @@ import { axiosAuth } from "@/app/lib/axios";
 import axios from "axios"
 import { toast } from "sonner";
 import { useFormStatus } from "react-dom";
+import RecyclingTwoToneIcon from '@mui/icons-material/RecyclingTwoTone';
+import { GrAttachment } from "react-icons/gr";
+import DeleteTwoTone from "@mui/icons-material/DeleteTwoTone";
 
 function SimpleTable() {
+  const {role}=useAppSelector((store)=>store.root.userRole)
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
  
   const [gridReady, setGridReady] = useState(null);
@@ -32,7 +36,7 @@ function SimpleTable() {
     const [isSelected,setIsSelected]=useState(false)
     const [isDeleted,setIsDeleted]=useState(false)
   const dispatch = useAppDispatch();
-
+ 
 // multiple Camera delete Function
 async function deleteMultipleCameras(){
   let deleteMultiples=[] as string[]
@@ -111,21 +115,26 @@ async function deleteMultipleCameras(){
   const {pending}=useFormStatus()
   return (
     <>
-      <label htmlFor="file" className="block">
-     
-      <span className="sr-only">choose csv</span>
-      <input name="file"  id="file" type="file" className="block w-full text-sm text-gray-300
+    
+      <label htmlFor="file" className="flex items-center gap-2 text-white">
+        
+       
+      <GrAttachment className="w-6 h-6 "/>click
+      <input required  name="file"  id="file" type="file" className="hidden w-full  text-sm text-gray-300
         file:me-4 file:py-2 file:px-6
         file:rounded-sm file:border-1
         file:text-sm file:font-semibold
         file:bg-blue-600 file:text-white
         hover:file:bg-blue-700
         file:disabled:opacity-50 file:disabled:pointer-events-none
+        
              
       "/>
       
     </label>
-    <Button size="large" type="submit" disabled={pending} color="error" variant="text">{pending ?"uploading...":"upload"}</Button>
+    
+    
+    <Button size="large" type="submit" disabled={pending} color="warning" variant="text">{pending ?"uploading...":"upload csv"}</Button>
     </>
   )
  }
@@ -229,51 +238,50 @@ if(rowSelected!=null && rowSelected.length >0){
   return (
     <>
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
+    
      
-      <Stack  direction="row" spacing={3}>
-        <Stack  direction="row" alignItems={"center"} >
+     <main className="flex gap-5 items-center ">
+        <section></section>
+    
+    
+              
+
          
-        <div className="max-w-xs shadow-inner ">
-  <form className="flex" action={onSubmit}>
+  <form className="flex max-w-xs" action={onSubmit}>
     <Fileupload></Fileupload>
      
-    {/* <label htmlFor="file" className="block">
      
-      <span className="sr-only">choose csv</span>
-      <input id="file" type="file" className="block w-full text-sm text-gray-400
-        file:me-4 file:py-2 file:px-4
-        file:rounded-lg file:border-0
-        file:text-sm file:font-semibold
-        file:bg-blue-600 file:text-white
-        hover:file:bg-blue-700
-        file:disabled:opacity-50 file:disabled:pointer-events-none
-       
-       
-       
-      "/>
-      
-    </label>
-    <Button color="inherit" variant="text">upload</Button> */}
-     
-   
   </form>
-</div>
-          
+ <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
+  
         
           
          
-        </Stack>
-        <Stack justifyContent={"flex-end"} direction={"row"} spacing={3} flex={1}>
-          <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
-      
-      <Button
+     
+      <div className=" flex flex-1 gap-5  justify-end">
+    <Button
       disabled={!isSelected}
          onClick={
         playselectedCamerasinNewTabOnClick
     } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
       <Button  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
-      <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>{isDeleted?"deleting...":"Delete many"}</Button>
-        </Stack>
+    </div>       
+    
+        <div className="  justify-end flex gap-5" >
+          
+           <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>{isDeleted?"deleting...":"Delete many"}</Button>
+                    <Badge badgeContent={1} color="success">
+  
+
+      <Fab href={"#"} LinkComponent={Link} color="error" size="small" aria-label="RecyclingTwoTone">
+  <DeleteTwoTone />
+</Fab>
+</Badge>
+      
+      
+     
+     
+        </div>
       
       
  
@@ -281,7 +289,8 @@ if(rowSelected!=null && rowSelected.length >0){
      
       
       
-      </Stack>
+      </main>
+      
     </div>
     
     <div className="ag-theme-quartz-dark shadow-lg" style={{ height: height }}>

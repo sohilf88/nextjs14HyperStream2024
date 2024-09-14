@@ -95,7 +95,7 @@ const handleCloseOnClick=()=>{
           variant="outlined"
           fullWidth
         />
-       <Switch  onChange={handleClick} checked={isActive} name="isActive" />
+       {/* <Switch  onChange={handleClick} checked={isActive} name="isActive" /> */}
       
    
  

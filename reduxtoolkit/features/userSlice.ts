@@ -4,7 +4,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
 
-    roles: ["user"]
+    role: "user"
 
 }
 
@@ -13,8 +13,8 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
 
-        handleUserRoles: (state, action: PayloadAction<[]>) => {
-            state.roles = action.payload
+        handleUserRoles: (state, action: PayloadAction<string>) => {
+            state.role = action.payload
         },
 
 
