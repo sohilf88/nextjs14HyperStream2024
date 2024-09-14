@@ -5,11 +5,7 @@ import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
-<<<<<<< HEAD
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, IconButton, Badge} from "@mui/material";
-=======
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel} from "@mui/material";
->>>>>>> 15-formImprovement
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel, Badge} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
@@ -28,8 +24,9 @@ import axios from "axios"
 import { toast } from "sonner";
 import { useFormStatus } from "react-dom";
 import RecyclingTwoToneIcon from '@mui/icons-material/RecyclingTwoTone';
-import { GrAttachment } from "react-icons/gr";
+// import { GrAttachment } from "react-icons/gr";
 import DeleteTwoTone from "@mui/icons-material/DeleteTwoTone";
+import Link from "next/link";
 
 function SimpleTable() {
   const {role}=useAppSelector((store)=>store.root.userRole)
@@ -123,7 +120,7 @@ async function deleteMultipleCameras(){
       <label htmlFor="file" className="flex items-center gap-2 text-white">
         
        
-      <GrAttachment className="w-6 h-6 "/>click
+      <DriveFolderUploadTwoToneIcon className="w-6 h-6 "/>click
       <input required  name="file"  id="file" type="file" className="hidden w-full  text-sm text-gray-300
         file:me-4 file:py-2 file:px-6
         file:rounded-sm file:border-1
@@ -234,7 +231,6 @@ if(rowSelected!=null && rowSelected.length >0){
     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
     
      
-<<<<<<< HEAD
      <main className="flex gap-5 items-center ">
         <section></section>
     
@@ -255,14 +251,6 @@ if(rowSelected!=null && rowSelected.length >0){
      
       <div className=" flex flex-1 gap-5  justify-end">
     <Button
-=======
-      <Stack justifyContent={"end"}  direction="row" spacing={3}>
-      
-       
-      <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
-      
-      <Button
->>>>>>> 15-formImprovement
       disabled={!isSelected}
          onClick={
         playselectedCamerasinNewTabOnClick

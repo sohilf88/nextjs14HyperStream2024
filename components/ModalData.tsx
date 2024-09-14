@@ -16,12 +16,8 @@ const style = {
   p: 4,
 };
 
-<<<<<<< HEAD
-function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
-=======
 
-function ModalData({handleFormSubmit,handleClick,formData,setFormData}:modalProps) {
->>>>>>> 15-formImprovement
+function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
   
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();

@@ -98,13 +98,6 @@ function useTableHook() {
       }
         
         
-<<<<<<< HEAD
-        // console.log(response.data)
-    
-        // setRowData(response.data.message);
-        // console.log(rowData)
-=======
->>>>>>> 15-formImprovement
       
     } catch (error) {
       errorHandler(error)
