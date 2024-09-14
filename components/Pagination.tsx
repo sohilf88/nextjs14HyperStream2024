@@ -61,16 +61,9 @@ function PaginationClient({hasNext,hasPrevious,data}:{
           
          
       
-<<<<<<< HEAD
           <option className="text-center" defaultValue={8} value={8}>08-Cameras</option>
           <option  className="text-center" value={6}>06-Cameras</option>
           <option  className="text-center" value={12}>12-Cameras</option>
-=======
-          <option className="text-center" defaultValue={8} value="8">08-Cameras</option>
-          <option  className="text-center" value="6">06-Cameras</option>
-          <option  className="text-center" value="15">15-Cameras(2K Screen)</option>
-          <option  className="text-center" value="24">24-Cameras(4K Screen)</option>
->>>>>>> 15-formImprovement
         </select>
         {/* search by district, taluka or name or city */}
 

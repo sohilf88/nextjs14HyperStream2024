@@ -46,20 +46,7 @@ useEffect(()=>{
 },[page,limit])
 
  
-<<<<<<< HEAD
   const hasNext=(end < data.totalCount)
-=======
-  const page = searchParams['page'] ?? '1'
-  const limit = searchParams['limit'] ?? '8'
- 
- const gridLimit=Number(limit)/2
-  const start=(Number(page)-1)*(Number(limit))
-  const end=start+Number(limit)
- 
-  const response=await axiosAuth.get(`/camera/filtered?page=${page}&limit=${limit}`,{withCredentials:true})
-  // console.log(response)
- const hasNext=(end < response.data.totalCount)
->>>>>>> 15-formImprovement
  const hasPrevious=(start>0)
 
   
@@ -76,11 +63,7 @@ return (
     </div>
    
   </div>
-<<<<<<< HEAD
-  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-3  mx-1   `}>
-=======
-  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} 3xl:grid-cols-5 gap-x-1 gap-y-3  mx-1  `}>
->>>>>>> 15-formImprovement
+  <div className={`grid ${gridLimit===3?"grid-cols-3":"lg:grid-cols-4"} gap-x-1 gap-y-3  mx-1  `}>
       
    {
     data && data.message.map((item:camera)=>(
@@ -89,11 +72,7 @@ return (
       </div>
     ))
    }
-<<<<<<< HEAD
-  
-=======
     
->>>>>>> 15-formImprovement
   </div>
      
   </main>
