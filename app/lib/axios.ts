@@ -9,7 +9,8 @@ export default axios.create({
 });
 
 export const axiosAuth = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_URL,
+    // baseURL: process.env.NEXT_PUBLIC_URL,
+    baseURL: " http://ec2-13-127-159-109.ap-south-1.compute.amazonaws.com/api/v1/",
 
     // headers: {
     //     "Content-Type": "application/json",
@@ -22,15 +23,15 @@ export const axiosAuth = axios.create({
 
 axiosAuth.interceptors.response.use(
     (response) => {
-        
+
         // return normal response as it is
-        
+
         return response;
     },
     async function (error) {
         const originalRequest = error.config;
         // console.log(error.response.data.message)
-        if (error.response.status === 401  && !originalRequest.sent) {
+        if (error.response.status === 401 && !originalRequest.sent) {
             originalRequest.sent = true;
 
             try {
@@ -52,7 +53,7 @@ export const generateNewAccessToken = async () => {
         if (isAxiosError(error) && error.response?.data) {
             const errorResponse = error.response.data as customError
             toast.error(errorResponse.message)
-            
+
 
         }
 
