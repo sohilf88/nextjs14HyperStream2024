@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose, handleOpen,handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
-import {  isAxiosError } from "axios";
+import axios, {  isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from 'sonner';
 
@@ -41,8 +41,10 @@ export function errorHandler(error:unknown){
 
 function useTableHook() {
   const {id}=useAppSelector((store)=>store.root.cameras)
-  const {roles}=useAppSelector((store)=>store.root.userRole)
+
+  const {role}=useAppSelector((store)=>store.root.userRole)
   // const [roles,setRoles]=useState("user")
+
   const router=useRouter()
     const dispatch = useAppDispatch();
     const initialState={
@@ -75,13 +77,13 @@ function useTableHook() {
    const getAllCameraDataFromBackEnd = async () => {
     // console.log(id)
     try {
-      if(roles.includes("root") && !id){
+      if(role==="root" && !id){
         const response=await axiosAuth.get(`admin/cameras/all`)
         
       //  console.log(response.data)
         setRowData(response.data.message);
       }
-      else if(roles.includes("root") && id!==null){
+      else if(role==="root" && id!==null){
         const response=await axiosAuth.get(`admin/cameras/specific?userId=${id}`)
         
       //  console.log(response.data)
@@ -89,13 +91,20 @@ function useTableHook() {
       }
        
       else {
-        const response=await axiosAuth.get("/camera")
+        const response=await axiosAuth.get(`/camera?isActive=true`)
         
         // console.log(response.data)
         setRowData(response.data.message);
       }
         
         
+<<<<<<< HEAD
+        // console.log(response.data)
+    
+        // setRowData(response.data.message);
+        // console.log(rowData)
+=======
+>>>>>>> 15-formImprovement
       
     } catch (error) {
       errorHandler(error)
@@ -130,7 +139,7 @@ function useTableHook() {
       }
 
       }else{
-        const response= await axiosAuth.post("camera",{
+        const response= await axiosAuth.post("/camera",{
         name:formData.name,
         district:formData.district,
         taluka:formData.taluka,
@@ -155,6 +164,7 @@ function useTableHook() {
     
   }
 
+  // disable camera and move into trash
   async function deleteSingleCamera(_id:string){
 
         try {
@@ -172,8 +182,9 @@ function useTableHook() {
     }
     
   }
+// deleteMultiple Cameras in 
 
-  
+
 // this function is used to get previous data from AG Grid event in Action Component 
    function handleDataUpdateOnEditButton (paramsPreviousData:any)  {
     

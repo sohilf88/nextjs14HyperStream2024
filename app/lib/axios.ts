@@ -52,8 +52,12 @@ export const generateNewAccessToken = async () => {
         if (isAxiosError(error) && error.response?.data) {
             const errorResponse = error.response.data as customError
             toast.error(errorResponse.message)
+<<<<<<< HEAD
+            // error.response.headers["set-cookie"]
+=======
             
 
+>>>>>>> 15-formImprovement
         }
 
     }

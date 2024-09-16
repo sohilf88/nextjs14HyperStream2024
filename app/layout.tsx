@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Providers from "./../reduxtoolkit/store/ClientProvider";
 import { Toaster } from 'sonner';
 
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-800">
+      <body className="bg-gradient-to-bl from-neutral-400 via-zinc-600 to-zinc-700">
        
         <Providers>
          

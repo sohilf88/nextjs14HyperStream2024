@@ -1,10 +1,8 @@
-'use client'
+
 
 import { FC } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Button } from '@mui/material'
-import ArrowRightTwoToneIcon from '@mui/icons-material/ArrowRightTwoTone';
-import ArrowLeftTwoToneIcon from '@mui/icons-material/ArrowLeftTwoTone';
+
 interface PaginationControlsProps {
   hasNextPage: boolean
   hasPrevPage: boolean
@@ -24,6 +22,7 @@ const PaginationControls: FC<PaginationControlsProps> = (
   const page = searchParams.get('page') ?? '1'
   const per_page = 6
   const end=Math.ceil(Number(totalCount)/Number(per_page))
+  // console.log(page)
   return (
 
     <div className="max-w-lg flex justify-center mx-auto mt-1">

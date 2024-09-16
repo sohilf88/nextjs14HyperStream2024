@@ -1,13 +1,15 @@
+<<<<<<< HEAD
+"use server"
+import { redirect } from 'next/navigation'
+=======
 
+>>>>>>> 15-formImprovement
 const userDashboard = async() => {
   
-return (
-    <div>
-     home
-     
-    
-    </div>
-  );
+
+redirect("/dashboard")
+
+return;
 };
 
 export default userDashboard;

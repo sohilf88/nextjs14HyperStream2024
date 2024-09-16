@@ -11,7 +11,7 @@ export default function UserLayout({
 }) {
   return (
     <html lang="en">
-      <body className=" bg-zinc-700">
+      <body className="bg-zinc-600">
         
          
           {children}

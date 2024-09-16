@@ -148,7 +148,7 @@ function ResponsiveAppBar() {
                href={`/${page}`}
                 key={page}
                 // onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "yellow", display: "block" }}
+                sx={{ my: 2, color: "whitesmoke", display: "block" }}
               >
                 {page}
               </Button>
@@ -183,13 +183,7 @@ function ResponsiveAppBar() {
                   <Button component={Link} href={"/auth/profile"}>Profile</Button>
                   {/* <Button component={Link} href={"/dashboard/import"}>bulk import</Button> */}
                 </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                  {/* <Button component={Link} href={"/auth/profile"}>Profile</Button> */}
-                  <Button component={Link} href={"/dashboard/bulk-import"}>Bulk import</Button>
-                </MenuItem>
-                 
-                    
-                 
+                
                     <MenuItem onClick={handleCloseUserMenu}> 
                     <Button onClick={Logout}>Logout</Button>
                     </MenuItem>

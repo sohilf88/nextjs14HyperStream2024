@@ -7,7 +7,11 @@ import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import { useState,useEffect } from "react";
 import { axiosAuth } from "../lib/axios";
 import Link from "next/link";
+<<<<<<< HEAD
+import { user, usersData } from "@/typescript.definations";
+=======
 import { user, userDetail, usersData } from "@/typescript.definations";
+>>>>>>> 15-formImprovement
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
 import { errorHandler } from "@/hooks/useTableHook";222
@@ -53,7 +57,7 @@ const getAllUsers=async()=>{
 }
 
   } catch (error) {
-    console.log(error)
+    // console.log(error)
   //  need to add error status condition below
     if(isAxiosError(error) && error.response?.status===403){
      setErrorState(!errorState)
@@ -196,7 +200,16 @@ return (
          <Button color="secondary" variant="contained" type="button" value={user._id} onClick={(e)=>onClickAndDisable(e.currentTarget.value)} startIcon={<NoAccountsTwoToneIcon/>}>disable account</Button>
          <Button variant="contained" component={Link} href={`/dashboard/${user._id}`} color="success" startIcon={<VideoCameraFrontTwoToneIcon/>}>cameras</Button>
          </div>
+<<<<<<< HEAD
+         
+        
+         
+      
+           
+          </form>
+=======
         </form>
+>>>>>>> 15-formImprovement
 
       )):<><div className="bg-white w-full h-full">No Access</div></>
     }

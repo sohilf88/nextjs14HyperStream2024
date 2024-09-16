@@ -16,8 +16,12 @@ const style = {
   p: 4,
 };
 
+<<<<<<< HEAD
+function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
+=======
 
 function ModalData({handleFormSubmit,handleClick,formData,setFormData}:modalProps) {
+>>>>>>> 15-formImprovement
   
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();
@@ -98,7 +102,7 @@ const handleCloseOnClick=()=>{
           variant="outlined"
           fullWidth
         />
-       <Switch  onChange={handleClick} checked={isActive} name="isActive" />
+       {/* <Switch  onChange={handleClick} checked={isActive} name="isActive" /> */}
       
    
  

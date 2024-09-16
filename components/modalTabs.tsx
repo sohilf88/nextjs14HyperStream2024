@@ -57,7 +57,11 @@ const roleAndAttribute:{label:string,value:string,accessType:string,description:
         description:"User Camera DashBoard"
     }
 ]
+<<<<<<< HEAD
+export default function ChangeProfile({open,setIsopen,user,getAllUsers}:any) {
+=======
 export default function ChangeProfile({open,setIsopen,userData,getAllUsers}:propsType) {
+>>>>>>> 15-formImprovement
     const router=useRouter()
     
     const [profile,setProfile]=useState({
