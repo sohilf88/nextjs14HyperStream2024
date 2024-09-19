@@ -9,8 +9,8 @@ export default axios.create({
 });
 
 export const axiosAuth = axios.create({
-    // baseURL: process.env.NEXT_PUBLIC_URL,
-    baseURL: "http://ec2-13-127-159-109.ap-south-1.compute.amazonaws.com/api/v1/",
+    baseURL: process.env.NEXT_PUBLIC_URL,
+    
 
     // headers: {
     //     "Content-Type": "application/json",

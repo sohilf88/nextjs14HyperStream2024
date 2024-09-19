@@ -29,7 +29,7 @@ import { toast } from 'sonner'
 
     }
     } catch (error:unknown) {
-      console.log(error)
+      // console.log(error)
       
       errorHandler(error)
     }

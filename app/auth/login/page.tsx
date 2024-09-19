@@ -12,17 +12,19 @@ import {axiosAuth} from '@/app/lib/axios';
 import { AxiosError, isAxiosError } from 'axios';
 import { customError } from '@/typescript.definations';
 import useTableHook from '@/hooks/useTableHook';
-import { useAppDispatch } from '@/reduxtoolkit/store/Hooks';
+import { useAppDispatch,useAppSelector } from '@/reduxtoolkit/store/Hooks';
 import { handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 import { useFormStatus } from 'react-dom';
 
 
 function Login() {
+    const router=useRouter()
+    const {role}=useAppSelector((store)=>store.root.userRole)
+   if(role!==""){
+    router.push("/dashboard")
+   }
 
-    
-
-
-   const router=useRouter()
+  
    const dispatch=useAppDispatch()
     async function onSubmit(formData:FormData){
       // const formData=new FormData(event.currentTarget)
@@ -38,7 +40,7 @@ function Login() {
         if(response.data?.success ){
           // console.log(response.data.data.roles.includes("root"))
          dispatch(handleUserRoles(response.data.data.roles))
-         if(response.data.data.roles.includes("root")){
+         if(response.data.data.roles==="root"){
           router.push("/admin")
          }else{
            router.push("/dashboard")

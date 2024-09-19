@@ -17,6 +17,7 @@ export async function middleware(request: NextRequest) {
     const jwtCookies = cookies()
 
     // console.log((jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/"))
+    console.log(jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess"))
 
     if (jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/auth/login") {
 
@@ -61,6 +62,7 @@ export async function middleware(request: NextRequest) {
 
     //     }
     // }
+    
 
     if (!jwtCookies.has("jwtAccess") && !jwtCookies.has("jwtRe")) {
         return NextResponse.redirect(new URL("/auth/login", request.url))
@@ -73,5 +75,5 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-    matcher: ["/admin/:page*", "/user/:page*", "/dashboard", "/"]
+    matcher: ["/admin/:page*", "/user/:page*", "/dashboard", "/", ]
 }

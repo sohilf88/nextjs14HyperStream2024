@@ -4,15 +4,14 @@ import { useState,useEffect } from "react";
 
 import Link from "next/link";
 import { user, usersData } from "@/typescript.definations";
-import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
-import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
+
 import { errorHandler } from "@/hooks/useTableHook";
 import { Modal,IconButton, Button, Typography, Box, Input, TextField, Fab } from "@mui/material";
-import CameraTwoToneIcon from '@mui/icons-material/CameraTwoTone';
+
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import NoAccountsTwoToneIcon from '@mui/icons-material/NoAccountsTwoTone';
 import VideoCameraFrontTwoToneIcon from '@mui/icons-material/VideoCameraFrontTwoTone';
-import UnfoldMoreDoubleTwoToneIcon from '@mui/icons-material/UnfoldMoreDoubleTwoTone';
+
 import KeyboardReturnTwoToneIcon from '@mui/icons-material/KeyboardReturnTwoTone';
 
 import ChangeProfile from "@/components/modalTabs";
@@ -37,13 +36,15 @@ const getAllDisableUsers=async()=>{
   try {
   const response=await axiosAuth.get("/admin/users?isActive=false")
 
+  // console.log(response.data?.message.length!==0)
+
  if(response.data){
   setUsers(response.data)
  
 }
 
   } catch (error) {
-    console.log(error)
+    // console.log(error)
   //  need to add error status condition below
     if(isAxiosError(error) && error.response?.status===401){
      setErrorState(!errorState)
@@ -119,7 +120,7 @@ async function onClickRestoreUser(userid:string){
      }
     // console.log(response)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     errorHandler(error)
   }
 
@@ -186,8 +187,8 @@ return (
     </div>
     
    
-    {
-      users ? users.message.map((user:user)=>(
+   
+      {(users?.message.length !==0) ? (users?.message.map((user:user)=>(
         <form
         className=" rounded-sm bg-slate-600 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5   transition-all duration-100 xl:hover:scale-[1.01] last:mb-10 shadow-2xl h-full"
          key={user._id}>
@@ -232,8 +233,8 @@ return (
            
           </form>
 
-      )):<><div className="bg-white w-full h-full">No Access</div></>
-    }
+      ))):(<div className="md:text-2xl flex items-center w-full uppercase  lg:text-3xl"> <span className="text-7xl">🤪</span> No disabled user</div>)}
+    
   
    </section>
    
@@ -241,7 +242,7 @@ return (
       <Box>
         <ChangeProfile getAllUsers={getAllDisableUsers} user={user} open={open} setIsopen={setIsopen}/>
         </Box>
-       </Modal> *
+       </Modal> 
    
   </main>
   </>

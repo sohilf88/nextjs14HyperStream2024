@@ -12,30 +12,34 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+
 import StreamIcon from '@mui/icons-material/Stream';
 import Link from "next/link";
 import { axiosAuth } from "@/app/lib/axios";
 import { useRouter } from "next/navigation";
 import { errorHandler } from "@/hooks/useTableHook";
-import { Paper, Stack } from "@mui/material";
+import { useAppDispatch } from "@/reduxtoolkit/store/Hooks";
+import { handleUserRoles } from "@/reduxtoolkit/features/userSlice";
+
 
 const pages = ["dashboard", "admin"];
 
 
 function ResponsiveAppBar() {
+  const dispatch=useAppDispatch()
  const router=useRouter()
   async function Logout(){
     try {
       const response= await axiosAuth.post("/auth/logout",{"withCredentials":true})
-      console.log(response)
+      // console.log(response)
       if(response.status===200){
+        dispatch(handleUserRoles(""))
         router.push("/auth/login")
       }
       
     } catch (error:unknown) {
       errorHandler(error)
-      // console.log(error.message)
+      
     }
    
   }

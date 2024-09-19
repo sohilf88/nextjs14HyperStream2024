@@ -5,7 +5,7 @@ import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
 import { useState, useEffect } from "react";
 
-import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel, Badge} from "@mui/material";
+import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel, Badge, Tooltip} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
@@ -23,14 +23,13 @@ import { axiosAuth } from "@/app/lib/axios";
 import axios from "axios"
 import { toast } from "sonner";
 import { useFormStatus } from "react-dom";
-import RecyclingTwoToneIcon from '@mui/icons-material/RecyclingTwoTone';
-// import { GrAttachment } from "react-icons/gr";
+
 import DeleteTwoTone from "@mui/icons-material/DeleteTwoTone";
 import Link from "next/link";
 
 function SimpleTable() {
   const {role}=useAppSelector((store)=>store.root.userRole)
-  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]=useTableHook()
+  const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,disableSelectedCamera,setRowData,]=useTableHook()
  
   const [gridReady, setGridReady] = useState<AgGridEvent>();
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
@@ -91,7 +90,7 @@ async function deleteMultipleCameras(){
   // file upload function
    const onSubmit = async (formData:FormData) => {
     const file=formData.get("file")
-    console.log(file)
+    // console.log(file)
     if (!file) return
 
     try {
@@ -99,7 +98,7 @@ async function deleteMultipleCameras(){
       
       data.set('file', file)
      const response =await axiosAuth.post("/camera/bulk-import",data)
-      console.log(response.data)
+      // console.log(response.data)
      if(response.data){
       // @ts-ignore
      await getAllCameraDataFromBackEnd()
@@ -117,11 +116,12 @@ async function deleteMultipleCameras(){
   return (
     <>
     
-      <label htmlFor="file" className="flex items-center gap-2 text-white">
+      <label htmlFor="file" className="flex items-center  text-white">
         
-       
-      <DriveFolderUploadTwoToneIcon className="w-6 h-6 "/>click
-      <input required  name="file"  id="file" type="file" className="hidden w-full  text-sm text-gray-300
+       <Tooltip arrow title="click to upload csv">
+      {/* <DriveFolderUploadTwoToneIcon className="w-6 h-6 "/> */}
+      
+      <input required  name="file"  id="file" type="file" className="w-full  text-sm text-gray-300
         file:me-4 file:py-2 file:px-6
         file:rounded-sm file:border-1
         file:text-sm file:font-semibold
@@ -131,11 +131,16 @@ async function deleteMultipleCameras(){
         
              
       "/>
+      </Tooltip>
       
     </label>
     
     
-    <Button size="large" type="submit" disabled={pending} color="warning" variant="text">{pending ?"uploading...":"upload csv"}</Button>
+    <Tooltip title="click to uplad" arrow placement="bottom-end">
+      <span>
+    <Button size="large" type="submit" disabled={pending} color="warning" variant="text">{pending ?"uploading...":"upload"}</Button>
+    </span>
+    </Tooltip>
     </>
   )
  }
@@ -174,7 +179,8 @@ async function deleteMultipleCameras(){
       editable: false,
       maxWidth: 150,
       cellRenderer: (parmas:ValueGetterParams) => {
-        return <Actions deleteCamera={deleteSingleCamera} handleDataUpdateOnEditButton={handleDataUpdateOnEditButton} params={parmas} />;
+        
+        return <Actions getUser={getAllCameraDataFromBackEnd} deleteCamera={deleteSingleCamera} handleDataUpdateOnEditButton={handleDataUpdateOnEditButton}  params={parmas} />;
       },
     },
   ]);
@@ -189,7 +195,7 @@ async function deleteMultipleCameras(){
   
   }
 
-  // console.log(rowSelected)
+
   // get no.of selected rows and add into ReduxToolkit
   function getSelectedRowsByCheckBox(event: AgGridEvent) {
     setRowSelected(event.api.getSelectedRows())
@@ -213,6 +219,11 @@ function playselectedCamerasinNewTabOnClick(){
   window.open('/user/selected', '_blank', 'noopener')
 
 }
+// function disabledCamera(){
+//   dispatch(handlePlayAllCameras(false))
+//   window.open('/dashboard/disabled', '_blank', 'noopener')
+
+// }
 
 // check length of selected cameras is 0 or not
 
@@ -261,14 +272,16 @@ if(rowSelected!=null && rowSelected.length >0){
         <div className="  justify-end flex gap-5" >
           
            <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>{isDeleted?"deleting...":"Delete many"}</Button>
+        
+            {/* <Tooltip title="Recycle bin">
                     <Badge badgeContent={1} color="success">
-  
+ 
 
-      <Fab href={"#"} LinkComponent={Link} color="error" size="small" aria-label="RecyclingTwoTone">
+      <Fab onClick={disabledCamera} color="error" size="small" aria-label="RecyclingTwoTone">
   <DeleteTwoTone />
 </Fab>
 </Badge>
-      
+          </Tooltip> */}
       
      
      

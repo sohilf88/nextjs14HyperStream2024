@@ -75,7 +75,10 @@ function useTableHook() {
   
 // fetch All Camera Details from backend database 
    const getAllCameraDataFromBackEnd = async () => {
-    // console.log(id)
+    let userRole=["root","admin"]
+
+
+    console.log(id, role)
     try {
       if(role==="root" && !id){
         const response=await axiosAuth.get(`admin/cameras/all`)
@@ -83,11 +86,14 @@ function useTableHook() {
       //  console.log(response.data)
         setRowData(response.data.message);
       }
-      else if(role==="root" && id!==null){
+      else if(role==="root" && id){
         const response=await axiosAuth.get(`admin/cameras/specific?userId=${id}`)
         
       //  console.log(response.data)
         setRowData(response.data.message);
+      // }else if(userRole.includes(role) && id?.[0]==="disabled"){
+      //   const response=await axiosAuth.get(`/camera?isActive=false`)
+      //   setRowData(response.data.message);
       }
        
       else {
@@ -175,8 +181,25 @@ function useTableHook() {
     }
     
   }
-// deleteMultiple Cameras in 
-
+// disable selected Cameras in 
+async function disableSelectedCamera(_id:string){
+        console.log("function triggerCamera")
+        try {
+       const response= await axiosAuth.patch(`/camera/disable/${_id}`,{isActive:false})
+       
+      if(response.data?.success){
+        
+         getAllCameraDataFromBackEnd()
+         toast.success(response.data.message)
+        
+      }
+        
+    } catch (error) {
+      errorHandler(error)
+    
+    }
+    
+  }
 
 // this function is used to get previous data from AG Grid event in Action Component 
    function handleDataUpdateOnEditButton (paramsPreviousData:any)  {
@@ -185,7 +208,7 @@ function useTableHook() {
     dispatch(handleOpen())
     dispatch(handleUpdate(true))
   }
-  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData]
+  return [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,setRowData,disableSelectedCamera]
     
   
 }

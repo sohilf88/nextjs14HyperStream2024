@@ -78,7 +78,7 @@ export default function userProfile() {
           confirmNewPassword:password.confirmNew
 
         })
-        console.log(response)
+        // console.log(response)
 
         if(response.data.success){
           toast.success(response.data?.message)

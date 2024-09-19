@@ -11,7 +11,7 @@ import { user, userDetail, usersData } from "@/typescript.definations";
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import AutoDeleteTwoToneIcon from '@mui/icons-material/AutoDeleteTwoTone';
 import { errorHandler } from "@/hooks/useTableHook";222
-import { Modal,IconButton, Button, Typography, Box, Input, TextField, Fab } from "@mui/material";
+import { Modal,IconButton, Button, Typography, Box, Input, TextField, Fab, Tooltip } from "@mui/material";
 import CameraTwoToneIcon from '@mui/icons-material/CameraTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
@@ -44,7 +44,7 @@ function admin() {
 
 const getAllUsers=async()=>{
   try {
-  const response=await axiosAuth.get("/admin/users?isActive=true")
+  const response=await axiosAuth.get(`/admin/users?isActive=true`)
   // console.log(response.data)
 
  if(response.data){
@@ -147,10 +147,13 @@ return (
           <span><Typography><PeopleAltTwoToneIcon/>{" "}ACTIVE-{(Number(users.message.length))}</Typography></span>
           <span><Typography><NoAccountsTwoToneIcon/>{" "}INACTIVE-{Number(users.totalUsers)-(Number(users.message.length))}</Typography></span>
         <Badge  badgeContent={Number(users.totalUsers)-(Number(users.message.length))} color="success" >
-        <Button variant="contained" color="secondary" startIcon={<AutoDeleteTwoToneIcon/>} component={Link} className=""  href="/admin/trash">trash</Button>
+          <Tooltip arrow title="click to see list of disable users">
+        <Button variant="contained" color="secondary" startIcon={<AutoDeleteTwoToneIcon/>} component={Link} className=""  href="/admin/trash">trash</Button></Tooltip>
         </Badge>
+        <Tooltip arrow title="create new user">
         <Button variant="contained" color="success"  startIcon={<PersonAddAltTwoToneIcon/>} component={Link} className="text-lg font-semibold hover:text-green-600"  href="/admin/signup">new user</Button>
-        {/* <Link className="text-lg font-semibold hover:text-green-500"  href="/admin/signup"><PersonAddAltTwoToneIcon></PersonAddAltTwoToneIcon> New User</Link> */}
+        </Tooltip>
+      
         </div>
         
       </div>
@@ -181,9 +184,11 @@ return (
           <div className="flex justify-between">
           <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s Profile `}</Typography>
           {/* <button type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>Edit</button> */}
+          <Tooltip arrow title="edit user">
           <IconButton  color="inherit" size="large"  aria-label="edit" type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>
   <EditTwoToneIcon />
 </IconButton>
+</Tooltip>
           </div>
           
         

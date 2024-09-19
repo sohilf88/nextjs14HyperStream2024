@@ -21,7 +21,7 @@ const gridLimit=Number(limit)/2
 const start=(Number(page)-1)*(Number(limit))
 const end=start+Number(limit)
 
-console.log(page,limit)
+// console.log(page,limit)
 const [data,setData]=useState<dataDetail>({
   success:false,
   message:[],

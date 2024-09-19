@@ -8,6 +8,7 @@ import ResponsiveAppBar from "@/components/Header";
 import { useAppDispatch } from "@/reduxtoolkit/store/Hooks";
 import { getUserId } from "@/reduxtoolkit/features/cameraSlice";
 import useTableHook from "@/hooks/useTableHook";
+import { useParams, useSearchParams } from "next/navigation";
 
 
 type paramsType={
@@ -18,7 +19,8 @@ type paramsType={
 
 
 const userDashboard = ({params}:paramsType) => {
-  const [getAllCameraDataFromBackEnd]=useTableHook()
+  //  const param=useParams()
+  //  console.log(param.id)
 
 const {id}=params
   
