@@ -42,26 +42,30 @@ async function deleteMultipleCameras(){
   let deleteMultiples=[] as string[]
   rowSelected && rowSelected.map((row:camera)=>{
     deleteMultiples?.push(row._id as string)
+   
   })
   try {
+    // console.log(deleteMultiples)
     setIsDeleted(true)
-     const response=await axios.all(deleteMultiples.map((id)=>(
-      axiosAuth.delete(`/camera/${id}`)
+//      const response=await axios.all(deleteMultiples.map((id)=>(
+//       axiosAuth.delete(`/camera/${id}`)
      
-  )
-)
-)
- 
-  
+//   )
+// )
+// )
+
+  const response=await axiosAuth.delete("/camera/deletemany",{data:{deleteMultiples}})
+  console.log(response.status)
   if(response){
     // @ts-ignore
     
     getAllCameraDataFromBackEnd()
     setIsDeleted(false)
-    toast.warning("camera deleted")
+    toast.error(` Removed successfully,Total deleted count =${response.data.message} `)
   }
     
   } catch (error) {
+    console.log(error)
     errorHandler(error)
   }
  
