@@ -1,4 +1,5 @@
 "use client"
+
 import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 // import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 // import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
@@ -65,7 +66,8 @@ async function deleteMultipleCameras(){
   }
     
   } catch (error) {
-    console.log(error)
+    // console.log(error)
+    setIsDeleted(false)
     errorHandler(error)
   }
  
@@ -153,6 +155,7 @@ async function deleteMultipleCameras(){
      getAllCameraDataFromBackEnd();
      handleWindowResize();
     window.addEventListener('resize', handleWindowResize);
+
     // unsubscribe from the event on component unmount
     return () => window.removeEventListener('resize', handleWindowResize);
   }, []);
@@ -163,25 +166,29 @@ async function deleteMultipleCameras(){
     flex: 1,
   });
 
-  
+  // socket configuration
+
+ 
+
   const [cameraColDefs, setCameraColDefs] = useState<ColDef[]>([
     {
-      field: "name",
+      field: "name",maxWidth:240,
       headerName: "Name",
-
+      
       checkboxSelection: true,
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
     },
-    { field: "district", headerName: "District" },
-    { field: "taluka", headerName: "Taluka" },
-    { field: "city", headerName: "City" },
-    { field: "area" },
+    { field: "district", headerName: "District", },
+    { field: "taluka", headerName: "Taluka"},
+    { field: "city", headerName: "City", },
+    { field: "area",maxWidth:360 },
     {
       field: "Action",
       filter: false,
       editable: false,
-      maxWidth: 150,
+      maxWidth: 240,
+      
       cellRenderer: (parmas:ValueGetterParams) => {
         
         return <Actions getUser={getAllCameraDataFromBackEnd} deleteCamera={deleteSingleCamera} handleDataUpdateOnEditButton={handleDataUpdateOnEditButton}  params={parmas} />;
@@ -240,6 +247,21 @@ if(rowSelected!=null && rowSelected.length >0){
   setIsSelected(false)
  }
   },[rowSelected])
+ 
+ 
+  // function runSocket(){
+  //  const socket=io("http://localhost:5000")
+  //  socket.on("connection",(data)=>{
+  //   socket.on("web",(data)=>{
+  //     console.log(data)
+  //   })
+  //  })
+  //  socket.emit("publish","rowSelected")
+   
+  // }
+  // useEffect(()=>{
+  //  runSocket()
+  // },[])
 
   return (
     <>
@@ -301,7 +323,7 @@ if(rowSelected!=null && rowSelected.length >0){
       
     </div>
     
-    <div className="ag-theme-quartz-dark shadow-lg" style={{ height: height }}>
+    <div className="ag-theme-quartz-dark shadow-lg" style={{ height: height,maxWidth:"90%",margin:"auto",textAlign:"center",textShadow:"revert-layer",color:"green" }}>
       
       <AgGridReact
         defaultColDef={defaultCols}

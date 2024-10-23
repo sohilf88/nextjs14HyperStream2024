@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     const jwtCookies = cookies()
 
     // console.log((jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/"))
-    console.log(jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess"))
+    // console.log(jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess"))
 
     if (jwtCookies.has("jwtRe") && jwtCookies.has("jwtAccess") && request.nextUrl.pathname === "/auth/login") {
 

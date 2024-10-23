@@ -78,14 +78,16 @@ function LoginForm() {
   }
 
 return (
-    <main className='px-2 max-w-full h-screen flex justify-center items-center bg-zinc-300'>
+  <div>
+   
+    <main className='bg-gradient-to-b from-orange-500 via-gray-50 to-emerald-700  px-2 max-w-full h-screen flex justify-center items-center'>
 
-      <div className='bg-white max-w-md md:max-w-lg w-full space-y-3 px-3 py-10 sm:py-12 sm:px-4 md:p-7 lg:py-12 shadow-md lg:drop-shadow-2xl rounded lg:max-w-2xl '>
-        <h1 className='mb-5 font-sans text-center leading-7 font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl text-purple-900'>Login Page</h1>
+      <div className='bg-white opacity-80  max-w-md md:max-w-lg w-full space-y-3 px-3 py-10 sm:py-12 sm:px-4 md:p-7 lg:py-12 shadow-md lg:drop-shadow-2xl rounded lg:max-w-2xl '>
+        <h1 className='mb-5 font-sans text-center leading-7 font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl italic'>Hyperstream Login Page</h1>
         <div className='flex flex-col gap-6 ' >
           <div className='space-y-3'>
-         <TextField name="email"  label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
-         <TextField name="password"  onKeyUp={handleKeyPress} label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
+         <TextField name="email"  label="Email" required={true} fullWidth type='email' color='primary' placeholder='Email your email id'></TextField>
+         <TextField name="password"  onKeyUp={handleKeyPress} label="Password" required={true} fullWidth type='password' color='primary' placeholder='Enter the password'
           ></TextField>
           <div onKeyUp={handleKeyPress} className=' text-right px-2 py-2 text-xs'>
            {
@@ -94,17 +96,18 @@ return (
           </div>
           
          </div>
-         <Button disabled={pending} size='large' fullWidth variant='contained' color='secondary' type='submit'>{`${pending ?"Loading...":"Login"}`}</Button>
+         <Button disabled={pending} size='large' fullWidth variant='contained' color='primary' type='submit'>{`${pending ?"Loading...":"Login"}`}</Button>
          
         </div>
         <div className='text-right'>
-          <span className='text-purple-700 font-base text-base'><Link href="/auth/forgot-password">Forgot password? </Link></span>
+          <span className='text-blue-600 hover:text-blue-800 font-base text-base'><Link href="/auth/forgot-password">Forgot password? </Link></span>
         </div>
         
       </div>
      
 
     </main>
+    </div>
   )
 }
 

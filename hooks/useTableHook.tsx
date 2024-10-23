@@ -78,7 +78,7 @@ function useTableHook() {
     let userRole=["root","admin"]
 
 
-    console.log(id, role)
+    // console.log(id, role)
     try {
       if(role==="root" && !id){
         const response=await axiosAuth.get(`admin/cameras/all`)

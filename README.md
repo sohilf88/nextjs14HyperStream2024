@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## ant media format
+https://{AMS-URL}:5443/{APP-NAME}/streams/{STREAM-ID}.m3u8
+http://172.16.10.128:5080/live/streams/Wi6KGI84iHFp1217105180471.m3u8
 ## Getting Started
 
 First, run the development server:

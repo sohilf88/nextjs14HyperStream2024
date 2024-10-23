@@ -6,7 +6,9 @@ import { useAppSelector } from "@/reduxtoolkit/store/Hooks"
 import { camera } from "@/typescript.definations"
 import { useSearchParams } from "next/navigation"
 
+
 function page() {
+ 
   const searchParams=useSearchParams()
   const page=searchParams.get("page") ?? '1'
   const per_page=searchParams.get("per_page") ?? '6'
@@ -37,7 +39,10 @@ function page() {
    {
     entries.map((item:camera)=>(
       <div className="shadow-xl" key={item._id}>
-         <HlsPlayer url={item.url}/>
+         <HlsPlayer item={item}/>
+         
+         
+        
       </div>
     ))
    }
