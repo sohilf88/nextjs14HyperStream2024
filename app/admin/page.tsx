@@ -89,7 +89,7 @@ async function onSubmit(e:React.FormEvent<HTMLFormElement>){
   const response=await axiosAuth.get(`/admin/users?isActive=true&email=${email}`)
   setClear(!clear)
   if(response.data){
-    setUsers(response.data.message)
+    setUsers(response.data)
   }
 }
 
