@@ -34,10 +34,12 @@ function SimpleTable() {
  
   const [gridReady, setGridReady] = useState<AgGridEvent>();
   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
-    const [isSelected,setIsSelected]=useState(false)
-    const [isDeleted,setIsDeleted]=useState(false)
+  const [isSelected,setIsSelected]=useState(false)
+  const [isDeleted,setIsDeleted]=useState(false)
   const dispatch = useAppDispatch();
  
+  
+  
 // multiple Camera delete Function
 async function deleteMultipleCameras(){
   let deleteMultiples=[] as string[]
@@ -46,17 +48,11 @@ async function deleteMultipleCameras(){
    
   })
   try {
-    // console.log(deleteMultiples)
+    
     setIsDeleted(true)
-//      const response=await axios.all(deleteMultiples.map((id)=>(
-//       axiosAuth.delete(`/camera/${id}`)
-     
-//   )
-// )
-// )
 
   const response=await axiosAuth.delete("/camera/deletemany",{data:{deleteMultiples}})
-  console.log(response.status)
+  // console.log(response.status)
   if(response){
     // @ts-ignore
     
@@ -153,6 +149,8 @@ async function deleteMultipleCameras(){
   useEffect(() => {
     // @ts-ignore
      getAllCameraDataFromBackEnd();
+    
+    //  setIsPlayAll(gridReady?.api.paginationGetRowCount()===0)
      handleWindowResize();
     window.addEventListener('resize', handleWindowResize);
 
@@ -292,7 +290,8 @@ if(rowSelected!=null && rowSelected.length >0){
          onClick={
         playselectedCamerasinNewTabOnClick
     } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-      <Button  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
+        {/* @ts-ignore */}
+      <Button disabled={rowData?.length===0}  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
     </div>       
     
         <div className="  justify-end flex gap-5" >

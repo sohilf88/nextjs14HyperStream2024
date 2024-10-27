@@ -37,7 +37,7 @@ const handleCloseOnClick=()=>{
 
   return (
     <Box sx={style} className="rounded shadow-md ">
-      <form  className="md:space-y-3 space-y-1">
+      <form  className="md:space-y-3 space-y-1 uppercase">
         <TextField
           onChange={handleClick}
           value={name}
@@ -47,6 +47,7 @@ const handleCloseOnClick=()=>{
           label="Camera Name"
           variant="outlined"
           fullWidth
+          
         />
         <TextField
           value={district}
@@ -94,16 +95,12 @@ const handleCloseOnClick=()=>{
           name="url"
           color="success"
           id="outlined-basic"
-          label="CCTV Link (ex- rtmp://server.com/STREAM_KEY)"
+          label="stream hls url"
           variant="outlined"
+          placeholder="example- https://cdn.stream.com/dxmnkfvndf.m3u8"
           fullWidth
         />
-       {/* <Switch  onChange={handleClick} checked={isActive} name="isActive" /> */}
-      
-   
- 
-         
-        
+                  
       </form>
       <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2  justify-center ">
           <Button startIcon={<AddTwoToneIcon/>} fullWidth   size="large" variant="contained"  onClick={handleFormSubmit}
