@@ -10,6 +10,7 @@ import VolumeDownTwoToneIcon from '@mui/icons-material/VolumeDownTwoTone';
 import VolumeOffTwoToneIcon from '@mui/icons-material/VolumeOffTwoTone';
 import FullscreenTwoToneIcon from '@mui/icons-material/FullscreenTwoTone';
 import FullscreenExitTwoToneIcon from '@mui/icons-material/FullscreenExitTwoTone';
+import { document } from "postcss";
 
 
 function HlsPlayer({item}:{
@@ -23,7 +24,19 @@ function HlsPlayer({item}:{
   const [url,setUrl]=useState(item.url)
   const [isFullScreen,setIsFulScreen]=useState(false)
 
+  function toggleFullScreen(){
+   let player=window.document.getElementById("videoplayer")
+   const isFullScreenWindow=window.document.fullscreenElement
+    if(!isFullScreenWindow){
+      player?.requestFullscreen()
+      setIsFulScreen(!isFullScreen)
+    }else{
+      setIsFulScreen(!isFullScreen)
+      window.document.exitFullscreen()
+    }
+  }
  
+  
 
 
 
@@ -35,7 +48,7 @@ function HlsPlayer({item}:{
   if (mounted)
     return (
      
-        <div className="player-wrapper relative ">
+        <div className="player-wrapper relative " id="videoplayer">
           <div className="text-white absolute top-1 left-1 z-50 flex justify-start gap-5 italic uppercase font-extralight text-xs font-mono tracking-wider">
             <span>{item?.name}</span>
             <span>{item?.city}</span>
@@ -82,12 +95,13 @@ function HlsPlayer({item}:{
             {/* fullscreen and exit */}
             <div>
             {
-              isFullScreen?(<IconButton color="error" >
+              isFullScreen?(<IconButton onClick={toggleFullScreen} id="button-full"   color="error">
             <FullscreenExitTwoToneIcon/>
-           </IconButton>):(<IconButton  color="primary" >
+           </IconButton>):(<IconButton onClick={toggleFullScreen} id="button-full"   color="primary" >
             <FullscreenTwoToneIcon/>
            </IconButton>)
             }
+            
              </div>
            
             
@@ -96,6 +110,7 @@ function HlsPlayer({item}:{
            
           </div>
          <ReactPlayer
+           
             className="react-player"
             playing={playing}
             muted={mute}
@@ -109,6 +124,7 @@ function HlsPlayer({item}:{
            
            
           />
+         
         </div>
       
     );
