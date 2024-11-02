@@ -2,7 +2,7 @@
 import ReactPlayer from "react-player";
 import { useEffect, useRef, useState } from "react";
 import { camera } from "@/typescript.definations";
-import {IconButton } from "@mui/material";
+import {IconButton, Slider } from "@mui/material";
 import PlayArrowTwoToneIcon from '@mui/icons-material/PlayArrowTwoTone';
 import StopTwoToneIcon from '@mui/icons-material/StopTwoTone';
 import PauseCircleFilledTwoToneIcon from '@mui/icons-material/PauseCircleFilledTwoTone';
@@ -20,23 +20,27 @@ function HlsPlayer({item}:{
 
   const [mounted, setMounted] = useState(false);
   const [playing, setPlaying] = useState(true);
+ 
   const [mute, setMute] = useState(true);
   const [url,setUrl]=useState(item.url)
-  const [isFullScreen,setIsFulScreen]=useState(false)
+  const [isFullScreen,setIsFulScreen]=useState<null | boolean>(null)
 
   function toggleFullScreen(){
+ 
    let player=window.document.getElementById("videoplayer")
    const isFullScreenWindow=window.document.fullscreenElement
     if(!isFullScreenWindow){
       player?.requestFullscreen()
       setIsFulScreen(!isFullScreen)
     }else{
-      setIsFulScreen(!isFullScreen)
+      
       window.document.exitFullscreen()
+      setIsFulScreen(!isFullScreen)
     }
   }
  
   
+ 
 
 
 
@@ -85,8 +89,12 @@ function HlsPlayer({item}:{
             onClick={()=>setMute(!mute)}>
             <VolumeOffTwoToneIcon/>
            </IconButton>):(<IconButton color="warning" onClick={()=>setMute(!mute)}>
+            
             <VolumeDownTwoToneIcon/>
-           </IconButton>)
+            
+           </IconButton>
+           )
+           
 
           }
            </div>
