@@ -6,11 +6,11 @@ import {IconButton, Slider } from "@mui/material";
 import PlayArrowTwoToneIcon from '@mui/icons-material/PlayArrowTwoTone';
 import StopTwoToneIcon from '@mui/icons-material/StopTwoTone';
 import PauseCircleFilledTwoToneIcon from '@mui/icons-material/PauseCircleFilledTwoTone';
-import VolumeDownTwoToneIcon from '@mui/icons-material/VolumeDownTwoTone';
-import VolumeOffTwoToneIcon from '@mui/icons-material/VolumeOffTwoTone';
+
 import FullscreenTwoToneIcon from '@mui/icons-material/FullscreenTwoTone';
 import FullscreenExitTwoToneIcon from '@mui/icons-material/FullscreenExitTwoTone';
 import { document } from "postcss";
+import ContinuousSlider from "./volumeController";
 
 
 function HlsPlayer({item}:{
@@ -20,7 +20,7 @@ function HlsPlayer({item}:{
 
   const [mounted, setMounted] = useState(false);
   const [playing, setPlaying] = useState(true);
- 
+ const [volume, setVolume] = useState(0)
   const [mute, setMute] = useState(true);
   const [url,setUrl]=useState(item.url)
   const [isFullScreen,setIsFulScreen]=useState<null | boolean>(null)
@@ -60,7 +60,8 @@ function HlsPlayer({item}:{
             <span>{item?.area}</span>
           </div>
           <div className="absolute group -bottom-1 transition-all duration-150 z-50 w-full flex  gap-2 justify-between items-center ">
-            <div>
+            <div className="flex items-center gap-5">
+              <div>
             
             {/* play pause */}
             {
@@ -82,21 +83,14 @@ function HlsPlayer({item}:{
             setPlaying(false)}}>
             <StopTwoToneIcon/>
            </IconButton>
-          
+          </div>
           {/* mute or unmute */}
-          {
-            mute?(<IconButton color="warning"
-            onClick={()=>setMute(!mute)}>
-            <VolumeOffTwoToneIcon/>
-           </IconButton>):(<IconButton color="warning" onClick={()=>setMute(!mute)}>
-            
-            <VolumeDownTwoToneIcon/>
-            
-           </IconButton>
-           )
+          <div>
            
-
-          }
+            <ContinuousSlider volume={volume} setVolume={setVolume} mute={mute} setMute={setMute}/>
+         
+          </div>
+          
            </div>
            
 
@@ -126,7 +120,7 @@ function HlsPlayer({item}:{
             
             width="100%"
             height="100%"
-            volume={0.5}
+            volume={volume}
             
             
            
