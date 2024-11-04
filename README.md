@@ -48,3 +48,14 @@ The header checkbox has three modes of operation, 'normal', 'filtered only' and 
     colDef.headerCheckboxSelectionFilteredOnly=true: The header checkbox will select only filtered rows when checked and un-select only filtered rows when unchecked. The header checkbox will update its state based only on filtered rows.
 
     colDef.headerCheckboxSelectionCurrentPageOnly=true: The header checkbox will select only the rows on the current page when checked, and un-select only the rows on the current page when unchecked.
+
+username - httpuser
+password - kqgpBd38mJiBYgZS6bXuggJsaapy
+location / {
+            proxy_pass http://localhost:3000;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+    }

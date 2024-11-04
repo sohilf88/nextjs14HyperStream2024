@@ -17,34 +17,32 @@ function HlsPlayer({item}:{
   item:camera
 }) {
  
-
+console.log(item)
   const [mounted, setMounted] = useState(false);
   const [playing, setPlaying] = useState(true);
  const [volume, setVolume] = useState(0)
   const [mute, setMute] = useState(true);
   const [url,setUrl]=useState(item.url)
-  const [isFullScreen,setIsFulScreen]=useState<null | boolean>(null)
-
-  function toggleFullScreen(){
  
-   let player=window.document.getElementById("videoplayer")
+
+  function onClickFullScreen(){
+ 
+  //  let player=window.document.getElementById("videoplayer")
+   let player=window.document.getElementById(item._id as string)
+  //  console.log(player)
    const isFullScreenWindow=window.document.fullscreenElement
+   
     if(!isFullScreenWindow){
+      
       player?.requestFullscreen()
-      setIsFulScreen(!isFullScreen)
+      
     }else{
       
       window.document.exitFullscreen()
-      setIsFulScreen(!isFullScreen)
+      
     }
   }
  
-  
- 
-
-
-
-  
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -52,7 +50,7 @@ function HlsPlayer({item}:{
   if (mounted)
     return (
      
-        <div className="player-wrapper relative " id="videoplayer">
+        <div className="player-wrapper relative " >
           <div className="text-white absolute top-1 left-1 z-50 flex justify-start gap-5 italic uppercase font-extralight text-xs font-mono tracking-wider">
             <span>{item?.name}</span>
             <span>{item?.city}</span>
@@ -96,13 +94,10 @@ function HlsPlayer({item}:{
 
             {/* fullscreen and exit */}
             <div>
-            {
-              isFullScreen?(<IconButton onClick={toggleFullScreen} id="button-full"   color="error">
-            <FullscreenExitTwoToneIcon/>
-           </IconButton>):(<IconButton onClick={toggleFullScreen} id="button-full"   color="primary" >
+           <IconButton onClick={onClickFullScreen} id="button-full"  color="warning">
             <FullscreenTwoToneIcon/>
-           </IconButton>)
-            }
+           </IconButton>
+            
             
              </div>
            
@@ -113,11 +108,10 @@ function HlsPlayer({item}:{
           </div>
          <ReactPlayer
            
-            className="react-player"
+            className="react-player " 
             playing={playing}
             muted={mute}
             url={url}
-            
             width="100%"
             height="100%"
             volume={volume}

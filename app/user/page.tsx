@@ -67,7 +67,7 @@ return (
       
    {
     data && data.message.map((item:camera)=>(
-      <div key={item._id}>
+      <div key={item._id} id={item._id}>
          {/* <HlsPlayer url={item.url}/> */}
          <HlsPlayer item={item}/>
       </div>
