@@ -87,7 +87,7 @@ function ResponsiveAppBar() {
               
             }}
           >
-            HyperStream..
+           <span className="font-caveat italic lowercase">HyperStream..</span>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

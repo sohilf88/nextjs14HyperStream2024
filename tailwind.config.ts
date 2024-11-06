@@ -39,6 +39,9 @@ const config = {
       screens: {
         "3xl": "1600px",
       },
+      fontFamily: {
+        "caveat": ["Caveat", "cursive"] 
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

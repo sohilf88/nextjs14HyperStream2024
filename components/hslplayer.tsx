@@ -51,7 +51,7 @@ console.log(item)
     return (
      
         <div className="player-wrapper relative " >
-          <div className="text-white absolute top-1 left-1 z-50 flex justify-start gap-5 italic uppercase font-extralight text-xs font-mono tracking-wider">
+          <div className="text-white font-caveat absolute top-1.5 right-2 z-50  flex justify-end gap-5 italic uppercase font-extralight text-xs  tracking-wide">
             <span>{item?.name}</span>
             <span>{item?.city}</span>
             <span>{item?.taluka}</span>
