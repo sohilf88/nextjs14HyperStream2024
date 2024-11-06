@@ -87,6 +87,7 @@ function ResponsiveAppBar() {
               
             }}
           >
+           
            <span className="font-caveat italic lowercase">HyperStream..</span>
           </Typography>
 
