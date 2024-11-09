@@ -18,6 +18,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@reduxjs/toolkit": "^1.9.7",
+    "@tsparticles/engine": "^3.5.0",
+    "@tsparticles/react": "^3.0.0",
     "ag-grid-community": "^31.0.1",
     "ag-grid-react": "^31.0.1",
     "axios": "^1.6.2",
@@ -38,6 +40,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tooltip": "^1.6.1",
+    "tsparticles": "^3.5.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

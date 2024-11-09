@@ -4,6 +4,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 import Providers from "./../reduxtoolkit/store/ClientProvider";
 import { Toaster } from 'sonner';
+import Design from "@/components/Design";
 
 
 
@@ -20,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-br from-zinc-500 to-zinc-900 w-full h-screen bg-loginImage bg-cover bg-no-repeat w-full  bg-center">
+      <body className="w-full h-screen bg-loginImage bg-cover bg-no-repeat bg-center">
        
         <Providers>
          

@@ -190,7 +190,7 @@ return (
    
       {(users?.message.length !==0) ? (users?.message.map((user:user)=>(
         <form
-        className=" rounded-sm bg-slate-600 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5   transition-all duration-100 xl:hover:scale-[1.01] last:mb-10 shadow-2xl h-full"
+        className=" rounded-sm bg-indigo-950 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5 shadow-md  transition-all duration-100 xl:hover:scale-[1.01] last:mb-10 shadow-indigo-400 h-full"
          key={user._id}>
           <div className="flex justify-between">
           <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s Profile `}</Typography>
