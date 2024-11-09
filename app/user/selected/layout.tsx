@@ -11,7 +11,7 @@ export default function UserLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-zinc-600">
+      <body className="bg-loginImage w-full h-screen bg-center bg-no-repeat ">
         
          
           {children}

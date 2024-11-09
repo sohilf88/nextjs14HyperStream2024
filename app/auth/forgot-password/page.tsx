@@ -54,7 +54,7 @@ import { toast } from 'sonner'
     )
   }
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-zinc-300">
+    <div className="flex justify-center items-center w-full h-screen">
       
     <div className="lg:max-w-2xl md:max-w-xl sm:max-w-md w-full py-4 px-8 h-72   bg-white rounded shadow-2xl">
       

@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        "loginImage":"url(/public/background.webp)",
+        "loginImage":"url('/bg.jpg')",
       },
       keyframes: {
         "accordion-down": {

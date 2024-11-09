@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-br from-zinc-500 to-zinc-900 w-full h-screen">
+      <body className="bg-gradient-to-br from-zinc-500 to-zinc-900 w-full h-screen bg-loginImage bg-cover bg-no-repeat w-full  bg-center">
        
         <Providers>
          

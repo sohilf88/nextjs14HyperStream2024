@@ -116,7 +116,7 @@ export default function userProfile() {
       }
     }
   return (
-    <div className=" backdrop-blur-sm backdrop-opacity-70   text-base w-screen h-screen flex items-center justify-center bg-zinc-700">
+    <div className=" backdrop-blur-sm backdrop-opacity-70   text-base w-screen h-screen flex items-center justify-center">
     
     <Tabs defaultValue="account" className="max-w-xl w-full mx-2 md:mx-0">
       <TabsList className="grid w-full grid-cols-2 ">

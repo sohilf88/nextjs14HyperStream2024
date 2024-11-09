@@ -47,7 +47,7 @@ function page() {
     const hasPrevious=(start>0)
   return (
     <main id="capture-selected">
-       <div className='h-16 flex items-center justify-center font-semibold text-white/60 text-xl tracking-wider px-2 bg-zinc-800 shadow-xl'>
+       <div className='h-16 flex items-center justify-center font-semibold text-white/60 text-xl tracking-wider px-2 shadow-xl'>
           <PaginationControls
            hasNextPage={hasNext}
            hasPrevPage={hasPrevious}

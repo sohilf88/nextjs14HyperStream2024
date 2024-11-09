@@ -82,7 +82,7 @@ function LoginForm() {
 return (
   <div>
    
-    <main className='bg-zinc-400  px-2 max-w-full h-screen flex justify-center items-center'>
+    <main className=' px-2 max-w-full h-screen flex justify-center items-center'>
 
       <div className='bg-white text-fuchsia-900  max-w-md md:max-w-lg w-full space-y-3 px-3 py-10 sm:py-12 sm:px-4 md:p-7 lg:py-12 shadow-md lg:drop-shadow-2xl rounded lg:max-w-2xl '>
         <h1 className='mb-5 text-center leading-7 font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl italic font-caveat'>Hyperstream Login Page</h1>
