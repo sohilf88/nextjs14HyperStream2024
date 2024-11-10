@@ -141,7 +141,7 @@ return (
     <>
        <Header/>
     
-  <main className="text-slate-300 bg-slate-800 h-screen px-10 py-5 w-full">
+  <main className="text-slate-400  h-screen px-10 py-5 w-full">
  
 
 
@@ -190,10 +190,10 @@ return (
    
       {(users?.message.length !==0) ? (users?.message.map((user:user)=>(
         <form
-        className=" rounded-sm bg-indigo-950 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5 shadow-md  transition-all duration-100 xl:hover:scale-[1.01]  shadow-indigo-400 h-full"
+        className=" rounded-sm bg-stone-800 text-white  italic text-lg  flex flex-col px-5 py-5 gap-y-5 shadow-md  transition-all duration-100 xl:hover:scale-[1.01]  shadow-stone-600 h-full"
          key={user._id}>
           <div className="flex justify-between">
-          <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s Profile `}</Typography>
+          <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s detail `}</Typography>
           {/* <button type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>Edit</button> */}
           <IconButton color="warning"  aria-label="edit" type="button" value={user._id} onClick={(e)=>getUserDetail(e.currentTarget.value)}>
   <EditTwoToneIcon />
@@ -201,9 +201,9 @@ return (
           </div>
           
         
-         <div className="text-2xl"><strong>Username:- </strong>{user.username}</div>
-         <div className="text-2xl"><strong>E-mail:- </strong>{user.email}</div>
-         <div className="text-2xl"><strong>Roles:- </strong>{user.roles}</div>
+         <div className="text-2xl"><strong className="font-caveat text-red-500 font-semibold">Username:- </strong>{user.username}</div>
+         <div className="text-2xl"><strong className="font-caveat text-red-500 font-semibold">E-mail:- </strong>{user.email}</div>
+         <div className="text-2xl"><strong className="font-caveat text-red-500 font-semibold">Roles:- </strong>{user.roles}</div>
          <div className="  text-2xl  flex items-center  justify-end gap-2">
          
 

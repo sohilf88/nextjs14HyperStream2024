@@ -5,7 +5,7 @@ const loading = () => {
     <div className=" bg-transparent flex w-screen h-screen justify-center items-center">
 
         <div aria-label="Loading..." role="status" className="flex items-center space-x-2">
-    <svg className="h-20 w-20 animate-spin stroke-gray-500" viewBox="0 0 256 256">
+    <svg className="h-20 w-20 animate-spin stroke-gray-700" viewBox="0 0 256 256">
         <line x1="128" y1="32" x2="128" y2="64" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
         <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" stroke-linecap="round" stroke-linejoin="round"
             stroke-width="24"></line>

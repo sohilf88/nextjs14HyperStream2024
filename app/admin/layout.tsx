@@ -1,8 +1,3 @@
-import Design from "@/components/Design";
-
-
-
-
 
 
 export default function UserLayout({
@@ -13,7 +8,7 @@ export default function UserLayout({
   return (
     <html lang="en">
      
-      <body className=" bg-zinc-700 " >
+      <body className=" bg-loginImage min-w-full max-h-screen " >
         
          
           {children}
