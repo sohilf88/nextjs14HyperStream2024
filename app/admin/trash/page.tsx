@@ -147,7 +147,7 @@ return (
 
    
     
-   <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-3 md:gap-4 lg:mx-8 mx-4 md:mx-6 ">
+   <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-3 md:gap-4 lg:mx-10 mx-4 md:mx-6 ">
   <div className="col-span-full flex items-center gap-3">
   
 
@@ -169,7 +169,7 @@ return (
         
       </div>
       <div className="flex space-x-4  ">
-        <div className="flex rounded-md overflow-hidden w-full gap-2">
+        <div className="flex rounded-md  w-full gap-2">
           <input  required value={email} onChange={(e)=>setEmail(e.target.value)} type="email" className=" text-zinc-700 pl-4 w-full rounded-md rounded-r-none placeholder:pl-4 max-w-2xl" placeholder="Search user with Email Address" />
           <button type="submit" className="bg-indigo-600 text-white px-6 text-lg font-semibold py-3 rounded-r-md">Go</button>
           <button disabled={!clear} onClick={onClickClearButton} type="button" className=" disabled:bg-red-300 bg-red-500 disabled:hover:cursor-not-allowed px-6 text-lg font-semibold py-2 rounded-md">Clear</button>
@@ -190,7 +190,7 @@ return (
    
       {(users?.message.length !==0) ? (users?.message.map((user:user)=>(
         <form
-        className=" rounded-sm bg-indigo-950 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5 shadow-md  transition-all duration-100 xl:hover:scale-[1.01] last:mb-10 shadow-indigo-400 h-full"
+        className=" rounded-sm bg-indigo-950 text-yellow-50 text-lg  flex flex-col px-5 py-5 gap-y-5 shadow-md  transition-all duration-100 xl:hover:scale-[1.01]  shadow-indigo-400 h-full"
          key={user._id}>
           <div className="flex justify-between">
           <Typography variant="h5" className="px-2 py-1 font-semibold text-center flex-1">{`${user.username}'s Profile `}</Typography>
