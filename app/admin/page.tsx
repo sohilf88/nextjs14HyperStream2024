@@ -120,7 +120,9 @@ async function onClickClearButton(){
 return (
   !errorState?(
     <>
+    <div className=''>
        <Header/>
+       </div>
     
   <main className="text-slate-300  h-screen px-10 py-5 w-full">
  
