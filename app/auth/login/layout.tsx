@@ -13,7 +13,7 @@ export default function UserLayout({
   return (
     <html lang="en">
       <Design></Design>
-      <body className="bg-loginImage w-full h-screen bg-no-repeat bg-cover" >
+      <body className="bg-background w-full h-screen bg-no-repeat bg-cover" >
         
          
           {children}

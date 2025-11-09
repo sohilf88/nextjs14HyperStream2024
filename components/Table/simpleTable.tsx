@@ -27,9 +27,10 @@ import { useFormStatus } from "react-dom";
 
 import DeleteTwoTone from "@mui/icons-material/DeleteTwoTone";
 import Link from "next/link";
-
+import {io} from "socket.io-client"
 function SimpleTable() {
-  const {role}=useAppSelector((store)=>store.root.userRole)
+  const {role,userId}=useAppSelector((store)=>store.root.userRole)
+ 
   const [rowData,formData,getAllCameraDataFromBackEnd,handleFormSubmit,handleClick,handleDataUpdateOnEditButton,deleteSingleCamera,setFormData,disableSelectedCamera,setRowData,]=useTableHook()
  
   const [gridReady, setGridReady] = useState<AgGridEvent>();
@@ -39,7 +40,7 @@ function SimpleTable() {
   const dispatch = useAppDispatch();
  
   
-  
+  console.log(role,userId)
 // multiple Camera delete Function
 async function deleteMultipleCameras(){
   let deleteMultiples=[] as string[]
@@ -247,19 +248,26 @@ if(rowSelected!=null && rowSelected.length >0){
   },[rowSelected])
  
  
-  // function runSocket(){
-  //  const socket=io("http://localhost:5000")
-  //  socket.on("connection",(data)=>{
-  //   socket.on("web",(data)=>{
-  //     console.log(data)
-  //   })
-  //  })
-  //  socket.emit("publish","rowSelected")
-   
-  // }
-  // useEffect(()=>{
-  //  runSocket()
-  // },[])
+    useEffect(() => {
+    const socket = io("http://localhost:5000", {
+      // transports: ["websocket"], // ensures consistent connection
+    });
+
+    socket.on("connect", () => {
+      console.log("✅ Connected:", socket.id);
+    });
+
+    socket.on(userId, (msg) => {
+      console.log("📩 Message from server:", msg);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("❌ Disconnected");
+    });
+
+    // return () => socket.disconnect();
+  }, []);
+
 
   return (
     <>

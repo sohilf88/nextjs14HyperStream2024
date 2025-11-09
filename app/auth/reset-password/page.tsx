@@ -34,7 +34,7 @@ function page() {
   const FormComponent=()=>{
     const {pending,data}=useFormStatus()
     return(
-      <div className="flex flex-col mt-6 gap-4 ">
+      <div className="flex flex-col mt-6 gap-4  ">
       
       
       <Typography sx={{textAlign:"center"}} variant="h5"   color={'purple'}>Reset password?</Typography>

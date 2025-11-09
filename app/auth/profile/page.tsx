@@ -116,15 +116,15 @@ export default function userProfile() {
       }
     }
   return (
-    <div className=" backdrop-blur-sm backdrop-opacity-70   text-base w-screen h-screen flex items-center justify-center">
+    <div className=" backdrop-blur-sm backdrop-opacity-70 bg-loginImage  text-base w-screen h-screen flex items-center justify-center">
     
-    <Tabs defaultValue="account" className="max-w-xl w-full mx-2 md:mx-0">
-      <TabsList className="grid w-full grid-cols-2 ">
+    <Tabs defaultValue="account" className="max-w-xl w-full mx-2 md:mx-0  ">
+      <TabsList className="grid w-full grid-cols-2 bg-loginImage ">
         <TabsTrigger className="" value="account">account</TabsTrigger>
         <TabsTrigger value="password">password</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        <Card>
+        <Card className="bg-loginImage ">
           <CardHeader>
             <CardTitle>Account</CardTitle>
             <CardDescription>
@@ -162,7 +162,7 @@ export default function userProfile() {
       </TabsContent>
      
       <TabsContent value="password">
-        <Card>
+        <Card className="bg-loginImage">
           <CardHeader>
             <CardTitle>Password</CardTitle>
             <CardDescription>

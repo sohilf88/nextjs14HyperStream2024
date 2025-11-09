@@ -13,13 +13,13 @@ import { AxiosError, isAxiosError } from 'axios';
 import { customError } from '@/typescript.definations';
 import useTableHook from '@/hooks/useTableHook';
 import { useAppDispatch,useAppSelector } from '@/reduxtoolkit/store/Hooks';
-import { handleUserRoles } from '@/reduxtoolkit/features/userSlice';
+import { handleUserid, handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 import { useFormStatus } from 'react-dom';
 
 
 function Login() {
     const router=useRouter()
-    const {role}=useAppSelector((store)=>store.root.userRole)
+    const {role,userId}=useAppSelector((store)=>store.root.userRole)
    
 
   
@@ -34,11 +34,13 @@ function Login() {
           email,password
           
         })
-        //  console.log(response)
+        
+        console.log(response.data)
         if(response.data?.success ){
           // console.log(response.data.data.roles.includes("root"))
-          console.log(response.data.data.roles==="root")
+          
          dispatch(handleUserRoles(response.data.data.roles))
+         dispatch(handleUserid(response.data.data.id))
          if(response.data.data.roles==="root"){
           return router.push("/admin")
          }else{
@@ -82,9 +84,9 @@ function LoginForm() {
 return (
   <div>
    
-    <main className=' px-2 max-w-full h-screen flex justify-center items-center'>
+    <main className=' px-2 max-w-full h-screen flex justify-center items-center '>
 
-      <div className='bg-white text-fuchsia-900  max-w-md md:max-w-lg w-full space-y-3 px-3 py-10 sm:py-12 sm:px-4 md:p-7 lg:py-12 shadow-md lg:drop-shadow-2xl rounded lg:max-w-2xl '>
+      <div className='bg-white border text-blue-700  max-w-md md:max-w-lg w-full space-y-3 px-3 py-10 sm:py-12 sm:px-4 md:p-7 lg:py-12 shadow-md lg:drop-shadow-4xl rounded lg:max-w-2xl '>
         <h1 className='mb-5 text-center leading-7 font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl italic font-caveat'>Hyperstream Login Page</h1>
         <div className='flex flex-col gap-6 ' >
           <div className='space-y-3'>
@@ -98,7 +100,7 @@ return (
           </div>
           
          </div>
-         <Button  disabled={pending} size='large' fullWidth variant='contained' color='secondary' type='submit'>{`${pending ?"Loading...":"Login"}`}</Button>
+         <Button  disabled={pending} size='large' fullWidth variant='contained' color='primary' type='submit'>{`${pending ?"Loading...":"Login"}`}</Button>
          
         </div>
         <div className='text-right'>
