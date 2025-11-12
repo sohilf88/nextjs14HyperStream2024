@@ -19,15 +19,18 @@ export type user = {
 
 
 export type camera = {
-    _id?: string,
-    name: string,
-    district: string,
-    taluka: string,
-    city: string,
-    area: string,
-    // location: string,
-    url: string,
-    isActive: boolean
+    _id?:"",
+    name:"",
+    district:"",
+    taluka:"",
+    city:"",
+    area:"",
+    url:"",
+    isActive:Boolean,
+    streamStart:"",
+    streamEnd:"",
+    isLive:Boolean,
+    streamId?:""
 
 
 }

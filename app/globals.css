@@ -14,3 +14,7 @@
   top: 0;
   left: 0;
 }
+
+.ag-header-center .ag-header-cell-label {
+  justify-content: center;
+}
