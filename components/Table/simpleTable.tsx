@@ -40,7 +40,7 @@ function SimpleTable() {
   const dispatch = useAppDispatch();
  
   
-  console.log(role,userId)
+  // console.log(role,userId)
 // multiple Camera delete Function
 async function deleteMultipleCameras(){
   let deleteMultiples=[] as string[]
@@ -248,25 +248,38 @@ if(rowSelected!=null && rowSelected.length >0){
   },[rowSelected])
  
  
+   
+    // 
     useEffect(() => {
+      if (!userId) return;
+     
     const socket = io("http://localhost:5000", {
-      // transports: ["websocket"], // ensures consistent connection
+      withCredentials: true, // important if you use cookies for auth
     });
 
     socket.on("connect", () => {
       console.log("✅ Connected:", socket.id);
+
+      // join room for logged-in user
+      socket.emit("joinRoom", userId);
     });
 
-    socket.on(userId, (msg) => {
-      console.log("📩 Message from server:", msg);
+    socket.on("cameraUpdate", (data) => {
+      console.log("📩 Received camera update:", data);
+      // handle data (update state, toast, etc.)
     });
 
     socket.on("disconnect", () => {
-      console.log("❌ Disconnected");
+      console.log("❌ Disconnected from server");
     });
 
+    return () => {
+      socket.disconnect();
+    };
+  }, [userId]);
+
     // return () => socket.disconnect();
-  }, []);
+
 
 
   return (

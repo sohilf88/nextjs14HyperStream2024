@@ -5,6 +5,8 @@ import Link from "next/link"
 import { useState } from "react"
 import { toast } from 'sonner';
 import { errorHandler } from '@/hooks/useTableHook';
+import Firework from "@/components/firework";
+
 
 import { redirect, useRouter } from "next/navigation"
 
@@ -15,6 +17,7 @@ import useTableHook from '@/hooks/useTableHook';
 import { useAppDispatch,useAppSelector } from '@/reduxtoolkit/store/Hooks';
 import { handleUserid, handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 import { useFormStatus } from 'react-dom';
+import FireworkBackground from '@/components/firework';
 
 
 function Login() {
@@ -83,34 +86,81 @@ function LoginForm() {
 
 return (
   <div>
-   
-    <main className=' px-2 max-w-full h-screen flex justify-center items-center '>
+  {/* <Firework></Firework>   */}
+ <main className="h-screen flex justify-center items-center bg-gradient-to-br from-[#FF9933] via-white to-[#138808]">
+    <div className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-xl rounded-2xl w-full max-w-md md:max-w-lg p-8 sm:p-10 space-y-6">
+      <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#FF9933] via-[#0A5EB7] to-[#138808] bg-clip-text text-transparent">
+        Hyperstream Streaming
+      </h1>
+      <h6 className='text-sm text-center text-red-700 '>Municipal Council Election 2025</h6>
 
-      <div className='bg-white border text-blue-700  max-w-md md:max-w-lg w-full space-y-3 px-3 py-10 sm:py-12 sm:px-4 md:p-7 lg:py-12 shadow-md lg:drop-shadow-4xl rounded lg:max-w-2xl '>
-        <h1 className='mb-5 text-center leading-7 font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl italic font-caveat'>Hyperstream Login Page</h1>
-        <div className='flex flex-col gap-6 ' >
-          <div className='space-y-3'>
-         <TextField name="email"  label="Email" required={true} fullWidth type='email' color='secondary' placeholder='Email your email id'></TextField>
-         <TextField name="password"  onKeyUp={handleKeyPress} label="Password" required={true} fullWidth type='password' color='secondary' placeholder='Enter the password'
-          ></TextField>
-          <div onKeyUp={handleKeyPress} className=' text-right px-2 py-2 text-xs'>
-           {
-            capslock?<span className=' text-red-600'>Caps Lock is <strong className='text-red-700'>ON</strong></span>:<span className=' text-green-800'>Capslock is <strong className='text-green-950-700'>OFF</strong></span>
-           }
+      <div className="flex flex-col gap-6">
+        <div className="space-y-4">
+          <TextField
+            name="email"
+            label="Email"
+            required
+            fullWidth
+            type="email"
+            color="primary"
+            placeholder="Enter your email"
+          />
+
+          <TextField
+            name="password"
+            label="Password"
+            required
+            fullWidth
+            type="password"
+            color="primary"
+            placeholder="Enter your password"
+            onKeyUp={handleKeyPress}
+          />
+
+          <div className="text-right text-xs text-gray-600">
+            {capslock ? (
+              <span className="text-red-600">
+                Caps Lock is <strong>ON</strong>
+              </span>
+            ) : (
+              <span className="text-green-700">
+                Caps Lock is <strong>OFF</strong>
+              </span>
+            )}
           </div>
-          
-         </div>
-         <Button  disabled={pending} size='large' fullWidth variant='contained' color='primary' type='submit'>{`${pending ?"Loading...":"Login"}`}</Button>
-         
         </div>
-        <div className='text-right'>
-          <span className='text-purple-600 hover:text-red-600 font-base text-base'><Link href="/auth/forgot-password">Forgot password? </Link></span>
-        </div>
-        
-      </div>
-     
 
-    </main>
+        <Button
+          disabled={pending}
+          size="large"
+          fullWidth
+          variant="contained"
+          color="primary"
+          type="submit"
+          sx={{
+            borderRadius: '10px',
+            textTransform: 'none',
+            fontSize: '1rem',
+            fontWeight: 600,
+            py: 1.2,
+            background:
+              'linear-gradient(90deg, rgba(99,102,241,1) 0%, rgba(139,92,246,1) 100%)',
+          }}
+        >
+          {pending ? 'Loading...' : 'Login'}
+        </Button>
+      </div>
+
+      <div className="text-center pt-2">
+        <Link
+          href="/auth/forgot-password"
+          className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          Forgot password?
+        </Link>
+      </div>
+    </div>
+  </main>
     </div>
   )
 }

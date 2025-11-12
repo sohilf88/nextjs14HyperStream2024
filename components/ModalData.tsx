@@ -22,13 +22,13 @@ function ModalData({handleFormSubmit,handleClick,formData,setFormData}:any) {
   const { isUpdate } = useAppSelector((store) => store.root.modal);
   const dispatch = useAppDispatch();
  
-  const {name,district,city,area,_id,url,taluka,isActive}=formData
+  const {name,district,city,area,_id,url,taluka,isActive,streamId}=formData
   
 const handleCloseOnClick=()=>{
  
   setFormData({
      // @ts-ignore
-    district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:false,name:""
+    district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:false,name:"",streamId:""
   })
   dispatch(handleClose())
   dispatch(handleUpdate(false))
@@ -45,6 +45,17 @@ const handleCloseOnClick=()=>{
           name="name"
           id="outlined-basic"
           label="Camera Name"
+          variant="outlined"
+          fullWidth
+          
+        />
+        <TextField
+          onChange={handleClick}
+          value={streamId}
+          color="info"
+          name="name"
+          id="outlined-basic"
+          label="Stream id"
           variant="outlined"
           fullWidth
           
