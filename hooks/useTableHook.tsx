@@ -325,7 +325,7 @@ function useTableHook() {
           city: formData.city,
           url: formData.url,
         });
-
+         console.log(response.data)
         if (response.status === 200) {
           await getAllCameraDataFromBackEnd();
           dispatch(handleClose());

@@ -22,7 +22,7 @@ function PaginationClient({hasNext,hasPrevious,data}:{
    const page = searchParams.get('page') ?? '1'
    const limit = searchParams.get('limit') ?? '8'
    
-  const [option,setOption]=useState(8)
+  const [option,setOption]=useState(6)
   const end=Math.ceil(Number(data.totalCount)/Number(limit))
  
    

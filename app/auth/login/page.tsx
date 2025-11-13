@@ -15,7 +15,7 @@ import { AxiosError, isAxiosError } from 'axios';
 import { customError } from '@/typescript.definations';
 import useTableHook from '@/hooks/useTableHook';
 import { useAppDispatch,useAppSelector } from '@/reduxtoolkit/store/Hooks';
-import { handleUserid, handleUserRoles } from '@/reduxtoolkit/features/userSlice';
+import { handleUserid, handleUserName, handleUserRoles } from '@/reduxtoolkit/features/userSlice';
 import { useFormStatus } from 'react-dom';
 import FireworkBackground from '@/components/firework';
 
@@ -44,6 +44,7 @@ function Login() {
           
          dispatch(handleUserRoles(response.data.data.roles))
          dispatch(handleUserid(response.data.data.id))
+         dispatch(handleUserName(response.data.data.name))
          if(response.data.data.roles==="root"){
           return router.push("/admin")
          }else{

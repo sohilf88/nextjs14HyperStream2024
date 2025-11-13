@@ -82,11 +82,13 @@ export type jwtAccessType = {
     username: String,
     email: String
     roles: string[],
-    _id: string
+    _id: string,
+    exp:number,
+    iat?: number,
 }
 
 export type usersData = {
     success: boolean,
     message: [],
-    totalUsers: number
+    totalCount: number
 }

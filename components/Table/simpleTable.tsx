@@ -411,7 +411,7 @@ import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import SlowMotionVideoTwoToneIcon from "@mui/icons-material/SlowMotionVideoTwoTone";
 import PlayCircleTwoToneIcon from "@mui/icons-material/PlayCircleTwoTone";
 import DriveFolderUploadTwoToneIcon from "@mui/icons-material/DriveFolderUploadTwoTone";
-
+import LoopTwoToneIcon from '@mui/icons-material/LoopTwoTone';
 import Actions from "./Actions";
 import ModalData from "@/components/ModalData";
 
@@ -432,7 +432,7 @@ export default function SimpleTable(): JSX.Element {
   const dispatch = useAppDispatch();
   const { role, userId } = useAppSelector((s) => s.root.userRole);
   const { isOpen } = useAppSelector((s) => s.root.modal);
-
+ console.log(userId)
   // hook (returns object)
   const {
     rowData,
@@ -545,7 +545,11 @@ export default function SimpleTable(): JSX.Element {
     dispatch(handlePlayAllCameras(true));
     window.open("/user", "_blank", "noopener");
   }, [dispatch]);
-
+// Autoplay
+const autoPlayVideos = useCallback(() => {
+    dispatch(handlePlayAllCameras(true));
+    window.open("/user/autoplay", "_blank", "noopener");
+  }, [dispatch]);
   const playSelectedCamerasInNewTab = useCallback(() => {
     if (!isSelected) return;
     dispatch(handlePlayAllCameras(false));
@@ -564,7 +568,7 @@ export default function SimpleTable(): JSX.Element {
     {
       field: "name",
       headerName: "Name",
-      maxWidth: 240,
+      // maxWidth: 320,
       checkboxSelection: true,
       headerCheckboxSelection: true,
       headerCheckboxSelectionFilteredOnly: true,
@@ -581,14 +585,16 @@ export default function SimpleTable(): JSX.Element {
       field: "isLive",
       headerName: "Status",
       filter: false,
-      cellRenderer: (params) => {
+      cellRenderer: (params: { value: boolean }) => {
         const live = params.value;
-        return live ? <span className="text-green-400">LIVE</span> : <span className="text-gray-400">OFF</span>;
+        return live ? <span className="text-yellow-400">LIVE</span> : <span className="text-red-600">OFFLINE</span>;
       },
-      maxWidth: 140,
+      maxWidth: 100,
     },
-    { field: "streamStart", headerName: "Start", filter: false, maxWidth: 180 },
-    { field: "streamEnd", headerName: "End", filter: false, maxWidth: 180 },
+    { field: "streamStart", headerName: "Stream Start", filter: false, maxWidth: 200 ,valueFormatter: (p) =>
+    p.value ? new Date(p.value).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "-",},
+    { field: "streamEnd", headerName: "Stream End", filter: false, maxWidth: 200,valueFormatter: (p) =>
+    p.value ? new Date(p.value).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "-", },
     {
       field: "Action",
       filter: false,
@@ -604,6 +610,7 @@ export default function SimpleTable(): JSX.Element {
 
     // create socket and store on ref
     const socket = io("http://localhost:5000", {
+      auth: { key: process.env.NEXT_PUBLIC_SOCKET_KEY },
       withCredentials: true,
       autoConnect: true,
     });
@@ -619,11 +626,46 @@ export default function SimpleTable(): JSX.Element {
       // update rowData in-place for immediate UI updates
       if (!data) return;
       // naive update: replace matching streamId
+      // setRowData((prev) => {
+      //   if (!prev) return prev;
+      //   return prev.map((c) => (c.streamId === data.streamId ? { ...c, ...data } : c));
+      // });
       setRowData((prev) => {
-        if (!prev) return prev;
-        return prev.map((c) => (c.streamId === data.streamId ? { ...c, ...data } : c));
-      });
-      toast.push ? toast(`Camera update: ${data.streamId}`) : console.log("cameraUpdate", data);
+  if (!prev || !Array.isArray(prev)) return [];
+
+  const formattedData = {
+    ...data,
+    streamStart: data.streamStart
+      ? new Date(data.streamStart).toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        })
+      : data.streamStart,
+    streamEnd: data.streamEnd
+      ? new Date(data.streamEnd).toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        })
+      : data.streamEnd,
+  };
+
+  const index = prev.findIndex((camera) => camera.streamId === formattedData.streamId);
+  if (index !== -1) {
+    const updated = [...prev];
+    updated[index] = { ...updated[index], ...formattedData };
+    return updated;
+  } else {
+    return [...prev, formattedData];
+  }
+});
+
+       // ✅ Use proper Sonner toast
+    console.log(data)
+    data.isLive ? toast.success(`Stream online: ${data.name}`):toast.error(`Stream offline: ${data.name}`)
+    // if(data.isLive){
+    //   toast.success(`Stream online: ${data.name}`);
+    // }
+    // toast.error(`Stream offline: ${data.name}`);
     });
 
     socket.on("disconnect", () => {
@@ -714,6 +756,16 @@ export default function SimpleTable(): JSX.Element {
               startIcon={<PlayCircleTwoToneIcon />}
             >
               Play All
+            </Button>
+             <Button
+              disabled={!rowData || rowData.length === 0}
+              onClick={autoPlayVideos}
+              size="medium"
+              variant="contained"
+              color="primary"
+              startIcon={<LoopTwoToneIcon />}
+            >
+             Autoplay
             </Button>
 
             <Button

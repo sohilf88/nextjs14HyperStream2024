@@ -5,7 +5,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 const initialState = {
 
     role:"",
-    userId:""
+    userId:"",
+    username:""
 
 }
 
@@ -16,12 +17,17 @@ export const userSlice = createSlice({
 
         handleUserRoles: (state, action: PayloadAction<string >) => {
             state.role = action.payload
-            state.userId = action.payload
+            // state.userId = action.payload
             
         },
         handleUserid: (state, action: PayloadAction<string >) => {
             
             state.userId = action.payload
+            
+        },
+        handleUserName: (state, action: PayloadAction<string >) => {
+            
+            state.username = action.payload
             
         },
         
@@ -33,4 +39,4 @@ export const userSlice = createSlice({
 })
 
 export default userSlice.reducer
-export const { handleUserRoles ,handleUserid} = userSlice.actions
+export const { handleUserRoles ,handleUserid,handleUserName} = userSlice.actions
