@@ -53,7 +53,7 @@ const handleCloseOnClick=()=>{
           onChange={handleClick}
           value={streamId}
           color="info"
-          name="name"
+          name="streamId"
           id="outlined-basic"
           label="Stream id"
           variant="outlined"
