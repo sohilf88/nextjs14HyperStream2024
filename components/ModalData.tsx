@@ -1,5 +1,5 @@
 "use client";
-import { Box, TextField,Button, Switch, FormGroup, FormControlLabel } from "@mui/material";
+import { Box, TextField,Button, Switch, FormGroup, FormControlLabel, FormLabel } from "@mui/material";
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
@@ -111,7 +111,24 @@ const handleCloseOnClick=()=>{
           placeholder="example- https://cdn.stream.com/dxmnkfvndf.m3u8"
           fullWidth
         />
-                  
+       <FormLabel component="legend">switch to enable or disable camera</FormLabel>
+      <FormGroup>
+        <FormControlLabel
+          control={
+            <Switch checked={isActive} onChange={handleClick} name="isActive" />
+          }
+         label={
+    <span>
+      camera{" "}
+      {isActive ? (
+        <span className="text-green-700 font-semibold">enabled</span>
+      ) : (
+        <span className="text-red-600 font-semibold">disabled</span>
+      )}
+    </span>
+  }
+        />
+           </FormGroup>                    
       </form>
       <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2  justify-center ">
           <Button startIcon={<AddTwoToneIcon/>} fullWidth   size="large" variant="contained"  onClick={handleFormSubmit}

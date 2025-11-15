@@ -284,12 +284,17 @@ function useTableHook() {
   // ----------------------
   // 🔹 Input Change Handler
   // ----------------------
-  function handleClick(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
+ function handleClick(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  const { name, type, value, checked } = e.target;
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: type === "checkbox" ? checked : 
+            type === "radio" ? value :
+            type === "switch" ? checked :
+            value, // default for text inputs
+  }));
+}
 
   // ----------------------
   // 🔹 Fetch All Cameras
@@ -314,7 +319,7 @@ function useTableHook() {
   // ----------------------
   // 🔹 Submit Form (Create or Update)
   // ----------------------
-  async function handleFormSubmit() {
+   async function handleFormSubmit() {
     try {
       if (formData._id) {
         const response = await axiosAuth.patch(`camera/${formData._id}`, {
@@ -324,6 +329,8 @@ function useTableHook() {
           area: formData.area,
           city: formData.city,
           url: formData.url,
+          streamId:formData.streamId,
+          isActive:formData.isActive
         });
          console.log(response.data)
         if (response.status === 200) {
@@ -340,6 +347,8 @@ function useTableHook() {
           area: formData.area,
           city: formData.city,
           url: formData.url,
+          streamId:formData.streamId,
+          isActive:formData.isActive
         });
 
         if (response.status === 200) {
@@ -352,6 +361,7 @@ function useTableHook() {
       errorHandler(error);
     }
   }
+
 
   // ----------------------
   // 🔹 Delete Camera
