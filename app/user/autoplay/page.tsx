@@ -119,6 +119,7 @@ export default function Autoplay() {
           data={data}
           hasNext={hasNext}
           hasPrevious={hasPrevious}
+          // @ts-ignore
           onNext={() => handleManualNavigation(currentPage + 1)}
           onPrevious={() => handleManualNavigation(currentPage - 1)}
         />

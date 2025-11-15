@@ -30,7 +30,7 @@ export type camera = {
     streamStart:"",
     streamEnd:"",
     isLive:Boolean,
-    streamId?:""
+    streamId:""
 
 
 }
@@ -90,5 +90,5 @@ export type jwtAccessType = {
 export type usersData = {
     success: boolean,
     message: [],
-    totalCount: number
+    totalUsers: number
 }
