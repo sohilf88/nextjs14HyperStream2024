@@ -224,6 +224,7 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose, handleOpen, handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
+import { role } from "@/reduxtoolkit/features/userSlice";
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
 import { isAxiosError } from "axios";
@@ -284,8 +285,10 @@ function useTableHook() {
   // ----------------------
   // 🔹 Input Change Handler
   // ----------------------
- function handleClick(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-  const { name, type, value, checked } = e.target;
+ function handleClick(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>  ) {
+  
+  const { name, type, value,  } = e.target;
+  const checked = e.target instanceof HTMLInputElement ? e.target.checked : undefined;
 
   setFormData((prev) => ({
     ...prev,
@@ -320,6 +323,7 @@ function useTableHook() {
   // 🔹 Submit Form (Create or Update)
   // ----------------------
    async function handleFormSubmit() {
+   
     try {
       if (formData._id) {
         const response = await axiosAuth.patch(`camera/${formData._id}`, {

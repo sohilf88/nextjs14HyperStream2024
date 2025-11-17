@@ -28,7 +28,7 @@ const handleCloseOnClick=()=>{
  
   setFormData({
      // @ts-ignore
-    district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:false,name:"",streamId:""
+    district:"",city:"",area:"",_id:"",url:"",taluka:"",isActive:true,name:"",streamId:""
   })
   dispatch(handleClose())
   dispatch(handleUpdate(false))
@@ -37,7 +37,7 @@ const handleCloseOnClick=()=>{
 
   return (
     <Box sx={style} className="rounded shadow-md ">
-      <form  className="md:space-y-3 space-y-1 uppercase">
+      <form  onSubmit={handleFormSubmit}  className="md:space-y-3 space-y-1 uppercase">
         <TextField
           onChange={handleClick}
           value={name}
@@ -129,7 +129,7 @@ const handleCloseOnClick=()=>{
   }
         />
            </FormGroup>                    
-      </form>
+      
       <Box className="mt-8 pt-5 flex-col md:flex-row flex md:gap-1 gap-2  justify-center ">
           <Button startIcon={<AddTwoToneIcon/>} fullWidth   size="large" variant="contained"  onClick={handleFormSubmit}
             
@@ -146,6 +146,7 @@ const handleCloseOnClick=()=>{
             Close
           </Button>
         </Box>
+        </form>
     </Box>
   );
 }
