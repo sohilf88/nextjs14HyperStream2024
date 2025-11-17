@@ -25,9 +25,11 @@ function Actions(props: any) {
 
   // ✅ Correct JSX return
   return (
-    role !== "user" ? (
+    
+   role && role !== "user" ? (
       <main>
         <div className="flex gap-2">
+          
           <Tooltip title="Edit Detail">
             <IconButton
               size="small"

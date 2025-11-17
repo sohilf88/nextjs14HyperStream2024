@@ -1,5 +1,6 @@
 // "use client"
 
+
 // import { AgGridReact } from "ag-grid-react"; // React Grid Logic
 // // import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 // // import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
@@ -100,62 +101,6 @@
 //   //   return () => window.removeEventListener('resize', handleWindowResize);
 //   // }, []);
   
-//   // file upload function
-//    const onSubmit = async (formData:FormData) => {
-//     const file=formData.get("file")
-//     // console.log(file)
-//     if (!file) return
-
-//     try {
-//       const data = new FormData()
-      
-//       data.set('file', file)
-//      const response =await axiosAuth.post("/camera/bulk-import",data)
-//       // console.log(response.data)
-//      if(response.data){
-//       // @ts-ignore
-//      await getAllCameraDataFromBackEnd()
-//       toast.success(response.data.message)
-//      }
-      
-//     } catch (error) {
-//       // Handle errors here
-//       errorHandler(error)
-//     }
-//   } 
-//   // form Data for file input
-//  const Fileupload=()=>{
-//   const {pending}=useFormStatus()
-//   return (
-//     <>
-    
-//       <label htmlFor="file" className="flex items-center  text-white">
-        
-//        <Tooltip arrow title="click to upload csv">
-//       {/* <DriveFolderUploadTwoToneIcon className="w-6 h-6 "/> */}
-      
-//       <input required  name="file"  id="file" type="file" className="w-full  text-sm text-gray-300
-//         file:me-4 file:py-2 file:px-6
-//         file:rounded-sm file:border-1
-//         file:text-sm file:font-semibold
-//         file:bg-blue-600 file:text-white
-//         hover:file:bg-blue-700
-//         file:disabled:opacity-50 file:disabled:pointer-events-none
-        
-             
-//       "/>
-//       </Tooltip>
-      
-//     </label>
-    
-    
-//     <Tooltip title="click to uplad" arrow placement="bottom-end">
-//       <span>
-//     <Button size="large" type="submit" disabled={pending} color="warning" variant="text">{pending ?"uploading...":"upload"}</Button>
-//     </span>
-//     </Tooltip>
-//     </>
-//   )
 //  }
 //   useEffect(() => {
 //     // @ts-ignore
@@ -432,7 +377,9 @@ export default function SimpleTable(): JSX.Element {
   const dispatch = useAppDispatch();
   const { role, userId } = useAppSelector((s) => s.root.userRole);
   const { isOpen } = useAppSelector((s) => s.root.modal);
- console.log(userId)
+ console.log(userId,role
+
+ )
   // hook (returns object)
   const {
     rowData,
@@ -529,6 +476,7 @@ export default function SimpleTable(): JSX.Element {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response.data)
       if (response?.data) {
         await getAllCameraDataFromBackEnd();
         toast.success(response.data.message);
@@ -537,6 +485,7 @@ export default function SimpleTable(): JSX.Element {
       }
     } catch (err) {
       errorHandler(err);
+      // toast.info(err?.message);
     }
   }, [getAllCameraDataFromBackEnd]);
 
@@ -610,6 +559,8 @@ const autoPlayVideos = useCallback(() => {
 
     // create socket and store on ref
     const socket = io("http://localhost:5000", {
+      transports: ["websocket"],
+  
       auth: { key: process.env.NEXT_PUBLIC_SOCKET_KEY },
       withCredentials: true,
       autoConnect: true,
@@ -623,6 +574,7 @@ const autoPlayVideos = useCallback(() => {
     });
 
     socket.on("cameraUpdate", (data: any) => {
+      console.log(data)
       // update rowData in-place for immediate UI updates
       if (!data) return;
       // naive update: replace matching streamId
@@ -691,6 +643,10 @@ const autoPlayVideos = useCallback(() => {
     // onEditRow kept if you want to use it elsewhere.
   }, []);
 
+
+
+
+  
  return (
   <>
     {/* Centered container for toolbar + table */}
@@ -699,6 +655,10 @@ const autoPlayVideos = useCallback(() => {
       {/* ====== TOOLBAR ====== */}
       <div className="md:mb-1 xl:mb-3 3xl:mb-5">
         <main className="flex flex-wrap gap-5 items-center justify-between">
+          {["admin", "superadmin"].includes(role) && (
+          <div className="flex gap-5 items-center justify-left">
+            
+
           {/* Upload Form */}
           <form className="flex gap-2 items-center" onSubmit={onSubmit}>
             <Tooltip arrow title="Click to upload CSV">
@@ -720,22 +680,50 @@ const autoPlayVideos = useCallback(() => {
               </label>
             </Tooltip>
 
-            <Button size="medium" type="submit" color="warning" variant="contained">
+            <Button type="submit" size="medium"  color="warning" variant="contained">
               Upload
             </Button>
+            
           </form>
-
-          {/* Add + Play + Delete Buttons */}
-          <div className="flex flex-wrap gap-4 justify-end">
-            <Button
+          <Button
               color="secondary"
               size="medium"
               onClick={() => dispatch(handleOpen())}
               variant="contained"
               startIcon={<AddTwoToneIcon />}
+              type="button"
             >
               Add Camera
             </Button>
+            <Button
+              onClick={deleteMultipleCameras}
+              type="button"
+              disabled={!isSelected}
+              size="medium"
+              variant="contained"
+              color="error"
+              startIcon={<DeleteIcon />}
+             
+            >
+              {isDeleting ? "Deleting..." : "Delete Many"}
+            </Button>
+              </div>
+            )
+              }
+          {/* Add + Play + Delete Buttons */}
+        
+          <div className="flex flex-wrap gap-4 justify-end">
+            
+            {/* <Button
+              color="secondary"
+              size="medium"
+              onClick={() => dispatch(handleOpen())}
+              variant="contained"
+              startIcon={<AddTwoToneIcon />}
+              type="button"
+            >
+              Add Camera
+            </Button> */}
 
             <Button
               disabled={!isSelected}
@@ -743,6 +731,7 @@ const autoPlayVideos = useCallback(() => {
               size="medium"
               variant="contained"
               startIcon={<SlowMotionVideoTwoToneIcon />}
+              type="button"
             >
               Play Selected
             </Button>
@@ -754,6 +743,7 @@ const autoPlayVideos = useCallback(() => {
               variant="contained"
               color="success"
               startIcon={<PlayCircleTwoToneIcon />}
+              type="button"
             >
               Play All
             </Button>
@@ -764,21 +754,12 @@ const autoPlayVideos = useCallback(() => {
               variant="contained"
               color="primary"
               startIcon={<LoopTwoToneIcon />}
+              type="button"
             >
              Autoplay
             </Button>
 
-            <Button
-              onClick={deleteMultipleCameras}
-              type="button"
-              disabled={!isSelected}
-              size="medium"
-              variant="contained"
-              color="error"
-              startIcon={<DeleteIcon />}
-            >
-              {isDeleting ? "Deleting..." : "Delete Many"}
-            </Button>
+            
           </div>
         </main>
       </div>

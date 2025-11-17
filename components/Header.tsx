@@ -449,7 +449,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 import StreamIcon from "@mui/icons-material/Stream";
-import LoopTwoToneIcon from '@mui/icons-material/LoopTwoTone';
+
 import Link from "next/link";
 import { axiosAuth } from "@/app/lib/axios";
 import { useRouter } from "next/navigation";
@@ -457,17 +457,24 @@ import { errorHandler } from "@/hooks/useTableHook";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleUserRoles } from "@/reduxtoolkit/features/userSlice";
 import { toast } from "sonner";
-
-const pages = [
-  { name: "Dashboard", path: "/dashboard" },
-  { name: "Admin", path: "/admin" },
-];
+ 
+// const pages = [
+//   { name: "Dashboard", path: "/dashboard" },
+//   { name: "super admin", path: "/admin" },
+// ];
 
 export default function ResponsiveAppBar() {
-  const { username } = useAppSelector((s) => s.root.userRole);
+  
+  const { username,role } = useAppSelector((s) => s.root.userRole);
+  const allPages = [
+  { name: "Dashboard", path: "/dashboard" },
+  { name: "super admin", path: "/admin", role: "root" },
+];
+
+const pages = allPages.filter((p) => !p.role || p.role === role);
   const dispatch = useAppDispatch();
   const router = useRouter();
- console.log(username)
+//  console.log(username)
 
   // ----------------------------------
   // 🔹 Logout Handler
@@ -544,7 +551,7 @@ export default function ResponsiveAppBar() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* Logo (Desktop) */}
-            <StreamIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} color="warning" />
+            <StreamIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} color="warning" className="animate-spin" />
             <Typography
               variant="h6"
               noWrap
@@ -561,7 +568,10 @@ export default function ResponsiveAppBar() {
                 flexGrow: 1,
               }}
             >
-              <span className="font-caveat italic lowercase">HyperStream..</span>
+              <span className="font-thin capitalize text-yellow-300">HyperStream</span>
+              <span className=" font-bold animate-pulse text-orange-400">..</span>
+              <span className="animate-pulse">..</span>
+              <span className="animate-pulse text-green-400">..</span>
             </Typography>
 
             {/* Mobile Menu Button */}
@@ -582,6 +592,7 @@ export default function ResponsiveAppBar() {
                 sx={{ display: { xs: "block", md: "none" } }}
               >
                 {pages.map(({ name, path }) => (
+                  
                   <MenuItem key={name} onClick={handleCloseNavMenu}>
                     <Typography
                       component={Link}

@@ -37,9 +37,11 @@ export async function middleware(request: NextRequest) {
   if (accessToken) {
     try {
       const decoded = jwtDecode<jwtAccessType>(accessToken);
+      console.log(decoded);
 
       if (decoded?.exp && decoded.exp * 1000 < Date.now()) {
         console.log("Access token expired → allowed");
+        console.log(decoded);
         return NextResponse.next();
       }
     } catch {

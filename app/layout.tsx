@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="w-full h-screen bg-loginImage bg-cover bg-no-repeat bg-center">
+      <body className="w-full h-screen bg-loginImage bg-cover bg-no-repeat bg-center font-caveat">
        
         <Providers>
          

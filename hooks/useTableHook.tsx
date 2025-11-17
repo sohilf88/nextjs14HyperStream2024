@@ -322,7 +322,8 @@ function useTableHook() {
   // ----------------------
   // 🔹 Submit Form (Create or Update)
   // ----------------------
-   async function handleFormSubmit() {
+   async function handleFormSubmit(event:React.FocusEvent) {
+    event.preventDefault()
    
     try {
       if (formData._id) {
