@@ -261,14 +261,17 @@ import ChangeProfile from "@/components/modalTabs";
 import AccessDenied from "@/components/http403";
 import { errorHandler } from "@/hooks/useTableHook";
 import { user, usersData } from "@/typescript.definations";
+import { useAppSelector } from "@/reduxtoolkit/store/Hooks";
 
 const AdminPage = () => {
+  
+  
   const [users, setUsers] = useState<usersData>({
     success: false,
     message: [],
     totalUsers: 0,
   });
-
+const { role, userId } = useAppSelector((s) => s.root.userRole);
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [shouldClear, setShouldClear] = useState(false);
@@ -321,10 +324,11 @@ const AdminPage = () => {
   };
 
   // Disable user
-  const handleDisableUser = async (userId: string) => {
+  const handleDisableUser = async (user_id: string) => {
     try {
-      const response = await axiosAuth.patch(`/admin/users/${userId}`, {
+      const response = await axiosAuth.patch(`/admin/users/${user_id}`, {
         isActive: false,
+        userId:userId,
       });
       if (response.data) {
         toast.success(response.data.message);

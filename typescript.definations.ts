@@ -81,7 +81,7 @@ export type jwtAccessType = {
 
     username: String,
     email: String
-    roles: string[],
+    roles: string
     _id: string,
     exp:number,
     iat?: number,

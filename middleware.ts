@@ -10,6 +10,22 @@ export async function middleware(request: NextRequest) {
 
   const isLoginPage = pathname === "/auth/login";
 
+ if (accessToken) {
+    try {
+      
+      const decoded = jwtDecode<jwtAccessType>(accessToken);
+      // console.log(decoded)
+      if(decoded?.roles !== "root" && pathname.startsWith("/admin")) {
+        // console.log("Not authorized to access admin → redirect to dashboard");
+        return NextResponse.redirect(new URL("/dashboard", request.url));
+      }
+    } catch (error) {
+      // console.log("Malformed token → force logout");
+      return NextResponse.redirect(new URL("/auth/login", request.url));
+    }
+      
+      
+    }
   // ------------------------------------------------
   // 1. If completely logged out → always redirect
   // ------------------------------------------------
@@ -23,29 +39,34 @@ export async function middleware(request: NextRequest) {
   // ------------------------------------------------
   // 2. If logged-in user tries to go to /auth/login → redirect to dashboard
   // ------------------------------------------------
-  console.log(isLoginPage)
-  console.log( request.url)
+  // console.log(isLoginPage)
+  // console.log( request.url)
   if (refreshToken && accessToken && isLoginPage) {
     
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
+
+
+  // -----------------------------------------
+//  check if access token role is root or not
+ 
   // ------------------------------------------------
-  // 3. If access-token exists → decode and validate
+  // 4. If access-token exists → decode and validate
   //    BUT expired token must NOT redirect → axios handles it
   // ------------------------------------------------
   if (accessToken) {
     try {
       const decoded = jwtDecode<jwtAccessType>(accessToken);
-      console.log(decoded);
+      // console.log(decoded);
 
       if (decoded?.exp && decoded.exp * 1000 < Date.now()) {
-        console.log("Access token expired → allowed");
-        console.log(decoded);
+        // console.log("Access token expired → allowed");
+        // console.log(decoded);
         return NextResponse.next();
       }
     } catch {
-      console.log("Malformed token → force logout");
+      // console.log("Malformed token → force logout");
       return NextResponse.redirect(new URL("/auth/login", request.url));
     }
   }

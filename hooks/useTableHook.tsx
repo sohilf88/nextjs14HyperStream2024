@@ -224,7 +224,7 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
 import { handleClose, handleOpen, handleUpdate } from "@/reduxtoolkit/features/ModalSlice";
-import { role } from "@/reduxtoolkit/features/userSlice";
+
 import { camera } from "@/typescript.definations";
 import { axiosAuth } from "@/app/lib/axios";
 import { isAxiosError } from "axios";

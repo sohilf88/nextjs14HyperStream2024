@@ -253,7 +253,7 @@
 
          
 //   <form className="flex max-w-xs" action={onSubmit}>
-//     <Fileupload></Fileupload>
+    // <Fileupload></Fileupload>
      
      
 //   </form>
@@ -380,6 +380,7 @@ export default function SimpleTable(): JSX.Element {
  console.log(userId,role
 
  )
+ 
   // hook (returns object)
   const {
     rowData,
@@ -399,6 +400,7 @@ export default function SimpleTable(): JSX.Element {
   const [rowSelected, setRowSelected] = useState<camera[]>([]);
   const [isSelected, setIsSelected] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [width, setWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 1200);
 
   // socket ref so we don't re-create connection
@@ -459,6 +461,12 @@ export default function SimpleTable(): JSX.Element {
   }, [rowSelected, getAllCameraDataFromBackEnd]);
 
   // File upload handler (form submit)
+const onFileChange = (e) => {
+  if (e.target.files && e.target.files.length > 0) {
+    setFileName(e.target.files[0].name);
+  }
+};
+
   const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -470,24 +478,33 @@ export default function SimpleTable(): JSX.Element {
       const file = input.files[0];
       const data = new FormData();
       data.set("file", file);
-
+      setLoading(true)
       const response = await axiosAuth.post("/camera/bulk-import", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data)
+      // console.log(response.data)
       if (response?.data) {
+        setLoading(false)
         await getAllCameraDataFromBackEnd();
+        input.value = "";
+        setFileName("")
         toast.success(response.data.message);
         // clear input
-        input.value = "";
+        
       }
     } catch (err) {
       errorHandler(err);
       // toast.info(err?.message);
     }
   }, [getAllCameraDataFromBackEnd]);
+  // file name will display
+ 
+
+  const [fileName, setFileName] = React.useState("");
+
+
 
   // play functions
   const playAllCamerasInNewTab = useCallback(() => {
@@ -558,7 +575,7 @@ const autoPlayVideos = useCallback(() => {
     if (!userId) return;
 
     // create socket and store on ref
-    const socket = io("http://localhost:5000", {
+    const socket = io(process.env.NEXT_PUBLIC_ENV=="prod"?"https://www.hyperstream.in":"http://localhost:5000", {
       transports: ["websocket"],
   
       auth: { key: process.env.NEXT_PUBLIC_SOCKET_KEY },
@@ -660,11 +677,11 @@ const autoPlayVideos = useCallback(() => {
             
 
           {/* Upload Form */}
-          <form className="flex gap-2 items-center" onSubmit={onSubmit}>
+          <form className="flex gap-2 items-center " onSubmit={onSubmit}>
             <Tooltip arrow title="Click to upload CSV">
               <label
                 htmlFor="file"
-                className="cursor-pointer flex items-center gap-2 text-gray-800 dark:text-gray-200"
+                className="cursor-pointer flex items-center gap-2 text-gray-300 dark:text-gray-200"
               >
                 <DriveFolderUploadTwoToneIcon />
                 <input
@@ -675,13 +692,17 @@ const autoPlayVideos = useCallback(() => {
                   type="file"
                   accept=".csv"
                   className="hidden"
+                   onChange={onFileChange}
                 />
-                <span>Select File</span>
+                      <span>
+        {fileName ? fileName :<span className="text-normal font-caveat capitalize text-zinc-400">select csv</span> }   {/* <-- SHOW FILE NAME */}
+      </span>
+
               </label>
             </Tooltip>
 
-            <Button type="submit" size="medium"  color="warning" variant="contained">
-              Upload
+            <Button type="submit" size="medium"  color="warning" variant="text">
+             {isLoading ? "uploading..." :"upload"}
             </Button>
             
           </form>

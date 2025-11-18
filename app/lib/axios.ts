@@ -70,7 +70,7 @@ export const axiosPublic = axios.create({
 });
 
 export const axiosAuth = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_URL,
+    baseURL: process.env.NEXT_PUBLIC_ENV=="prod"?"https://hyperstream.in/server/api/v1":"http://localhost:5000/api/v1/",
     withCredentials: true
 });
 

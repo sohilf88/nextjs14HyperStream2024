@@ -22,7 +22,7 @@ function Actions(props: any) {
       console.error("Failed to disable camera:", error);
     }
   }
-
+  console.log(role)
   // ✅ Correct JSX return
   return (
     
