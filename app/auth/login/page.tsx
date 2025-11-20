@@ -91,7 +91,7 @@ return (
  <main className="h-screen flex justify-center items-center bg-gradient-to-br from-[#FF9933] via-white to-[#138808]">
     <div className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-xl rounded-2xl w-full max-w-md md:max-w-lg p-8 sm:p-10 space-y-6">
       <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#FF9933] via-[#0A5EB7] to-[#138808] bg-clip-text text-transparent">
-        Hyperstream Streaming
+        Arwastream Streaming
       </h1>
       <h6 className='text-sm text-center text-red-700 '>Municipal Council Election 2025</h6>
 

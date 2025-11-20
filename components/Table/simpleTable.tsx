@@ -461,7 +461,7 @@ export default function SimpleTable(): JSX.Element {
   }, [rowSelected, getAllCameraDataFromBackEnd]);
 
   // File upload handler (form submit)
-const onFileChange = (e) => {
+const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   if (e.target.files && e.target.files.length > 0) {
     setFileName(e.target.files[0].name);
   }

@@ -64,7 +64,7 @@ import axios, { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { customError } from "@/typescript.definations";
 
-export const axiosPublic = axios.create({
+export default axios.create({
     baseURL: process.env.NEXT_PUBLIC_URL,
     headers: { "Content-Type": "application/json" }
 });

@@ -86,7 +86,7 @@
 //             }}
 //           >
 
-//            <span className="font-caveat italic lowercase">HyperStream..</span>
+//            <span className="font-caveat italic lowercase">Arwastream..</span>
 //           </Typography>
 
 //           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -142,7 +142,7 @@
 //               textDecoration: "none",
 //             }}
 //           >
-//             HyperStream
+//             Arwastream
 //           </Typography>
 //           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 //             {pages.map((page) => (
@@ -306,7 +306,7 @@
 //               flexGrow: 1,
 //             }}
 //           >
-//             <span className="font-caveat italic lowercase">HyperStream..</span>
+//             <span className="font-caveat italic lowercase">Arwastream..</span>
 //           </Typography>
 
 //           {/* Mobile Menu Icon */}
@@ -369,7 +369,7 @@
 //               textTransform: "uppercase",
 //             }}
 //           >
-//             HyperStream
+//             Arwastream
 //           </Typography>
 
 //           {/* Desktop Navigation */}
@@ -568,7 +568,7 @@ const pages = allPages.filter((p) => !p.role || p.role === role);
                 flexGrow: 1,
               }}
             >
-              <span className="font-thin capitalize text-yellow-300">HyperStream</span>
+              <span className="font-thin capitalize text-yellow-300">Arwastream</span>
               <span className=" font-bold animate-pulse text-orange-400">..</span>
               <span className="animate-pulse">..</span>
               <span className="animate-pulse text-green-400">..</span>
@@ -628,7 +628,7 @@ const pages = allPages.filter((p) => !p.role || p.role === role);
                 display: { xs: "flex", md: "none" },
               }}
             >
-              HyperStream
+              Arwastream
             </Typography>
 
             {/* Desktop Navigation */}
