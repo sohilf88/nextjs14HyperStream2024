@@ -65,7 +65,8 @@ import { toast } from "sonner";
 import { customError } from "@/typescript.definations";
 
 export default axios.create({
-    baseURL: process.env.NEXT_PUBLIC_URL,
+    // baseURL: process.env.NEXT_PUBLIC_URL,
+    baseURL: process.env.NEXT_PUBLIC_ENV=="prod"? process.env.NEXT_PUBLIC_URL:"http://localhost:5000/api/v1/",
     headers: { "Content-Type": "application/json" }
 });
 
