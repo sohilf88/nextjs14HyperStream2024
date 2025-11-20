@@ -192,12 +192,12 @@ export default function Page() {
               className="relative bg-black rounded-lg overflow-hidden shadow-lg"
             >
               <HlsPlayer item={item} />
-              <div className="absolute top-0 right-3 bg-black/40 px-2 py-1 text-sm text-white flex flex-wrap gap-x-4 justify-end text-right w-full">
+              {/* <div className="absolute top-0 right-1 bg-black/10 px-2 py-1 text-sm text-white flex flex-wrap gap-x-4 justify-end text-right w-full">
   <span>{item.name ?? "Unnamed"}</span>
   <span>{item.district ?? ""}</span>
   <span>{item.city ?? ""}</span>
   <span>{item.area ?? ""}</span>
-</div>
+</div> */}
 
 
               

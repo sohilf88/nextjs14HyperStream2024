@@ -136,6 +136,12 @@ export default function Autoplay() {
             className="rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition"
           >
             <HlsPlayer item={item} />
+            {/* <div className="absolute top-0 right-1 bg-black/10 px-2 py-1 text-sm text-white flex flex-wrap gap-x-4 justify-end text-right w-full">
+              <span>{item.name ?? "Unnamed"}</span>
+              <span>{item.district ?? ""}</span>
+              <span>{item.city ?? ""}</span>
+              <span>{item.area ?? ""}</span>
+            </div> */}
           </div>
         ))}
       </section>

@@ -50,12 +50,12 @@ console.log(item)
     return (
      
         <div className="player-wrapper relative " >
-          {/* <div className="text-white font-caveat absolute top-1.5 right-2 z-50  flex justify-end gap-5 italic uppercase font-extralight text-xs  tracking-wide">
+          <div className="text-white font-caveat absolute top-1.5 right-2 z-50  flex justify-end gap-5  uppercase font-extralight text-xs ">
             <span>{item?.name}</span>
             <span>{item?.city}</span>
             <span>{item?.taluka}</span>
             <span>{item?.area}</span>
-          </div> */}
+          </div>
           <div className="absolute group -bottom-1 transition-all duration-150 z-50 w-full flex  gap-2 justify-between items-center ">
             <div className="flex items-center gap-5">
               <div>
