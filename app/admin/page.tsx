@@ -355,7 +355,7 @@ const { role, userId } = useAppSelector((s) => s.root.userRole);
     <>
       <Header />
 
-      <main className="text-slate-300 min-h-screen px-6 md:px-10 py-5 w-full">
+      <main className="text-white min-h-screen px-6 md:px-10 py-5 w-full">
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:mx-8">
           {/* Search & Stats Header */}
           <div className="col-span-full mb-4">
@@ -363,23 +363,23 @@ const { role, userId } = useAppSelector((s) => s.root.userRole);
               <div className="flex justify-between items-center mb-3">
                 <Typography
                   variant="h6"
-                  className="text-white font-semibold"
+                  className="text-black/30 font-semibold"
                 >
-                  Search User by Email
+                  
                 </Typography>
 
                 <div className="flex flex-wrap items-center gap-4 text-lg font-semibold">
                   <Typography className="flex items-center gap-1">
-                    <AssignmentIndIcon /> TOTAL - {users.totalUsers}
+                    <AssignmentIndIcon /> Total Users - {users.totalUsers}
                   </Typography>
 
                   <Typography className="flex items-center gap-1">
-                    <PeopleAltTwoToneIcon /> ACTIVE -{" "}
+                    <PeopleAltTwoToneIcon /> Active Users  -{" "}
                     {users.message?.length || 0}
                   </Typography>
 
                   <Typography className="flex items-center gap-1">
-                    <NoAccountsTwoToneIcon /> INACTIVE - {inactiveCount}
+                    <NoAccountsTwoToneIcon /> Disabled Users - {inactiveCount}
                   </Typography>
 
                   <Badge badgeContent={inactiveCount} color="success">
@@ -445,11 +445,11 @@ const { role, userId } = useAppSelector((s) => s.root.userRole);
             users.message.map((user: user) => (
               <div
                 key={user._id}
-                className="bg-slate-800 rounded-md p-5 text-yellow-50 shadow-lg hover:shadow-xl transition-all duration-150"
+                className="bg-gradient-to-r from-stone-500 to-stone-700 rounded-md p-5 text-yellow-50 shadow-lg hover:shadow-2xl transition-all duration-150"
               >
                 <div className="flex justify-between items-center mb-3">
-                  <Typography variant="h5" className="font-semibold">
-                    {user.username}'s Profile
+                  <Typography variant="h5" className="font-semibold capitalize ">
+                    {user.username}'s  Profile Overview
                   </Typography>
                   <Tooltip title="Edit user" arrow>
                     <IconButton

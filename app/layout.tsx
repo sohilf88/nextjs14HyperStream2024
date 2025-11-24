@@ -9,8 +9,8 @@ import Design from "@/components/Design";
 
 
 export const metadata: Metadata = {
-  title: "HyperStream CCTV Live Streaming Services",
-  description: "HyperStream CCTV RTMP Service",
+  title: "ArwaStream CCTV Live Streaming Services",
+  description: "ArwaStream CCTV RTMP Service",
 };
 
 

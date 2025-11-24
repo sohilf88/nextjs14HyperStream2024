@@ -8,7 +8,7 @@ export default function UserLayout({
   return (
     <html lang="en">
      
-      <body className=" bg-loginImage bg-fixed bg-cover bg-center min-w-full max-h-screen " >
+      <body className=" bg-gradient-to-br from-zinc-200 to-gray-800 bg-fixed bg-cover bg-center min-w-full max-h-screen " >
         
          
           {children}
