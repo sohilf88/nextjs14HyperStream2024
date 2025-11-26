@@ -30,7 +30,7 @@ console.log(item)
    let player=window.document.getElementById(item._id as string)
   //  console.log(player)
    const isFullScreenWindow=window.document.fullscreenElement
-   
+   console.log(isFullScreenWindow)
     if(!isFullScreenWindow){
       
       player?.requestFullscreen()
@@ -93,6 +93,7 @@ console.log(item)
 
             {/* fullscreen and exit */}
             <div>
+              <span className="text-red-600 font-bold uppercase text-sm animate-pulse">Live</span>
            <IconButton onClick={onClickFullScreen} id="button-full"  color="warning">
             <FullscreenTwoToneIcon/>
            </IconButton>

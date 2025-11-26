@@ -6,7 +6,7 @@ import { useState } from "react"
 import { toast } from 'sonner';
 import { errorHandler } from '@/hooks/useTableHook';
 import Firework from "@/components/firework";
-
+import FourKSharpIcon from '@mui/icons-material/FourKSharp';
 
 import { redirect, useRouter } from "next/navigation"
 
@@ -20,10 +20,29 @@ import { useFormStatus } from 'react-dom';
 import FireworkBackground from '@/components/firework';
 
 
+
+export const electionTypes = [
+  { id: "lok_sabha", label: "Lok Sabha Election" },
+  { id: "rajya_sabha", label: "Rajya Sabha Election" },
+
+  { id: "vidhan_sabha", label: "State Assembly (Vidhan Sabha) Election" },
+  { id: "vidhan_parishad", label: "State Legislative Council Election" },
+
+  { id: "municipal_corporation", label: "Municipal Corporation Election" },
+  { id: "municipal_council", label: "Municipal Council Election" },
+  { id: "nagar_panchayat", label: "Nagar Panchayat Election" },
+
+  { id: "zila_parishad", label: "Zila Parishad Election" },
+  { id: "panchayat_samiti", label: "Panchayat Samiti Election" },
+  { id: "gram_panchayat", label: "Gram Panchayat Election" }
+];
+
+
 function Login() {
     const router=useRouter()
     const {role,userId}=useAppSelector((store)=>store.root.userRole)
    
+// all election type
 
   
    const dispatch=useAppDispatch()
@@ -90,10 +109,10 @@ return (
   {/* <Firework></Firework>   */}
  <main className="h-screen flex justify-center items-center bg-gradient-to-br from-[#FF9933] via-white to-[#138808]">
     <div className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-xl rounded-2xl w-full max-w-md md:max-w-lg p-8 sm:p-10 space-y-6">
-      <h1 className="text-center text-3xl font-bold bg-gradient-to-r from-[#FF9933] via-[#0A5EB7] to-[#138808] bg-clip-text text-transparent">
-        Arwastream Streaming
+      <h1 className="text-center font-mono text-3xl font-bold bg-gradient-to-r from-[#FF9933] via-[#0A5EB7] to-[#138808] bg-clip-text text-transparent">
+        arwaStreaming 
       </h1>
-      <h6 className='text-sm text-center text-red-700 '>Municipal Council Election 2025</h6>
+      <h6 className='text-sm text-center text-red-700 font-mono '>Municipal Council Election 2025</h6>
 
       <div className="flex flex-col gap-6">
         <div className="space-y-4">

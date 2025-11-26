@@ -60,6 +60,7 @@ export type cameraFeatureSlice = {
     selectedCamera: camera[],
     onRowSelected: camera | null,
     id: string | undefined | null
+    currentCamera:camera
 }
 
 export type userDetail = {

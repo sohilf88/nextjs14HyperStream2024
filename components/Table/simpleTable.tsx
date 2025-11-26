@@ -1,341 +1,4 @@
-// "use client"
 
-
-// import { AgGridReact } from "ag-grid-react"; // React Grid Logic
-// // import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-// // import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-// import { ColDef, AgGridEvent, ValueGetterParams, RowSelectedEvent } from "ag-grid-community"; //typeScript for ag grid
-// import { useState, useEffect } from "react";
-
-// import { Box, Button, Modal ,ButtonGroup, Stack, Fab, TextField, InputLabel, Badge, Tooltip} from "@mui/material";
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-// import SlowMotionVideoTwoToneIcon from '@mui/icons-material/SlowMotionVideoTwoTone';
-// import PlayCircleTwoToneIcon from '@mui/icons-material/PlayCircleTwoTone';
-// import Actions from "./Actions";
-
-// import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
-// import ModalData from "@/components/ModalData";
-// import { handleClose,handleOpen, handlePlayAllCameras,handleSelectedCameras } from "@/reduxtoolkit/features/ModalSlice";
-// import useTableHook, { errorHandler } from "@/hooks/useTableHook";
-// import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
-// import { camera } from "@/typescript.definations";
-// import DriveFolderUploadTwoToneIcon from '@mui/icons-material/DriveFolderUploadTwoTone';
-// import { axiosAuth } from "@/app/lib/axios";
-// import axios from "axios"
-// import { toast } from "sonner";
-// import { useFormStatus } from "react-dom";
-
-// import DeleteTwoTone from "@mui/icons-material/DeleteTwoTone";
-// import Link from "next/link";
-// import {io} from "socket.io-client"
-// function SimpleTable() {
-//   const {role,userId}=useAppSelector((store)=>store.root.userRole)
- 
-//   const {
-//   rowData,
-//   formData,
-//   getAllCameraDataFromBackEnd,
-//   handleFormSubmit,
-//   handleClick,
-//   handleDataUpdateOnEditButton,
-//   deleteSingleCamera,
-//   disableSelectedCamera,
-//   setFormData
-// } = useTableHook();
- 
-//   const [gridReady, setGridReady] = useState<AgGridEvent>();
-//   const [rowSelected,setRowSelected]=useState<camera[]| null>([])
-//   const [isSelected,setIsSelected]=useState(false)
-//   const [isDeleted,setIsDeleted]=useState(false)
-//   const dispatch = useAppDispatch();
- 
-  
-//   // console.log(role,userId)
-// // multiple Camera delete Function
-// async function deleteMultipleCameras(){
-//   let deleteMultiples=[] as string[]
-//   rowSelected && rowSelected.map((row:camera)=>{
-//     deleteMultiples?.push(row._id as string)
-   
-//   })
-//   try {
-    
-//     setIsDeleted(true)
-
-//   const response=await axiosAuth.delete("/camera/deletemany",{data:{deleteMultiples}})
-//   // console.log(response.status)
-//   if(response){
-//     // @ts-ignore
-    
-//     getAllCameraDataFromBackEnd()
-//     setIsDeleted(false)
-//     toast.error(` Removed successfully,Total deleted count =${response.data.message} `)
-//   }
-    
-//   } catch (error) {
-//     // console.log(error)
-//     setIsDeleted(false)
-//     errorHandler(error)
-//   }
- 
-// }
-//   // for table height size
-//   const [width, setWidth] = useState(0)
-//   // const [heightofViewport, setheightofViewport] = useState(0)
-
-//   const handleWindowResize = () => {
-//     setWidth(window.innerWidth);
-//     // setheightofViewport(window.innerHeight);
-//   }
-//   if(width>1600){
-//     var height=640
-//   }else{
-//     height=480
-//   }
-//   // useEffect(() => {
-//   //   // component is mounted and window is available
-//   //   handleWindowResize();
-//   //   window.addEventListener('resize', handleWindowResize);
-//   //   // unsubscribe from the event on component unmount
-//   //   return () => window.removeEventListener('resize', handleWindowResize);
-//   // }, []);
-  
-//  }
-//   useEffect(() => {
-//     // @ts-ignore
-//      getAllCameraDataFromBackEnd();
-    
-//     //  setIsPlayAll(gridReady?.api.paginationGetRowCount()===0)
-//      handleWindowResize();
-//     window.addEventListener('resize', handleWindowResize);
-
-//     // unsubscribe from the event on component unmount
-//     return () => window.removeEventListener('resize', handleWindowResize);
-//   }, []);
-
-//   const [defaultCols, setDefaultCols] = useState<ColDef>({
-//     filter: true,
-//     floatingFilter: true,
-//     flex: 1,
-//   });
-
-//   // socket configuration
-
- 
-
-//   const [cameraColDefs, setCameraColDefs] = useState<ColDef[]>([
-//     {
-//       field: "name",
-//       headerName: "Name",
-      
-//       checkboxSelection: true,
-//       headerCheckboxSelection: true,
-//       headerCheckboxSelectionFilteredOnly: true,
-//     },
-//     { field: "district", headerName: "District", },
-//     { field: "taluka", headerName: "Taluka"},
-//     { field: "city", headerName: "City", },
-//     { field: "area",headerName:"Location" },
-//     { field: "isLive",headerName:"Camera Status" },
-//     { field: "streamStart",headerName:"streamStart",filter: false, },
-//     { field: "streamEnd",headerName:"streamEnd",filter: false, },
-//     {
-//       field: "Action",
-//       filter: false,
-//       editable: false,
-//       maxWidth: 240,
-      
-//       cellRenderer: (parmas:ValueGetterParams) => {
-        
-//         return <Actions getUser={getAllCameraDataFromBackEnd} deleteCamera={deleteSingleCamera} handleDataUpdateOnEditButton={handleDataUpdateOnEditButton}  params={parmas} />;
-//       },
-//     },
-//   ]);
-  
-//   // below state is for MUI-Modal only
-//   const { isOpen } = useAppSelector((store) => store.root.modal);
-// //  const { selectedCamera } = useAppSelector((store) => store.root.cameras)
- 
-//   function onGridReady(params: AgGridEvent) {
-   
-//    setGridReady(params)
-  
-//   }
-
-
-//   // get no.of selected rows and add into ReduxToolkit
-//   function getSelectedRowsByCheckBox(event: AgGridEvent) {
-//     setRowSelected(event.api.getSelectedRows())
-//     dispatch(selectedCamera(event.api.getSelectedRows()));
-//   }
-//   // select single row for and display into modal via ReduxToolkit Camera Slice with Reducer onRowSelected
-//   function onRowSelectedFunction(event: RowSelectedEvent) {
-//     if (event.node.isSelected()) {
-//       dispatch(onRowSelectedSlice(event.data));
-     
-//     }
-//   }
-
-//   function playAllCamerasinNewTabOnClick(){
-//   dispatch(handlePlayAllCameras(true))
-//   window.open('/user', '_blank', 'noopener')
-
-// }
-// function playselectedCamerasinNewTabOnClick(){
-//   dispatch(handlePlayAllCameras(false))
-//   window.open('/user/selected', '_blank', 'noopener')
-
-// }
-// // function disabledCamera(){
-// //   dispatch(handlePlayAllCameras(false))
-// //   window.open('/dashboard/disabled', '_blank', 'noopener')
-
-// // }
-
-// // check length of selected cameras is 0 or not
-
- 
-//   useEffect(()=>{
-// if(rowSelected!=null && rowSelected.length >0){
-//   setIsSelected(true)
-//  }
-//  if(rowSelected?.length===0 ){
-//   setIsSelected(false)
-//  }
-//   },[rowSelected])
- 
- 
-   
-//     // 
-//     useEffect(() => {
-//      if (!userId) return;
-     
-//     const socket = io("http://localhost:5000", {
-//       withCredentials: true, // important if you use cookies for auth
-//     });
-
-//     socket.on("connect", () => {
-//       console.log("✅ Connected:", socket.id);
-
-//       // join room for logged-in user
-//       socket.emit("joinRoom", userId);
-//     });
-
-//     socket.on("cameraUpdate", (data) => {
-//       console.log("📩 Received camera update:", data);
-//       // handle data (update state, toast, etc.)
-//     });
-
-//     socket.on("disconnect", () => {
-//       console.log("❌ Disconnected from server");
-//     });
-
-//     return () => {
-//       socket.disconnect();
-//     };
-//   }, [userId]);
-
-//     // return () => socket.disconnect();
-
-
-
-//   return (
-//     <>
-//     <div className="for-buttons md:mb-1 xl:mb-3 3xl:mb-5 ">
-    
-     
-//      <main className="flex gap-5 items-center ">
-//         <section></section>
-    
-    
-              
-
-         
-//   <form className="flex max-w-xs" action={onSubmit}>
-    // <Fileupload></Fileupload>
-     
-     
-//   </form>
-//  <Button color="secondary" size="large" onClick={()=>dispatch(handleOpen())}  variant="contained" startIcon={<AddTwoToneIcon />}>Add Camera</Button>
-  
-        
-          
-         
-     
-//       <div className=" flex flex-1 gap-5  justify-end">
-//     <Button
-//       disabled={!isSelected}
-//          onClick={
-//         playselectedCamerasinNewTabOnClick
-//     } size="large" variant="contained"  startIcon={<SlowMotionVideoTwoToneIcon/>}>Play Selected</Button>
-//         {/* @ts-ignore */}
-//       <Button disabled={rowData?.length===0}  onClick={playAllCamerasinNewTabOnClick} size="large" variant="contained"  color="success" startIcon={<PlayCircleTwoToneIcon/>}>Play All</Button>
-//     </div>       
-    
-//         <div className="  justify-end flex gap-5" >
-          
-//            <Button onClick={deleteMultipleCameras} type="button"  disabled={!isSelected} size="large" variant="contained"  color="error" startIcon={<DeleteIcon />}>{isDeleted?"deleting...":"Delete many"}</Button>
-        
-//             {/* <Tooltip title="Recycle bin">
-//                     <Badge badgeContent={1} color="success">
- 
-
-//       <Fab onClick={disabledCamera} color="error" size="small" aria-label="RecyclingTwoTone">
-//   <DeleteTwoTone />
-// </Fab>
-// </Badge>
-//           </Tooltip> */}
-      
-     
-     
-//         </div>
-      
-      
- 
-      
-     
-      
-      
-//       </main>
-      
-//     </div>
-    
-//     <div className="ag-theme-quartz-dark shadow-lg" style={{ height: height,maxWidth:"90%",margin:"auto",textAlign:"center",textShadow:"revert-layer",color:"green" }}>
-      
-//       <AgGridReact
-//         defaultColDef={defaultCols}
-//         columnDefs={cameraColDefs}
-//         //@ts-ignore
-//         rowData={rowData} 
-//         rowSelection={"multiple"}
-//         suppressRowDeselection={true}
-//         rowMultiSelectWithClick={true}
-//         pagination={true}
-//         onGridReady={onGridReady}
-//         onRowSelected={onRowSelectedFunction}
-//         onSelectionChanged={getSelectedRowsByCheckBox}
-        
-        
-        
-//         // enableCellChangeFlash={true}
-//       />
-//       <Modal open={isOpen} onClose={() => dispatch(handleClose())}>
-//         <Box>
-//         <ModalData handleFormSubmit={handleFormSubmit} handleClick={handleClick} formData={formData} setFormData={setFormData}/>
-        
-//         </Box>
-//       </Modal>
-     
-//     </div>
-//     </>
-//   );
-// }
-
-// export default SimpleTable;
-
-
-// chatgpt improved code as below
 
 "use client";
 
@@ -349,8 +12,9 @@ import {
   Modal,
   IconButton,
   Tooltip,
+  Typography,
 } from "@mui/material";
-
+import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import SlowMotionVideoTwoToneIcon from "@mui/icons-material/SlowMotionVideoTwoTone";
@@ -361,9 +25,9 @@ import Actions from "./Actions";
 import ModalData from "@/components/ModalData";
 
 import { useAppDispatch, useAppSelector } from "@/reduxtoolkit/store/Hooks";
-import { handleClose, handleOpen, handlePlayAllCameras } from "@/reduxtoolkit/features/ModalSlice";
-import { onRowSelectedSlice, selectedCamera } from "@/reduxtoolkit/features/cameraSlice";
-
+import { handleClose, handleIsOpenActionModal, handleOpen, handlePlayAllCameras } from "@/reduxtoolkit/features/ModalSlice";
+import { currentCameraDetail, onRowSelectedSlice, selectedCamera ,clearCurrentCamera} from "@/reduxtoolkit/features/cameraSlice";
+import HlsPlayer from "../hslplayer";
 import useTableHook, { errorHandler } from "@/hooks/useTableHook";
 import { camera } from "@/typescript.definations";
 
@@ -376,11 +40,9 @@ type Nullable<T> = T | null;
 export default function SimpleTable(): JSX.Element {
   const dispatch = useAppDispatch();
   const { role, userId } = useAppSelector((s) => s.root.userRole);
-  const { isOpen } = useAppSelector((s) => s.root.modal);
- console.log(userId,role
+  const { isOpen ,isOpenActionModal} = useAppSelector((s) => s.root.modal);
+  const { currentCamera } = useAppSelector((s) => s.root.cameras);
 
- )
- 
   // hook (returns object)
   const {
     rowData,
@@ -553,7 +215,7 @@ const autoPlayVideos = useCallback(() => {
       filter: false,
       cellRenderer: (params: { value: boolean }) => {
         const live = params.value;
-        return live ? <span className="text-yellow-400">LIVE</span> : <span className="text-red-600">OFFLINE</span>;
+        return live ? <span className="text-green-400 font-bold animate-pulse">LIVE</span> : <span className="text-red-500 font-seminbold">OFFLINE</span>;
       },
       maxWidth: 100,
     },
@@ -661,9 +323,18 @@ const autoPlayVideos = useCallback(() => {
   }, []);
 
 
+// current clicked row data
 
-
+const handleRowClick = useCallback((event: any) => {
   
+  dispatch(currentCameraDetail(event.data));
+}, []);
+
+function modalHandleCloseForSingleVideo(){
+  dispatch(handleIsOpenActionModal(false))
+  dispatch(clearCurrentCamera())
+
+}
  return (
   <>
     {/* Centered container for toolbar + table */}
@@ -809,6 +480,7 @@ const autoPlayVideos = useCallback(() => {
           onRowSelected={(e) => {
             if (e.node.isSelected()) dispatch(onRowSelectedSlice(e.data as camera));
           }}
+          onRowClicked={handleRowClick}
         />
       </div>
     </div>
@@ -824,6 +496,46 @@ const autoPlayVideos = useCallback(() => {
         />
       </Box>
     </Modal>
+   
+<Modal
+  open={isOpenActionModal}
+  onClose={() => dispatch(handleIsOpenActionModal(false))}
+  sx={{
+    backdropFilter: "blur(6px)",
+    backgroundColor: "rgba(0,0,0,0.3)",
+  }}
+>
+  <div className="w-screen h-screen flex justify-center items-center">
+
+    {/* CENTERED WHITE BOX */}
+    <div
+      className="relative bg-white/90  shadow-3xl rounded-sm"
+      style={{
+        width: "80%",
+        maxWidth: "1100px",
+        padding: "18px",
+      }}
+    >
+      {/* CLOSE BUTTON */}
+     
+   <div className="text-right ">
+       
+      <Tooltip title="close">
+          <IconButton size="large" onClick={modalHandleCloseForSingleVideo}>
+            <CloseTwoToneIcon color="error" className=""/>
+          </IconButton>
+</Tooltip>
+</div>
+      {/* PLAYER — DO NOT TOUCH */}
+      <HlsPlayer item={currentCamera} />
+    </div>
+
+  </div>
+</Modal>
+
+
+  
+
   </>
 )};
 
