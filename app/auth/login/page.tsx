@@ -21,21 +21,21 @@ import FireworkBackground from '@/components/firework';
 
 
 
-export const electionTypes = [
-  { id: "lok_sabha", label: "Lok Sabha Election" },
-  { id: "rajya_sabha", label: "Rajya Sabha Election" },
+// export const electionTypes = [
+//   { id: "lok_sabha", label: "Lok Sabha Election" },
+//   { id: "rajya_sabha", label: "Rajya Sabha Election" },
 
-  { id: "vidhan_sabha", label: "State Assembly (Vidhan Sabha) Election" },
-  { id: "vidhan_parishad", label: "State Legislative Council Election" },
+//   { id: "vidhan_sabha", label: "State Assembly (Vidhan Sabha) Election" },
+//   { id: "vidhan_parishad", label: "State Legislative Council Election" },
 
-  { id: "municipal_corporation", label: "Municipal Corporation Election" },
-  { id: "municipal_council", label: "Municipal Council Election" },
-  { id: "nagar_panchayat", label: "Nagar Panchayat Election" },
+//   { id: "municipal_corporation", label: "Municipal Corporation Election" },
+//   { id: "municipal_council", label: "Municipal Council Election" },
+//   { id: "nagar_panchayat", label: "Nagar Panchayat Election" },
 
-  { id: "zila_parishad", label: "Zila Parishad Election" },
-  { id: "panchayat_samiti", label: "Panchayat Samiti Election" },
-  { id: "gram_panchayat", label: "Gram Panchayat Election" }
-];
+//   { id: "zila_parishad", label: "Zila Parishad Election" },
+//   { id: "panchayat_samiti", label: "Panchayat Samiti Election" },
+//   { id: "gram_panchayat", label: "Gram Panchayat Election" }
+// ];
 
 
 function Login() {
@@ -57,7 +57,7 @@ function Login() {
           
         })
         
-        console.log(response.data)
+        // console.log(response.data)
         if(response.data?.success ){
           // console.log(response.data.data.roles.includes("root"))
           
