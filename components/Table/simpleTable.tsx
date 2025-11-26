@@ -237,7 +237,7 @@ const autoPlayVideos = useCallback(() => {
     if (!userId) return;
 
     // create socket and store on ref
-    const socket = io(process.env.NEXT_PUBLIC_ENV=="prod"?"https://www.hyperstream.in":"http://localhost:5000", {
+    const socket = io(process.env.NEXT_PUBLIC_ENV=="prod"?process.env.NEXT_PUBLIC_URL:"http://localhost:5000", {
       transports: ["websocket"],
   
       auth: { key: process.env.NEXT_PUBLIC_SOCKET_KEY },
